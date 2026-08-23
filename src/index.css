@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette - Blue/Cream Hard Reset */
+  --color-bg-primary: #F2EFE7; /* Warm Cream */
+  --color-white: #FFFFFF;
+  
+  --color-text-primary: #171918; /* Graphite (kept for readability) */
+  --color-text-secondary: #5F625D;
+  
+  --color-soft-sage: #C8DFDB; /* Pale Seafoam */
+  --color-surface-dark: #3368A0; /* Dark Blue */
+  --color-accent-copper: #66A3BF; /* Teal/Light Blue */
+  
+  --color-border-subtle: #E4E5DF;
+  --color-brand-micro: #5A071B;
+  
+  /* Typography */
+  --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Base Typography Resets */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: var(--color-text-secondary);
+  }
+}
+
+/* Subtle premium micro-interactions */
+.smooth-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-reveal {
+  animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Utilities for precise typography */
+@layer utilities {
+  .text-eyebrow {
+    @apply text-[10px] md:text-[11px] lg:text-[12px] uppercase tracking-[0.16em] font-bold;
+  }
+  .text-hero-heading {
+    @apply text-[40px] md:text-[46px] lg:text-[64px] xl:text-[72px] font-extrabold leading-[1.05] tracking-tight;
+  }
+  .text-section-heading {
+    @apply text-[30px] md:text-[36px] lg:text-[42px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight;
+  }
+  .text-product-heading {
+    @apply text-[28px] md:text-[34px] lg:text-[36px] xl:text-[48px] font-extrabold leading-[1.1] tracking-tight;
+  }
+  .text-body-primary {
+    @apply text-[15px] md:text-[16px] lg:text-[18px] leading-[1.6];
+  }
+  .text-body-small {
+    @apply text-[14px] md:text-[15px] leading-[1.5];
+  }
+}
