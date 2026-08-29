@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate, useInView } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresence } from 'framer-motion';
 
 function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = "" }) {
   const ref = useRef(null);
@@ -22,69 +22,33 @@ function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = 
 
   return <motion.span ref={ref}>{formatted}</motion.span>;
 }
-import { ChevronLeft, ChevronRight, Trophy, Droplet, ShieldCheck, Users, Award, MapPin, Armchair, Layers, SprayCan, Wrench } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Trophy, Droplet, Droplets, ShieldCheck, Users, Award, MapPin, Armchair, Layers, SprayCan, Wrench, Zap, Settings } from 'lucide-react';
+import heroBg from '../assets/hero-bg.png';
+import productImg from '../assets/hero.png';
+import actualProductImg from '../assets/product.png';
 
-const heroSlides = [
-  {
-    id: 1,
-    image: "https://images.pexels.com/photos/175039/pexels-photo-175039.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
-    title: "Credofix - The Toughest Adhesive on Planet Earth",
-    subtitle: "Incredibly Strong, 100% Waterproof Bonding Solutions",
-    buttonText: "Explore Products",
-    buttonLink: "#products"
-  },
-  {
-    id: 2,
-    image: "https://images.pexels.com/photos/585419/pexels-photo-585419.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
-    title: "Industrial Grade Bonding Power",
-    subtitle: "Engineered for the most demanding applications and materials",
-    buttonText: "View Applications",
-    buttonLink: "#applications"
-  },
-  {
-    id: 3,
-    image: "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1920&q=80",
-    title: "Trusted by Professionals Worldwide",
-    subtitle: "Premium quality adhesive solutions for every project",
-    buttonText: "Enquire Now",
-    buttonLink: "#contact"
-  }
+// 3 Premium Hero Images
+const heroImages = [
+  heroBg,
+  "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop"
 ];
-const brandCtas = [
-  "Built for stronger everyday bonds.",
-  "Industrial-grade strength for every project.",
-  "Engineered for precision and absolute reliability."
-];
-
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [heroIndex, setHeroIndex] = useState(0);
 
-  // Auto-advance slider
+  // Auto-advance Hero Slider (5 seconds)
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setHeroIndex((prev) => (prev + 1) % heroImages.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  const nextSlide = () => setHeroIndex((prev) => (prev + 1) % heroImages.length);
+  const prevSlide = () => setHeroIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 
-  const [ctaIndex, setCtaIndex] = useState(0);
-  const [ctaFade, setCtaFade] = useState(true);
 
-  // Auto-advance rotating CTA
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCtaFade(false);
-      setTimeout(() => {
-        setCtaIndex((prev) => (prev + 1) % brandCtas.length);
-        setCtaFade(true);
-      }, 500);
-    }, 10000);
-    return () => clearInterval(timer);
-  }, []);
 
   // Smooth scroll helper for anchor links
   useEffect(() => {
@@ -109,521 +73,500 @@ export default function Home() {
       {/* ========================================================
           02 — HERO (FULL SCREEN SLIDER)
           ======================================================== */}
-      <section id="hero" className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Slides */}
-        {heroSlides.map((slide, index) => (
-          <div 
-            key={slide.id}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-          >
-            {/* Background Image */}
-            <img 
-              src={slide.image} 
-              alt={slide.title} 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/60"></div>
-            
-            {/* Content */}
-            <div className="relative z-20 w-full h-full max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center mt-12">
-              <h1 className="text-[36px] sm:text-[48px] md:text-[60px] lg:text-[72px] font-extrabold text-white leading-[1.1] tracking-tight max-w-[900px] mb-6 drop-shadow-lg">
-                {slide.title}
-              </h1>
-              <p className="text-[16px] sm:text-[18px] md:text-[22px] text-white/90 font-medium max-w-[700px] mb-10 drop-shadow-md">
-                {slide.subtitle}
-              </p>
-              <a 
-                href={slide.buttonLink} 
-                className="bg-surface-dark hover:opacity-90 text-white px-8 py-3.5 rounded-[4px] text-[16px] font-bold transition-all duration-300 hover:scale-105 shadow-lg inline-flex items-center gap-2"
-              >
-                {slide.buttonText}
-              </a>
-            </div>
-          </div>
-        ))}
+      <section 
+        id="hero" 
+        className="relative w-full mt-[100px] md:mt-[104px] lg:mt-[138px] h-[75vh] min-h-[450px] lg:h-[80vh] overflow-hidden bg-black group flex items-center justify-center"
+      >
+        <AnimatePresence initial={false}>
+          <motion.img 
+            key={heroIndex}
+            src={heroImages[heroIndex]}
+            alt="Hero Slide"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+          />
+        </AnimatePresence>
 
-        {/* Controls */}
-        <button 
-          onClick={prevSlide}
-          className="absolute left-2 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 p-2 text-white/50 hover:text-white transition-colors hidden sm:block"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft size={48} strokeWidth={1.5} />
+        {/* Center Content: Glassmorphism Buttons */}
+        <div className="relative z-30 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-12 md:mt-16">
+          <a href="#products" className="px-8 py-3.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[14px] md:text-[15px] font-bold uppercase tracking-wider hover:bg-white/20 hover:scale-105 transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+            Explore Products
+          </a>
+          <a href="#contact" className="px-8 py-3.5 rounded-full bg-brand-strong/40 backdrop-blur-md border border-brand-primary/50 text-white text-[14px] md:text-[15px] font-bold uppercase tracking-wider hover:bg-brand-strong/60 hover:scale-105 transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+            Request Quote
+          </a>
+        </div>
+
+        {/* Navigation Arrows */}
+        <button onClick={prevSlide} className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 cursor-pointer">
+          <ChevronLeft size={24} />
         </button>
-        
-        <button 
-          onClick={nextSlide}
-          className="absolute right-2 sm:right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 p-2 text-white/50 hover:text-white transition-colors hidden sm:block"
-          aria-label="Next slide"
-        >
-          <ChevronRight size={48} strokeWidth={1.5} />
+        <button onClick={nextSlide} className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 cursor-pointer">
+          <ChevronRight size={24} />
         </button>
 
-        {/* Indicators */}
-        <div className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-1.5 transition-all duration-300 rounded-full ${index === currentSlide ? 'w-8 bg-surface-dark' : 'w-4 bg-white/50 hover:bg-white/80'}`}
-              aria-label={`Go to slide ${index + 1}`}
+        {/* Pagination Dots */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-20">
+          {heroImages.map((_, i) => (
+            <button 
+              key={i} 
+              onClick={() => setHeroIndex(i)}
+              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${i === heroIndex ? 'bg-brand-primary w-8' : 'bg-white/50 hover:bg-white w-2'}`}
             />
           ))}
         </div>
       </section>
 
       {/* ========================================================
-          02.5 — STATS / FEATURES
+          03 — OUR PRODUCTS (PREMIUM CLEAN)
           ======================================================== */}
-      <section className="bg-bg-primary py-12 lg:py-16 border-b border-border-subtle relative z-20">
-        <div className="max-w-[1000px] mx-auto px-5 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
+      <section id="products" className="bg-[#FAFAFA] py-20 lg:py-24 relative z-20">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
+          
+          <div className="flex flex-col items-center justify-center mb-10 text-center">
+            <h2 className="text-section-heading text-text-primary">
+              Popular Products
+            </h2>
+            <div className="w-12 h-1 bg-brand-primary mt-3"></div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.0 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center group cursor-default"
-            >
-              <div className="text-surface-dark mb-4 transition-transform duration-300 group-hover:scale-110">
-                <Trophy size={48} strokeWidth={1.5} />
+            {/* PRODUCT 1 */}
+            <div className="group relative w-full aspect-square bg-white overflow-hidden cursor-pointer rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+              <img src={actualProductImg} alt="Multi-Purpose Gel" className="w-full h-full object-contain p-6 md:p-8 transition-transform duration-700 group-hover:scale-110" />
+              
+              <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="w-8 h-1 bg-brand-primary mb-4 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75"></div>
+                <h3 className="text-[16px] md:text-[18px] font-display font-bold text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100">Multi-Purpose Gel</h3>
+                <p className="text-[12px] md:text-[13px] text-gray-300 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-150">Everyday strong bonding</p>
+                <div className="mt-5 px-5 py-2 border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 hover:bg-white hover:text-text-primary transition-all duration-300 delay-200">
+                  View Details
+                </div>
               </div>
-              <h3 className="text-[20px] font-extrabold text-text-primary mb-1">
-                <Counter to={1} prefix="#" delay={0} />
-              </h3>
-              <p className="text-[13px] text-text-secondary leading-tight">Trusted Brand<br/>in India</p>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center group cursor-default"
-            >
-              <div className="text-surface-dark mb-4 transition-transform duration-300 group-hover:scale-110">
-                <Droplet size={48} strokeWidth={1.5} />
+            {/* PRODUCT 2 */}
+            <div className="group relative w-full aspect-square bg-white overflow-hidden cursor-pointer rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+              <img src={actualProductImg} alt="Crystal Clear Epoxy" className="w-full h-full object-contain p-6 md:p-8 transition-transform duration-700 group-hover:scale-110" />
+              
+              <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="w-8 h-1 bg-brand-primary mb-4 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75"></div>
+                <h3 className="text-[16px] md:text-[18px] font-display font-bold text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100">Crystal Clear Epoxy</h3>
+                <p className="text-[12px] md:text-[13px] text-gray-300 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-150">Invisible, flawless finish</p>
+                <div className="mt-5 px-5 py-2 border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 hover:bg-white hover:text-text-primary transition-all duration-300 delay-200">
+                  View Details
+                </div>
               </div>
-              <h3 className="text-[20px] font-extrabold text-text-primary mb-1">
-                <Counter to={100} suffix="%" delay={0.1} />
-              </h3>
-              <p className="text-[13px] text-text-secondary leading-tight">Waterproof<br/>Formula</p>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center group cursor-default"
-            >
-              <div className="text-surface-dark mb-4 transition-transform duration-300 group-hover:scale-110">
-                <ShieldCheck size={48} strokeWidth={1.5} />
+            {/* PRODUCT 3 */}
+            <div className="group relative w-full aspect-square bg-white overflow-hidden cursor-pointer rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+              <img src={actualProductImg} alt="Fast-Setting Formula" className="w-full h-full object-contain p-6 md:p-8 transition-transform duration-700 group-hover:scale-110" />
+              
+              <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="w-8 h-1 bg-brand-primary mb-4 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75"></div>
+                <h3 className="text-[16px] md:text-[18px] font-display font-bold text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100">Fast-Setting Formula</h3>
+                <p className="text-[12px] md:text-[13px] text-gray-300 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-150">Instant, unbreakable hold</p>
+                <div className="mt-5 px-5 py-2 border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 hover:bg-white hover:text-text-primary transition-all duration-300 delay-200">
+                  View Details
+                </div>
               </div>
-              <h3 className="text-[20px] font-extrabold text-text-primary mb-1">
-                <Counter to={10} suffix="+" delay={0.2} />
-              </h3>
-              <p className="text-[13px] text-text-secondary leading-tight">Years of<br/>Excellence</p>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center group cursor-default"
-            >
-              <div className="text-surface-dark mb-4 transition-transform duration-300 group-hover:scale-110">
-                <Users size={48} strokeWidth={1.5} />
+            {/* PRODUCT 4 */}
+            <div className="group relative w-full aspect-square bg-white overflow-hidden cursor-pointer rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+              <img src={actualProductImg} alt="Industrial Heavy Duty" className="w-full h-full object-contain p-6 md:p-8 transition-transform duration-700 group-hover:scale-110" />
+              
+              <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="w-8 h-1 bg-brand-primary mb-4 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75"></div>
+                <h3 className="text-[16px] md:text-[18px] font-display font-bold text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100">Industrial Heavy Duty</h3>
+                <p className="text-[12px] md:text-[13px] text-gray-300 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-150">Maximum strength for pros</p>
+                <div className="mt-5 px-5 py-2 border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 hover:bg-white hover:text-text-primary transition-all duration-300 delay-200">
+                  View Details
+                </div>
               </div>
-              <h3 className="text-[20px] font-extrabold text-text-primary mb-1">
-                <Counter to={10000} suffix="+" delay={0.3} />
-              </h3>
-              <p className="text-[13px] text-text-secondary leading-tight">Satisfied<br/>Customers</p>
-            </motion.div>
+            </div>
 
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <a href="#all-products" className="text-[13px] font-bold tracking-wider uppercase text-text-primary hover:text-brand-primary transition-colors">
+              View All Catalog &rarr;
+            </a>
           </div>
         </div>
       </section>
 
       {/* ========================================================
-          04 — BRAND STORY (ABOUT)
+          04 — WHY CHOOSE US (PREMIUM HORIZONTAL)
           ======================================================== */}
-      <section id="about" className="bg-white py-20 lg:py-32">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8"
-        >
+      <section id="about" className="relative w-full py-16 lg:py-20 flex items-center overflow-hidden">
+        
+        {/* Background Image with Striped/Textured look and Color Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" 
+            alt="Textured Background" 
+            className="w-full h-full object-cover grayscale opacity-40" 
+          />
+          {/* Color Opacity Layer */}
+          <div className="absolute inset-0 bg-[#0F0F0F]/90"></div>
+          {/* CSS Striped Pattern overlay for extra texture */}
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px' }}></div>
+        </div>
+
+        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-8 lg:px-12 flex flex-col lg:flex-row items-center justify-between relative z-20 gap-16 lg:gap-8">
           
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
-            
-            {/* Left: Heading */}
-            <div className="w-full lg:w-5/12">
-              <span className="text-text-secondary text-eyebrow mb-5 block">About Credofix</span>
-              <h2 className="text-[40px] md:text-[52px] lg:text-[60px] font-extrabold text-text-primary leading-[1.05] tracking-tight">
-                Built for <br className="hidden md:block"/> stronger bonds.
-              </h2>
-            </div>
-            
-            {/* Right: Paragraphs */}
-            <div className="w-full lg:w-7/12">
-              <p className="text-[18px] md:text-[22px] text-text-primary font-medium mb-6 leading-relaxed">
-                Credofix is engineered for ultimate performance. We focus on the exact chemistry of adhesion, ensuring that whether in an industrial workshop or for detailed craft repair, the bond holds true under any condition.
-              </p>
-              <p className="text-[16px] text-text-secondary mb-10 leading-relaxed max-w-[600px]">
-                Founded on the principles of uncompromising quality and reliability, our products are rigorously tested to meet industrial standards. We proudly manufacture in India, bringing world-class adhesive solutions to professionals and DIYers alike.
-              </p>
-              
-              <div className="grid grid-cols-3 gap-2 sm:gap-6 pt-8 border-t border-border-subtle">
-                <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 text-center sm:text-left">
-                  <div className="text-surface-dark flex-shrink-0">
-                    <Award size={20} className="sm:w-[26px] sm:h-[26px]" strokeWidth={2} />
-                  </div>
-                  <span className="text-[12px] sm:text-[16px] font-medium text-text-primary leading-tight">Quality <br className="sm:hidden"/>Focused</span>
-                </div>
-                <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 text-center sm:text-left">
-                  <div className="text-surface-dark flex-shrink-0">
-                    <MapPin size={20} className="sm:w-[26px] sm:h-[26px]" strokeWidth={2} />
-                  </div>
-                  <span className="text-[12px] sm:text-[16px] font-medium text-text-primary leading-tight">Made in <br className="sm:hidden"/>India</span>
-                </div>
-                <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 text-center sm:text-left">
-                  <div className="text-surface-dark flex-shrink-0">
-                    <ShieldCheck size={20} className="sm:w-[26px] sm:h-[26px]" strokeWidth={2} />
-                  </div>
-                  <span className="text-[12px] sm:text-[16px] font-medium text-text-primary leading-tight">Reliable <br className="sm:hidden"/>Solutions</span>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-
-        </motion.div>
-      </section>
-
-      {/* ========================================================
-          03 — PRODUCT DISCOVERY
-          ======================================================== */}
-      <section id="products" className="bg-bg-primary py-20 lg:py-32 border-b border-border-subtle">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8"
-        >
-          
-          <div className="mb-16 lg:mb-24">
-             <span className="text-text-secondary text-eyebrow block mb-3 uppercase tracking-widest text-sm font-bold">Find the right bond</span>
-             <h2 className="text-[32px] md:text-[42px] font-extrabold text-text-primary tracking-tight leading-tight">Our Products</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            
-            {/* PRODUCT 31 (125g) - Landscape Hover Card */}
-            <div tabIndex="0" className="group relative w-full aspect-[4/3] lg:aspect-[16/10] overflow-hidden rounded-[4px] cursor-pointer shadow-sm hover:shadow-xl focus:outline-none transition-shadow duration-500">
-              {/* Background Image */}
-              <div className="absolute inset-0 bg-bg-primary">
-                 <img 
-                   src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1200&q=80" 
-                   alt="Stone texture" 
-                   className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-multiply grayscale transition-transform duration-700 group-hover:scale-110 group-focus:scale-110"
-                 />
-                 <div className="absolute inset-0 flex items-center justify-center mt-6">
-                   <img 
-                      src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" 
-                      alt="Credofix Gel Glue 125g Application" 
-                      className="relative z-10 w-[140px] md:w-[180px] h-[210px] md:h-[270px] object-cover shadow-2xl border border-white transition-transform duration-700 group-hover:scale-105 group-focus:scale-105"
-                   />
-                 </div>
-              </div>
-              
-              {/* Default Top Gradient & Title */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-transparent h-1/2 opacity-100 group-hover:opacity-0 group-focus:opacity-0 transition-opacity duration-500"></div>
-              <div className="absolute top-4 left-4 right-4 md:top-6 md:left-6 md:right-6 transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0 flex justify-between items-start">
-                 <h3 className="text-white text-[18px] md:text-[24px] lg:text-[28px] font-extrabold drop-shadow-md leading-tight">Credofix Gel Glue</h3>
-                 <span className="bg-white text-surface-dark px-2 md:px-3 py-1 rounded-[4px] text-[11px] md:text-[13px] font-bold shadow-md">125g</span>
-              </div>
-
-              {/* Hover State: Dark Overlay */}
-              <div className="absolute inset-0 bg-surface-dark/95 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-500 flex flex-col justify-center p-6 lg:p-12 text-left z-20">
-                 <span className="text-accent-copper font-bold text-[11px] md:text-[12px] uppercase tracking-widest mb-3 transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500">01 / Gel Glue</span>
-                 <div className="flex items-center gap-3 md:gap-4 mb-4 transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500 delay-75">
-                   <h3 className="text-white text-[22px] md:text-[28px] lg:text-[32px] font-extrabold leading-tight">Credofix</h3>
-                   <span className="bg-white/20 text-white px-2 md:px-3 py-1 rounded-[4px] text-[11px] md:text-[13px] font-bold border border-white/30">125g</span>
-                 </div>
-                 <p className="text-white/80 text-[14px] lg:text-[16px] mb-6 md:mb-8 leading-relaxed transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500 delay-100 line-clamp-4 md:line-clamp-none">
-                   A high-viscosity formulation designed for precise application without dripping. Ideal for vertical surfaces and porous materials where standard liquid adhesives fail.
-                 </p>
-                 <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500 delay-150">
-                   <span className="inline-flex items-center text-[14px] md:text-[15px] font-bold text-white group-hover:text-accent-copper group-focus:text-accent-copper transition-colors gap-2 cursor-pointer">
-                     Learn More &rarr;
-                   </span>
-                 </div>
-              </div>
-            </div>
-
-            {/* PRODUCT 32 (250g) - Landscape Hover Card */}
-            <div tabIndex="0" className="group relative w-full aspect-[4/3] lg:aspect-[16/10] overflow-hidden rounded-[4px] cursor-pointer shadow-sm hover:shadow-xl focus:outline-none transition-shadow duration-500">
-              {/* Background Image */}
-              <div className="absolute inset-0 bg-soft-sage">
-                 <div className="absolute inset-0 flex items-center justify-center mt-6">
-                   <img 
-                      src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" 
-                      alt="Credofix Gel Glue 250g Application" 
-                      className="relative z-10 w-[160px] md:w-[200px] h-[240px] md:h-[300px] object-cover shadow-2xl border border-white filter contrast-125 brightness-95 transition-transform duration-700 group-hover:scale-105 group-focus:scale-105"
-                   />
-                 </div>
-              </div>
-              
-              {/* Default Top Gradient & Title */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-transparent h-1/2 opacity-100 group-hover:opacity-0 group-focus:opacity-0 transition-opacity duration-500"></div>
-              <div className="absolute top-4 left-4 right-4 md:top-6 md:left-6 md:right-6 transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0 flex justify-between items-start">
-                 <h3 className="text-white text-[18px] md:text-[24px] lg:text-[28px] font-extrabold drop-shadow-md leading-tight">Credofix Gel Glue</h3>
-                 <span className="bg-white text-surface-dark px-2 md:px-3 py-1 rounded-[4px] text-[11px] md:text-[13px] font-bold shadow-md">250g</span>
-              </div>
-
-              {/* Hover State: Dark Overlay */}
-              <div className="absolute inset-0 bg-surface-dark/95 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-500 flex flex-col justify-center p-6 lg:p-12 text-left z-20">
-                 <span className="text-accent-copper font-bold text-[11px] md:text-[12px] uppercase tracking-widest mb-3 transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500">02 / Gel Glue</span>
-                 <div className="flex items-center gap-3 md:gap-4 mb-4 transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500 delay-75">
-                   <h3 className="text-white text-[22px] md:text-[28px] lg:text-[32px] font-extrabold leading-tight">Credofix</h3>
-                   <span className="bg-white/20 text-white px-2 md:px-3 py-1 rounded-[4px] text-[11px] md:text-[13px] font-bold border border-white/30">250g</span>
-                 </div>
-                 <p className="text-white/80 text-[14px] lg:text-[16px] mb-6 md:mb-8 leading-relaxed transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500 delay-100 line-clamp-4 md:line-clamp-none">
-                   The industrial-sized variant of our signature gel formulation. Designed for heavy users, contractors, and workshops requiring consistent supply and reliable bonding strength.
-                 </p>
-                 <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0 transition-all duration-500 delay-150">
-                   <span className="inline-flex items-center text-[14px] md:text-[15px] font-bold text-white group-hover:text-accent-copper group-focus:text-accent-copper transition-colors gap-2 cursor-pointer">
-                     Learn More &rarr;
-                   </span>
-                 </div>
-              </div>
-            </div>
-
-          </div>
-        </motion.div>
-      </section>
-
- 
-
-      {/* ========================================================
-          05 — APPLICATIONS
-          ======================================================== */}
-      <section id="applications" className="bg-surface-dark py-20 lg:py-32">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8"
-        >
-          
-          <div className="text-center mb-16 lg:mb-20">
-            <h2 className="text-[32px] md:text-[42px] font-extrabold text-white mb-4 tracking-tight leading-tight">
-              Solutions for Every Challenge
+          {/* Left: Text Content */}
+          <div className="w-full lg:w-1/2">
+            <span className="text-eyebrow text-brand-primary mb-4 block">
+              Why Choose Us
+            </span>
+            <h2 className="text-section-heading text-white mb-8">
+              Uncompromising Quality.<br />
+              <span className="text-white/50">Absolute Precision.</span>
             </h2>
-            <p className="text-[16px] md:text-[18px] text-white/80 max-w-2xl mx-auto">
-              From home repairs to professional construction projects
+            <p className="text-body-primary text-white/70 mb-12 max-w-lg">
+              Our advanced formulations are rigorously tested to ensure they meet the demands of professionals. We don't just supply adhesives; we supply reliability that holds your world together.
             </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-lg">
+              
+              <div>
+                <div className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center mb-4 text-white">
+                  <span className="text-[16px] font-light">&rarr;</span>
+                </div>
+                <h4 className="text-[15px] font-bold text-white mb-2">Industrial Grade</h4>
+                <p className="text-[13px] text-white/60 leading-snug">Engineered to withstand extreme stress and temperature variations.</p>
+              </div>
+
+              <div>
+                <div className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center mb-4 text-white">
+                  <span className="text-[16px] font-light">&rarr;</span>
+                </div>
+                <h4 className="text-[15px] font-bold text-white mb-2">Clean Application</h4>
+                <p className="text-[13px] text-white/60 leading-snug">Smooth, controlled dispensing for flawless aesthetic finishes.</p>
+              </div>
+
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            {/* Card 1 */}
-            <div className="bg-white/5 border border-white/10 rounded-[8px] p-8 flex flex-col items-center text-center hover:bg-white/10 transition-colors cursor-pointer group">
-              <div className="text-bg-primary mb-6 transform group-hover:-translate-y-2 group-hover:scale-110 transition-all duration-300">
-                <Armchair size={48} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-[20px] font-bold text-white mb-3">Wood & Furniture</h3>
-              <p className="text-white/70 text-[14px] leading-relaxed mb-8 flex-grow">
-                Instant bonding for MDF, plywood, and solid wood frames without clamping.
-              </p>
-              <span className="text-bg-primary text-[14px] font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                Learn More &rarr;
-              </span>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white/5 border border-white/10 rounded-[8px] p-8 flex flex-col items-center text-center hover:bg-white/10 transition-colors cursor-pointer group">
-              <div className="text-bg-primary mb-6 transform group-hover:-translate-y-2 group-hover:scale-110 transition-all duration-300">
-                <Layers size={48} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-[20px] font-bold text-white mb-3">Mica & Laminates</h3>
-              <p className="text-white/70 text-[14px] leading-relaxed mb-8 flex-grow">
-                Flawless edge banding and sunmica pasting with perfect edge alignment.
-              </p>
-              <span className="text-bg-primary text-[14px] font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                Learn More &rarr;
-              </span>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white/5 border border-white/10 rounded-[8px] p-8 flex flex-col items-center text-center hover:bg-white/10 transition-colors cursor-pointer group">
-              <div className="text-bg-primary mb-6 transform group-hover:-translate-y-2 group-hover:scale-110 transition-all duration-300">
-                <SprayCan size={48} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-[20px] font-bold text-white mb-3">Activator Spray</h3>
-              <p className="text-white/70 text-[14px] leading-relaxed mb-8 flex-grow">
-                Use our curing spray for immediate setting and maximum bond strength in seconds.
-              </p>
-              <span className="text-bg-primary text-[14px] font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                Learn More &rarr;
-              </span>
-            </div>
-
-            {/* Card 4 */}
-            <div className="bg-white/5 border border-white/10 rounded-[8px] p-8 flex flex-col items-center text-center hover:bg-white/10 transition-colors cursor-pointer group">
-              <div className="text-bg-primary mb-6 transform group-hover:-translate-y-2 group-hover:scale-110 transition-all duration-300">
-                <Wrench size={48} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-[20px] font-bold text-white mb-3">Multi-Purpose Fix</h3>
-              <p className="text-white/70 text-[14px] leading-relaxed mb-8 flex-grow">
-                Versatile, industrial-grade adhesive for everyday household repairs.
-              </p>
-              <span className="text-bg-primary text-[14px] font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                Learn More &rarr;
-              </span>
-            </div>
-
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ========================================================
-          06 — WHY CREDOFIX
-          ======================================================== */}
-      <section className="bg-bg-primary py-16 lg:py-20 border-b border-border-subtle">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8"
-        >
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-            
-            {/* Left: Image */}
-            <div className="w-full lg:w-5/12">
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] shadow-xl">
+          {/* Right: Circular Image Composition */}
+          <div className="w-full lg:w-1/2 relative h-[400px] lg:h-[500px] flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
+            <div className="relative w-full max-w-[450px] aspect-square">
+              
+              {/* Main Circle (Top Right) */}
+              <div className="absolute top-0 right-0 w-[75%] aspect-square rounded-full overflow-hidden border-[6px] border-[#0F0F0F] z-20 shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
-                  alt="Professional Thinking" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105 grayscale opacity-90"
+                  src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop" 
+                  alt="Industrial Precision" 
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
                 />
               </div>
-            </div>
-
-            {/* Right: Content */}
-            <div className="w-full lg:w-7/12">
-              <h2 className="text-[32px] md:text-[42px] font-extrabold text-text-primary mb-10 tracking-tight leading-tight">
-                Why Credofix?
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                
-                {/* 1 */}
-                <div className="bg-white p-6 rounded-[8px] border border-border-subtle shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-surface-dark mb-4">
-                    <ShieldCheck size={28} strokeWidth={1.5} />
-                  </div>
-                  <h4 className="text-[18px] font-bold text-text-primary mb-2">Strong Bond</h4>
-                  <p className="text-[14px] text-text-secondary leading-relaxed">Formulated for high tensile strength under extreme stress and variable temperatures.</p>
-                </div>
-
-                {/* 2 */}
-                <div className="bg-white p-6 rounded-[8px] border border-border-subtle shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-surface-dark mb-4">
-                    <Droplet size={28} strokeWidth={1.5} />
-                  </div>
-                  <h4 className="text-[18px] font-bold text-text-primary mb-2">Easy Application</h4>
-                  <p className="text-[14px] text-text-secondary leading-relaxed">Viscosity controlled for absolute precision, reducing mess and waste.</p>
-                </div>
-
-                {/* 3 */}
-                <div className="bg-white p-6 rounded-[8px] border border-border-subtle shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-surface-dark mb-4">
-                    <Award size={28} strokeWidth={1.5} />
-                  </div>
-                  <h4 className="text-[18px] font-bold text-text-primary mb-2">Consistent Quality</h4>
-                  <p className="text-[14px] text-text-secondary leading-relaxed">Rigorous batch tested to ensure absolute reliability in every single package.</p>
-                </div>
-
-                {/* 4 */}
-                <div className="bg-white p-6 rounded-[8px] border border-border-subtle shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-surface-dark mb-4">
-                    <MapPin size={28} strokeWidth={1.5} />
-                  </div>
-                  <h4 className="text-[18px] font-bold text-text-primary mb-2">Made in India</h4>
-                  <p className="text-[14px] text-text-secondary leading-relaxed">Manufactured locally with pride, care, and strict adherence to industrial standards.</p>
-                </div>
-
+              
+              {/* Secondary Circle (Bottom Left) */}
+              <div className="absolute bottom-4 left-0 w-[55%] aspect-square rounded-full overflow-hidden border-[6px] border-[#0F0F0F] z-10 shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800&auto=format&fit=crop" 
+                  alt="Strong Bond" 
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                />
               </div>
-            </div>
 
+              {/* Accent Element */}
+              <div className="absolute top-[15%] left-[5%] w-[15%] aspect-square rounded-full bg-brand-primary z-30"></div>
+              
+            </div>
           </div>
-        </motion.div>
+          
+        </div>
       </section>
 
+
+
       {/* ========================================================
-          07 — VISUAL BRAND STORY
+          05 — APPLICATIONS (PREMIUM)
           ======================================================== */}
-      <section className="w-full relative h-[260px] md:h-[320px] bg-black overflow-hidden border-b border-border-subtle">
-        <img 
-          src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1920&q=80" 
-          alt="Industrial manufacturing facility" 
-          className="absolute inset-0 w-full h-full object-cover opacity-70 grayscale"
-        />
-        <div className="absolute inset-0 bg-black/60"></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-          <div className="h-[80px] md:h-[100px] flex items-center justify-center">
-            <h2 
-               className={`text-[28px] md:text-[38px] lg:text-[48px] font-extrabold text-white max-w-4xl leading-[1.2] tracking-tight drop-shadow-md transition-opacity duration-500 ${ctaFade ? 'opacity-100' : 'opacity-0'}`}
-            >
-              {brandCtas[ctaIndex]}
-            </h2>
+      <section id="applications" className="bg-white py-16 lg:py-24 border-b border-border-subtle">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
+            
+            {/* Left Column: Text */}
+            <div className="w-full lg:w-[35%] flex flex-col justify-start">
+              <span className="text-eyebrow text-brand-primary mb-4 block">
+                Applications
+              </span>
+              <h2 className="text-section-heading text-text-primary mb-5">
+                One Solution.<br/>
+                <span className="text-text-secondary">Infinite Uses.</span>
+              </h2>
+              <p className="text-body-primary text-text-secondary mb-6">
+                From simple household repairs to heavy-duty industrial bonding, our adhesive is formulated to deliver flawless results everywhere.
+              </p>
+              <a href="#explore" className="text-[13px] font-bold uppercase tracking-widest text-text-primary border-b border-text-primary pb-1 inline-block w-max hover:text-brand-primary hover:border-brand-primary transition-colors">
+                Explore All Applications
+              </a>
+            </div>
+
+            {/* Right Column: 1-Row 4-Column Grid */}
+            <div className="w-full lg:w-[65%] grid grid-cols-2 lg:grid-cols-4 gap-4">
+              
+              {/* App 1 */}
+              <div className="group relative w-full h-[250px] lg:h-[300px] overflow-hidden bg-bg-secondary rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Home Repair" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0 relative" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                <div className="absolute bottom-0 left-0 p-4 w-full z-20">
+                  <h4 className="text-[15px] lg:text-[16px] font-display font-bold text-white mb-1">Home Repair</h4>
+                  <p className="text-[11px] lg:text-[12px] text-white/90 leading-tight">Perfect for everyday repairs and fixes.</p>
+                </div>
+              </div>
+
+              {/* App 2 */}
+              <div className="group relative w-full h-[250px] lg:h-[300px] overflow-hidden bg-bg-secondary rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+                <img src="https://images.unsplash.com/photo-1584286595398-a59f21d313f5?auto=format&fit=crop&w=800&q=80" alt="DIY & Crafts" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0 relative" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                <div className="absolute bottom-0 left-0 p-4 w-full z-20">
+                  <h4 className="text-[15px] lg:text-[16px] font-display font-bold text-white mb-1">DIY & Crafts</h4>
+                  <p className="text-[11px] lg:text-[12px] text-white/90 leading-tight">Ideal for creative projects and crafts.</p>
+                </div>
+              </div>
+
+              {/* App 3 */}
+              <div className="group relative w-full h-[250px] lg:h-[300px] overflow-hidden bg-bg-secondary rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+                <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80" alt="Professional Use" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0 relative" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                <div className="absolute bottom-0 left-0 p-4 w-full z-20">
+                  <h4 className="text-[15px] lg:text-[16px] font-display font-bold text-white mb-1">Professional Use</h4>
+                  <p className="text-[11px] lg:text-[12px] text-white/90 leading-tight">Trusted by professionals and contractors.</p>
+                </div>
+              </div>
+
+              {/* App 4 */}
+              <div className="group relative w-full h-[250px] lg:h-[300px] overflow-hidden bg-bg-secondary rounded-[12px] shadow-sm hover:shadow-premium smooth-hover">
+                <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=800&q=80" alt="General Bonding" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0 relative" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                <div className="absolute bottom-0 left-0 p-4 w-full z-20">
+                  <h4 className="text-[15px] lg:text-[16px] font-display font-bold text-white mb-1">General Bonding</h4>
+                  <p className="text-[11px] lg:text-[12px] text-white/90 leading-tight">For wood, metal, plastic, ceramic and more.</p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
 
       {/* ========================================================
-          08 — CONTACT CTA
+          05.5 — MISSION STATEMENT (Premium Layered Banner)
           ======================================================== */}
-      <section id="contact" className="bg-surface-dark py-12 lg:py-16">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-10"
-        >
+      <section className="relative py-16 lg:py-20 flex items-center overflow-hidden">
+        
+        {/* Background Layers */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1572242637255-fc21183df02d?q=80&w=2070&auto=format&fit=crop" 
+            alt="Premium Texture" 
+            className="w-full h-full object-cover grayscale opacity-20" 
+          />
+          {/* Deep Corporate Red/Charcoal Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#98211A]/95 to-[#C12920]/90 mix-blend-multiply"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/80 to-transparent"></div>
+        </div>
+
+        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
           
-          <div className="w-full md:w-7/12 text-center md:text-left">
-            <h2 className="text-[36px] md:text-[48px] font-extrabold text-white mb-4 leading-[1.1] tracking-tight">Need the right adhesive?</h2>
-            <p className="text-[16px] md:text-[18px] text-white/80 max-w-md mx-auto md:mx-0">
-              Talk to our team for product information, bulk orders, and business enquiries.
-            </p>
-          </div>
-          
-          <div className="w-full md:w-5/12 flex flex-col sm:flex-row gap-4 justify-center md:justify-end">
-             <a href="mailto:sales@credofix.in" className="bg-white text-text-primary h-[48px] px-8 rounded-[8px] text-[15px] font-bold flex items-center justify-center hover:bg-bg-primary transition-colors">
-               Send Enquiry
-             </a>
-             <a href="https://wa.me/918000567117" target="_blank" rel="noreferrer" className="bg-transparent border border-white/40 text-white h-[48px] px-8 rounded-[8px] text-[15px] font-bold flex items-center justify-center hover:border-white transition-colors">
-               WhatsApp Us
-             </a>
+          {/* Top Line */}
+          <div className="flex items-center gap-6 mb-8 lg:mb-12">
+            <h3 className="text-eyebrow text-white/90 whitespace-nowrap">Our Mission</h3>
+            <div className="h-[1px] bg-white/20 w-full max-w-[600px]"></div>
           </div>
 
-        </motion.div>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+            
+            {/* Left: Quote Text */}
+            <div className="w-full lg:w-[65%] flex items-start gap-4 lg:gap-6">
+              <span className="font-serif text-[60px] md:text-[80px] text-white/20 leading-none mt-[-10px] md:mt-[-15px] select-none shrink-0">
+                &ldquo;
+              </span>
+              <p className="text-white text-[20px] md:text-[24px] lg:text-[28px] font-medium italic leading-[1.5] tracking-tight">
+                To be an innovation driven, research led, and customer focused manufacturer of world-class adhesives and sealants. From formulation to final application, every product we create is guided by dedication to quality and real-world performance.
+              </p>
+            </div>
+
+            {/* Right: Products Image Placeholder */}
+            <div className="w-full lg:w-[35%] flex justify-center lg:justify-end">
+              <img 
+                src="https://images.unsplash.com/photo-1574359411659-15573a27fd0c?q=80&w=800&auto=format&fit=crop" 
+                alt="Product Range" 
+                className="w-full max-w-[320px] lg:max-w-[360px] h-auto object-cover rounded-[6px] shadow-2xl"
+              />
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          06 — TESTIMONIALS (GOOGLE WIDGET STYLE)
+          ======================================================== */}
+      <section id="testimonials" className="bg-white py-20 lg:py-24 border-b border-border-subtle">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
+          
+          {/* Section Header */}
+          <div className="text-center mb-12 flex flex-col items-center">
+            <h2 className="text-section-heading text-text-primary mb-3">
+              Customers Speak
+            </h2>
+            <div className="w-16 h-1 bg-brand-primary mx-auto"></div>
+          </div>
+
+          {/* 4-Column Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* COLUMN 1: Company Rating Block (Premium Card) */}
+            <div className="bg-[#FAF9F7] rounded-[8px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-black/5 flex flex-col items-center justify-center text-center h-full">
+              <div className="flex flex-col items-center mb-5">
+                <div className="w-14 h-14 bg-brand-primary rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-brand-primary/20 mb-3">
+                  B
+                </div>
+                <h3 className="text-[18px] font-bold text-text-primary leading-tight">Bond Max</h3>
+                <p className="text-[13px] font-medium text-text-secondary uppercase tracking-widest mt-1">Adhesives</p>
+              </div>
+              
+              <div className="flex flex-col items-center mb-5 w-full border-y border-black/5 py-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[28px] font-bold text-[#e7711b] leading-none">4.9</span>
+                  <div className="flex gap-1 text-[#e7711b]">
+                    {[1,2,3,4,5].map(star => (
+                      <svg key={star} width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-[12px] text-text-secondary font-medium">Based on 500+ real reviews</p>
+              </div>
+              
+              <div className="flex flex-col items-center gap-4 mt-2">
+                <div className="flex items-center gap-1.5 opacity-80">
+                  <span className="text-[11px] text-text-secondary font-medium uppercase tracking-wider">Powered by</span>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" className="h-3.5" alt="Google" />
+                </div>
+                
+                <a href="#" className="inline-flex items-center gap-2 bg-[#4285f4] hover:bg-[#3367d6] transition-colors text-white text-[13px] font-bold tracking-wide py-2.5 px-6 rounded-full shadow-md shadow-[#4285f4]/30">
+                  Review us on
+                  <span className="bg-white rounded-full p-0.5 flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-3.5 h-3.5" alt="G" />
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            {/* COLUMN 2: Review Card 1 */}
+            <div className="bg-white rounded-[8px] p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-black/5 flex flex-col relative">
+              <div className="absolute top-4 right-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-4 h-4" alt="Google" />
+              </div>
+              <div className="flex items-center gap-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&auto=format&fit=crop" className="w-10 h-10 rounded-full object-cover" alt="User" />
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#1a0dab]">Rajesh Sharma</h5>
+                  <p className="text-[12px] text-text-secondary mt-0.5">2 months ago</p>
+                </div>
+              </div>
+              <div className="flex gap-0.5 text-[#e7711b] mb-3">
+                {[1,2,3,4,5].map(star => (
+                  <svg key={star} width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
+                ))}
+              </div>
+              <p className="text-[14px] text-text-primary leading-relaxed line-clamp-6">
+                I recently used Bond Max Instant Glue, and I couldn't be more impressed! The adhesive works incredibly fast, bonding various materials in seconds. It has significantly reduced our curing time without compromising on durability. Excellent industrial grade solution.
+              </p>
+            </div>
+
+            {/* COLUMN 3: Review Card 2 */}
+            <div className="bg-white rounded-[8px] p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-black/5 flex flex-col relative">
+              <div className="absolute top-4 right-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-4 h-4" alt="Google" />
+              </div>
+              <div className="flex items-center gap-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop" className="w-10 h-10 rounded-full object-cover" alt="User" />
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#1a0dab]">Anjali Desai</h5>
+                  <p className="text-[12px] text-text-secondary mt-0.5">5 months ago</p>
+                </div>
+              </div>
+              <div className="flex gap-0.5 text-[#e7711b] mb-3">
+                {[1,2,3,4,5].map(star => (
+                  <svg key={star} width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
+                ))}
+              </div>
+              <p className="text-[14px] text-text-primary leading-relaxed line-clamp-6">
+                As an interior contractor, precision and cleanliness are everything. This adhesive is clear, sets quickly, and leaves absolutely zero residue. Will definitely recommend to other builders. Much better than standard glues.
+              </p>
+            </div>
+
+            {/* COLUMN 4: Review Card 3 */}
+            <div className="bg-white rounded-[8px] p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-black/5 flex flex-col relative">
+              <div className="absolute top-4 right-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-4 h-4" alt="Google" />
+              </div>
+              <div className="flex items-center gap-3 mb-4">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" className="w-10 h-10 rounded-full object-cover" alt="User" />
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#1a0dab]">Vikram Singh</h5>
+                  <p className="text-[12px] text-text-secondary mt-0.5">1 year ago</p>
+                </div>
+              </div>
+              <div className="flex gap-0.5 text-[#e7711b] mb-3">
+                {[1,2,3,4,5].map(star => (
+                  <svg key={star} width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
+                ))}
+              </div>
+              <p className="text-[14px] text-text-primary leading-relaxed line-clamp-6">
+                Bond Max has several different kind of bonds and adhesives. It works very instantly. I've used countless adhesives for heavy metal joints, but nothing holds up under stress testing quite like this one. Best for industry applications.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          06 — FINAL CTA (UI CLONE)
+          ======================================================== */}
+      <section id="contact" className="bg-brand-strong w-full relative overflow-hidden">
+        
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-10 lg:py-12 flex flex-col-reverse lg:flex-row items-center justify-between relative z-10 gap-10 lg:gap-8">
+          
+          {/* Left: Text & Button */}
+          <div className="w-full lg:w-[60%] flex flex-col items-center lg:items-start text-center lg:text-left">
+            <h2 className="text-[26px] sm:text-[30px] lg:text-[36px] font-extrabold text-white mb-3 leading-[1.1] tracking-tight uppercase">
+              Ready to Make a Stronger Bond?
+            </h2>
+            <p className="text-[14px] md:text-[16px] text-white/90 font-medium mb-6">
+              Find the right adhesive solution for your application. We deliver industrial strength for every need.
+            </p>
+            <a 
+              href="mailto:team@dungarchemicals.com" 
+              className="bg-white text-text-primary px-8 py-3.5 rounded-[6px] text-[15px] font-bold hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-2"
+            >
+              Talk to Us &rarr;
+            </a>
+          </div>
+
+          {/* Right: Product Image */}
+          <div className="w-full lg:w-[40%] flex justify-center lg:justify-end">
+            <img 
+              src={actualProductImg} 
+              alt="Bond Max Tube" 
+              className="w-full max-w-[200px] lg:max-w-[240px] h-auto object-contain bg-white p-4 border-[6px] border-white rounded-[12px] shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+
+        </div>
       </section>
 
     </div>

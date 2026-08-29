@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Menu, X, Phone, Mail, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, Phone, Mail, MapPin, Clock, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FacebookIcon = ({ size = 16, fill = "currentColor" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} xmlns="http://www.w3.org/2000/svg">
@@ -19,130 +20,203 @@ const YoutubeIcon = ({ size = 16, fill = "currentColor" }) => (
   </svg>
 );
 
+const LinkedinIcon = ({ size = 16, fill = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 0H5C2.239 0 0 2.239 0 5V19C0 21.761 2.239 24 5 24H19C21.761 24 24 21.761 24 19V5C24 2.239 21.761 0 19 0ZM8 19H5V8H8V19ZM6.5 6.732C5.534 6.732 4.75 5.942 4.75 4.968C4.75 3.994 5.534 3.204 6.5 3.204C7.466 3.204 8.25 3.994 8.25 4.968C8.25 5.942 7.467 6.732 6.5 6.732ZM20 19H17V13.396C17 10.028 13.7 10.283 13.7 13.396V19H10.7V8H13.7V9.565C15.093 7.159 20 6.942 20 12.011V19Z"/>
+  </svg>
+);
+
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Home', path: '#hero' },
     { name: 'Products', path: '#products' },
     { name: 'Applications', path: '#applications' },
+    { name: 'Benefits', path: '#benefits' },
     { name: 'About', path: '#about' },
     { name: 'Contact', path: '#contact' },
   ];
 
   return (
-    <nav className="fixed w-full z-50 flex flex-col shadow-sm">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-border-subtle shadow-sm">
       
-      {/* Tier 1: Announcement Banner (Dark Blue) */}
-      <div className="bg-surface-dark text-white py-2 px-4 text-center text-[13px] font-bold flex flex-wrap items-center justify-center gap-4">
-        <div className="flex items-center gap-1.5">
-          <Zap size={15} fill="currentColor" className="text-white"/>
-          <span>NEW: Credofix Max Strength Adhesive - 30% Stronger Bond!</span>
-        </div>
-        <a href="#products" className="hidden sm:inline-block bg-white text-surface-dark px-4 py-1.5 rounded-[4px] text-[11px] hover:bg-bg-primary transition-colors">
-          Learn More
-        </a>
-      </div>
-
-      {/* Tier 2: Info & Contact Bar (Dark Grey) */}
-      <div className="bg-[#232428] text-white py-2 sm:py-2.5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1280px] mx-auto flex justify-between items-center text-[12px] sm:text-[13px] font-medium tracking-wide">
-          <div className="flex items-center gap-6">
-            <a href="tel:8000567117" className="flex items-center gap-1.5 sm:gap-2 hover:text-white/80 transition-colors">
-              <Phone size={14} fill="currentColor" /> <span className="tracking-wider">8000567117</span>
-            </a>
-            <span className="opacity-30 hidden sm:inline">|</span>
-            <a href="mailto:info@dungarchemicals.com" className="hidden sm:flex items-center gap-2 hover:text-white/80 transition-colors">
-              <Mail size={14} fill="currentColor" /> info@dungarchemicals.com
-            </a>
+      {/* TIER 1: Top Bar (Brand Trust) */}
+      <div className="bg-[#111827] text-white w-full py-2">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex justify-center md:justify-between items-center text-[10px] md:text-[11px] font-medium uppercase tracking-widest">
+          <div className="flex items-center gap-2">
+            <span className="text-[#FFC400]">★</span>
+            <span>Rajasthan's No. 1 Adhesive Brand</span>
           </div>
-          <div className="flex items-center gap-4 sm:gap-5">
-            <a href="#facebook" className="hover:text-white/80 transition-colors"><FacebookIcon size={16} fill="currentColor" /></a>
-            <a href="#youtube" className="hover:text-white/80 transition-colors"><YoutubeIcon size={16} fill="currentColor" /></a>
-            <a href="#instagram" className="hover:text-white/80 transition-colors"><InstagramIcon size={16} fill="currentColor" /></a>
+          <div className="hidden md:flex items-center gap-4 text-white/80">
+            <span>ISO 9001:2015 Certified</span>
+            <span>|</span>
+            <span>Trusted by Professionals</span>
           </div>
         </div>
       </div>
 
-      {/* Tier 3: Main Navigation (White) */}
-      <div className="bg-white border-b border-border-subtle transition-all duration-300">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-[64px] md:h-[76px]">
-            
-            {/* Brand Logo */}
-            <a href="#hero" className="flex flex-col justify-center group py-2">
-              <span className="font-display text-[22px] md:text-[26px] font-extrabold text-text-primary tracking-tight">
-                Credofix<span className="text-surface-dark">.</span>
+      {/* TIER 2: Middle Bar (Logo & Contact) */}
+      <div className="w-full bg-white border-b border-border-subtle py-2 md:py-3">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex justify-between items-center">
+          
+          {/* Brand Logo */}
+          <a href="#hero" className="flex flex-col justify-center">
+            <div className="font-display text-[22px] md:text-[26px] font-bold tracking-tight flex items-center leading-none">
+              <span className="text-brand-primary">DUN</span>
+              <span className="text-text-primary">GAR</span>
+            </div>
+            <p className="text-[10px] md:text-[11px] text-text-primary font-normal uppercase tracking-[0.2em] mt-0.5">
+              CHEMICALS
+            </p>
+          </a>
+
+          {/* Contact Details (Desktop) */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-10">
+            <div className="flex items-center gap-2">
+              <span className="text-brand-strong">
+                <Phone size={16} strokeWidth={2} />
               </span>
-            </a>
-
-            {/* Desktop Nav (Center/Left alignment) */}
-            <div className="hidden md:flex flex-1 items-center justify-center pl-8 lg:pl-16">
-              <div className="flex space-x-8 lg:space-x-10">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.path}
-                    href={link.path}
-                    className="text-body-small font-bold text-text-primary hover:text-surface-dark transition-colors smooth-hover"
-                  >
-                    {link.name}
-                  </a>
-                ))}
-              </div>
+              <a href="tel:+918000567117" className="text-[13px] font-normal text-text-primary hover:text-brand-primary transition-colors">+91 80005 67117</a>
             </div>
             
-            {/* Desktop CTA (Dark Blue) */}
-            <div className="hidden md:block">
-              <a 
-                href="#contact" 
-                className="bg-surface-dark hover:opacity-90 text-white px-6 py-2.5 rounded-[4px] text-[15px] font-bold transition-opacity shadow-sm"
-              >
-                Find Your Solution
-              </a>
+            <div className="flex items-center gap-2">
+              <Mail size={16} className="text-text-secondary" />
+              <a href="mailto:team@dungarchemicals.com" className="text-[13px] font-normal text-text-primary hover:text-brand-primary transition-colors">team@dungarchemicals.com</a>
             </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-text-primary hover:text-text-secondary focus:outline-none p-2 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-                aria-label="Toggle menu"
-              >
-                {isOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
-              </button>
-            </div>
+            <a href="#contact" className="bg-brand-strong text-white px-6 py-2.5 rounded-[4px] text-[13px] font-medium transition-transform hover:-translate-y-0.5 shadow-sm ml-2 flex items-center gap-2">
+              Get a Quote <ChevronRight size={16} />
+            </a>
+          </div>
+
+          {/* Mobile Action Button & Menu Toggle */}
+          <div className="lg:hidden flex items-center gap-3 z-50">
+            <a href="#contact" className="bg-brand-strong text-white px-4 py-2 rounded-[4px] text-[11px] font-bold tracking-widest shadow-sm border border-brand-strong hover:bg-white hover:text-brand-strong transition-colors">
+              QUOTE
+            </a>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="focus:outline-none p-1 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center text-text-primary"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
+            </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Nav Drawer */}
-        <div 
-          className={`md:hidden absolute w-full bg-white border-b border-border-subtle transition-all duration-300 origin-top overflow-hidden shadow-lg ${
-            isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
-          }`}
-        >
-          <div className="px-4 py-4 space-y-1">
+      {/* TIER 3: Bottom Bar (Navigation) */}
+      <div className="w-full bg-white border-b border-border-subtle hidden lg:block shadow-sm">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex items-center h-[42px] space-x-10">
             {navLinks.map((link) => (
               <a
                 key={link.path}
                 href={link.path}
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-3 text-body-primary font-bold text-text-primary hover:bg-bg-primary transition-colors rounded-[4px]"
+                className={`group relative text-[13px] md:text-[14px] font-medium transition-colors flex items-center h-full ${link.name === 'Home' ? 'text-brand-strong' : 'text-text-primary hover:text-brand-strong'}`}
               >
                 {link.name}
+                <span className={`absolute bottom-0 left-0 h-[3px] bg-brand-strong transition-all duration-300 ease-out ${link.name === 'Home' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </a>
             ))}
-            <div className="pt-4 px-4 pb-2">
-              <a 
-                href="#contact" 
-                onClick={() => setIsOpen(false)}
-                className="flex justify-center items-center w-full bg-surface-dark text-white h-12 px-4 rounded-[4px] text-[15px] font-bold active:scale-[0.98] transition-transform"
-              >
-                Find Your Solution
-              </a>
-            </div>
           </div>
         </div>
       </div>
-    </nav>
+
+      {/* Mobile Nav Drawer (Premium Off-Canvas) */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] lg:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Drawer */}
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+              className="fixed top-0 right-0 w-[85%] max-w-[400px] h-full bg-[#111827] z-[100] flex flex-col shadow-2xl lg:hidden overflow-y-auto"
+            >
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between p-6 border-b border-white/10">
+                <div className="flex flex-col">
+                  <div className="font-display text-[20px] font-bold tracking-tight flex items-center leading-none">
+                    <span className="text-brand-primary">DUN</span>
+                    <span className="text-white">GAR</span>
+                  </div>
+                  <p className="text-[9px] text-white/70 font-normal uppercase tracking-[0.2em] mt-1">
+                    CHEMICALS
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Drawer Links */}
+              <div className="flex-1 flex flex-col py-8 px-6 space-y-6">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
+                    key={link.path}
+                    href={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className="group flex items-center justify-between text-[22px] font-display font-medium text-white/90 hover:text-white border-b border-white/5 pb-4 transition-colors"
+                  >
+                    <span>{link.name}</span>
+                    <span className="text-brand-primary opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300">
+                      &rarr;
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+
+              {/* Drawer Footer (CTA & Contact) */}
+              <div className="p-6 bg-[#0a0f18] mt-auto">
+                <a 
+                  href="#contact" 
+                  onClick={() => setIsOpen(false)}
+                  className="flex justify-center items-center w-full bg-brand-primary hover:bg-brand-strong transition-colors text-white h-12 rounded-[4px] text-[14px] uppercase tracking-wider font-bold shadow-lg"
+                >
+                  Get a Quote
+                </a>
+                <div className="flex items-center justify-center gap-6 mt-6">
+                  <a href="tel:+918000567117" className="text-white/60 hover:text-brand-primary transition-colors flex items-center gap-2 text-[13px]">
+                    <Phone size={14} /> Call Us
+                  </a>
+                  <a href="mailto:team@dungarchemicals.com" className="text-white/60 hover:text-brand-primary transition-colors flex items-center gap-2 text-[13px]">
+                    <Mail size={14} /> Email Us
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

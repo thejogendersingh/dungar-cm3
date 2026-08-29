@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color Palette - Blue/Cream Hard Reset */
-  --color-bg-primary: #F2EFE7; /* Warm Cream */
-  --color-white: #FFFFFF;
+  /* Color Palette - Premium Asian Paints / Berger Tier */
+  --color-bg-primary: #FFFFFF; /* Crisp White */
+  --color-bg-secondary: #FAFAFA; /* Ultra Light Gray */
+  --color-white: #FFFFFF; /* Pure White */
   
-  --color-text-primary: #171918; /* Graphite (kept for readability) */
-  --color-text-secondary: #5F625D;
+  --color-text-primary: #111827; /* Rich Charcoal */
+  --color-text-secondary: #6B7280; /* Medium Gray for paragraphs */
   
-  --color-soft-sage: #C8DFDB; /* Pale Seafoam */
-  --color-surface-dark: #3368A0; /* Dark Blue */
-  --color-accent-copper: #66A3BF; /* Teal/Light Blue */
+  --color-brand-primary: #C12920; /* Bright Brand Red */
+  --color-brand-strong: #98211A; /* Darker Red for CTA bg */
+  --color-brand-secondary: #E3D8CC; /* Neutral beige for accents */
   
-  --color-border-subtle: #E4E5DF;
-  --color-brand-micro: #5A071B;
+  --color-border-subtle: #EAE6DF; /* Light border */
   
   /* Typography */
-  --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -61,6 +61,20 @@
   }
 }
 
+/* Marquee Animations */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee 25s linear infinite reverse;
+}
+
 /* Custom Utilities for precise typography */
 @layer utilities {
   .text-eyebrow {
@@ -80,5 +94,13 @@
   }
   .text-body-small {
     @apply text-[14px] md:text-[15px] leading-[1.5];
+  }
+  
+  /* Premium Shadow Tokens */
+  .shadow-premium {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  }
+  .shadow-premium-hover {
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
   }
 }
