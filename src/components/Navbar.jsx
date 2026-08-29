@@ -51,85 +51,84 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-border-subtle shadow-sm">
       
-      {/* TIER 1: Top Bar (Brand Trust) */}
-      <div className="bg-[#111827] text-white w-full py-2">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex justify-center md:justify-between items-center text-[10px] md:text-[11px] font-medium uppercase tracking-widest">
-          <div className="flex items-center gap-2">
-            <span className="text-[#FFC400]">★</span>
-            <span>Rajasthan's No. 1 Adhesive Brand</span>
+      <div className="w-full border-t-[4px] border-[#ff6a13]"></div>
+      {/* TIER 1: Top Bar (Contact & Socials) */}
+      <div className="bg-[#232a31] text-white w-full py-2.5">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex justify-center md:justify-between items-center text-[12px] font-medium tracking-wide">
+          
+          {/* Left: Contact Info */}
+          <div className="flex items-center gap-4 text-white/90">
+            <a href="tel:+918000567117" className="flex items-center gap-2 hover:text-white transition-colors">
+              <Phone size={14} fill="currentColor" className="text-white" />
+              <span>+91 80005 67117</span>
+            </a>
+            <span className="text-white/40 hidden sm:inline">|</span>
+            <a href="mailto:team@dungarchemicals.com" className="hidden sm:flex items-center gap-2 hover:text-white transition-colors">
+              <Mail size={14} className="text-white" />
+              <span>team@dungarchemicals.com</span>
+            </a>
           </div>
-          <div className="hidden md:flex items-center gap-4 text-white/80">
-            <span>ISO 9001:2015 Certified</span>
-            <span>|</span>
-            <span>Trusted by Professionals</span>
+
+          {/* Right: Socials */}
+          <div className="hidden md:flex items-center gap-5 text-white">
+            <a href="#" className="hover:text-white/70 transition-colors"><FacebookIcon size={15} /></a>
+            <a href="#" className="hover:text-white/70 transition-colors"><InstagramIcon size={15} /></a>
+            <a href="#" className="hover:text-white/70 transition-colors"><YoutubeIcon size={15} /></a>
           </div>
+
         </div>
       </div>
 
-      {/* TIER 2: Middle Bar (Logo & Contact) */}
-      <div className="w-full bg-white border-b border-border-subtle py-2 md:py-3">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex justify-between items-center">
+      {/* TIER 2: Main Bar (Logo, Centered Links, CTA) */}
+      <div className="w-full bg-white shadow-sm border-b border-border-subtle relative z-40">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 h-[72px] lg:h-[84px] flex justify-between items-center">
           
-          {/* Brand Logo */}
-          <a href="#hero" className="flex flex-col justify-center">
-            <div className="font-display text-[22px] md:text-[26px] font-bold tracking-tight flex items-center leading-none">
-              <span className="text-brand-primary">DUN</span>
-              <span className="text-text-primary">GAR</span>
+          {/* Left: Brand Logo */}
+          <a href="#hero" className="flex flex-col justify-center shrink-0 items-start">
+            <div 
+              className="text-[26px] md:text-[30px] text-text-primary leading-none"
+              style={{ fontFamily: "'Pacifico', cursive", letterSpacing: '1px' }}
+            >
+              Dungar
             </div>
-            <p className="text-[10px] md:text-[11px] text-text-primary font-normal uppercase tracking-[0.2em] mt-0.5">
+            <p className="text-[9px] md:text-[10px] text-[#ff6a13] font-bold uppercase tracking-[0.4em] mt-1 ml-1">
               CHEMICALS
             </p>
           </a>
 
-          {/* Contact Details (Desktop) */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-10">
-            <div className="flex items-center gap-2">
-              <span className="text-brand-strong">
-                <Phone size={16} strokeWidth={2} />
-              </span>
-              <a href="tel:+918000567117" className="text-[13px] font-normal text-text-primary hover:text-brand-primary transition-colors">+91 80005 67117</a>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <Mail size={16} className="text-text-secondary" />
-              <a href="mailto:team@dungarchemicals.com" className="text-[13px] font-normal text-text-primary hover:text-brand-primary transition-colors">team@dungarchemicals.com</a>
-            </div>
-
-            <a href="#contact" className="bg-brand-strong text-white px-6 py-2.5 rounded-[4px] text-[13px] font-medium transition-transform hover:-translate-y-0.5 shadow-sm ml-2 flex items-center gap-2">
-              Get a Quote <ChevronRight size={16} />
-            </a>
-          </div>
-
-          {/* Mobile Action Button & Menu Toggle */}
-          <div className="lg:hidden flex items-center gap-3 z-50">
-            <a href="#contact" className="bg-brand-strong text-white px-4 py-2 rounded-[4px] text-[11px] font-bold tracking-widest shadow-sm border border-brand-strong hover:bg-white hover:text-brand-strong transition-colors">
-              QUOTE
-            </a>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="focus:outline-none p-1 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center text-text-primary"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* TIER 3: Bottom Bar (Navigation) */}
-      <div className="w-full bg-white border-b border-border-subtle hidden lg:block shadow-sm">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex items-center h-[42px] space-x-10">
+          {/* Center: Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-10">
             {navLinks.map((link) => (
               <a
                 key={link.path}
                 href={link.path}
-                className={`group relative text-[13px] md:text-[14px] font-medium transition-colors flex items-center h-full ${link.name === 'Home' ? 'text-brand-strong' : 'text-text-primary hover:text-brand-strong'}`}
+                className={`text-[15px] font-bold transition-colors ${link.name === 'Home' ? 'text-[#ff6a13]' : 'text-[#333333] hover:text-[#ff6a13]'}`}
               >
                 {link.name}
-                <span className={`absolute bottom-0 left-0 h-[3px] bg-brand-strong transition-all duration-300 ease-out ${link.name === 'Home' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </a>
             ))}
+          </div>
+
+          {/* Right: CTA Button (Desktop) & Mobile Toggle */}
+          <div className="flex items-center gap-4 shrink-0">
+            {/* Desktop CTA */}
+            <a href="#contact" className="hidden lg:flex bg-[#ff6a13] hover:bg-[#e65a0b] text-white px-7 py-2.5 rounded-[4px] text-[15px] font-bold transition-colors shadow-sm">
+              Find Your Solution
+            </a>
+
+            {/* Mobile Actions */}
+            <div className="lg:hidden flex items-center gap-3">
+              <a href="#contact" className="bg-[#ff6a13] text-white px-4 py-2 rounded-[4px] text-[12px] font-bold shadow-sm">
+                SOLUTION
+              </a>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="focus:outline-none p-1 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center text-text-primary"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X size={28} strokeWidth={2} /> : <Menu size={28} strokeWidth={2} />}
+              </button>
+            </div>
           </div>
         </div>
       </div>

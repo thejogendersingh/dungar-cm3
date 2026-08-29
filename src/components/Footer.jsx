@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#111] text-white pt-20 pb-8 border-t-[3px] border-brand-primary">
+    <footer className="bg-[#111] text-white pt-20 pb-8 border-t-[3px] border-[#ff6a13]">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Main 4-Column Structure */}
@@ -11,12 +11,14 @@ export default function Footer() {
           
           {/* Column 1: Brand Info */}
           <div className="flex flex-col">
-            <a href="#hero" className="flex flex-col mb-4">
-              <div className="font-display font-bold text-[32px] tracking-tight leading-none flex items-center">
-                <span className="text-brand-primary">DUN</span>
-                <span className="text-white">GAR</span>
+            <a href="#hero" className="flex flex-col items-start mb-6 shrink-0">
+              <div 
+                className="text-[32px] md:text-[36px] text-white leading-none"
+                style={{ fontFamily: "'Pacifico', cursive", letterSpacing: '1px' }}
+              >
+                Dungar
               </div>
-              <p className="text-[12px] uppercase tracking-widest text-white mt-1 font-normal">
+              <p className="text-[10px] md:text-[11px] text-[#ff6a13] font-bold uppercase tracking-[0.4em] mt-1 ml-1">
                 CHEMICALS
               </p>
             </a>
@@ -29,16 +31,16 @@ export default function Footer() {
             
             {/* Social Icons (Clean Circular Style) */}
             <div className="flex items-center gap-3">
-              <a href="#" className="w-9 h-9 border border-white/20 hover:border-brand-primary hover:bg-brand-primary flex items-center justify-center rounded-full transition-all duration-300">
+              <a href="#" className="w-9 h-9 border border-white/20 hover:border-[#ff6a13] hover:bg-[#ff6a13] flex items-center justify-center rounded-full transition-all duration-300">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
               </a>
-              <a href="#" className="w-9 h-9 border border-white/20 hover:border-brand-primary hover:bg-brand-primary flex items-center justify-center rounded-full transition-all duration-300">
+              <a href="#" className="w-9 h-9 border border-white/20 hover:border-[#ff6a13] hover:bg-[#ff6a13] flex items-center justify-center rounded-full transition-all duration-300">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
               </a>
-              <a href="#" className="w-9 h-9 border border-white/20 hover:border-brand-primary hover:bg-brand-primary flex items-center justify-center rounded-full transition-all duration-300">
+              <a href="#" className="w-9 h-9 border border-white/20 hover:border-[#ff6a13] hover:bg-[#ff6a13] flex items-center justify-center rounded-full transition-all duration-300">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
               </a>
-              <a href="#" className="w-9 h-9 border border-white/20 hover:border-brand-primary hover:bg-brand-primary flex items-center justify-center rounded-full transition-all duration-300">
+              <a href="#" className="w-9 h-9 border border-white/20 hover:border-[#ff6a13] hover:bg-[#ff6a13] flex items-center justify-center rounded-full transition-all duration-300">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
               </a>
             </div>

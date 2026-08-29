@@ -81,26 +81,36 @@
     @apply text-[10px] md:text-[11px] lg:text-[12px] uppercase tracking-[0.16em] font-bold;
   }
   .text-hero-heading {
-    @apply text-[40px] md:text-[46px] lg:text-[64px] xl:text-[72px] font-extrabold leading-[1.05] tracking-tight;
+    @apply text-[32px] md:text-[40px] lg:text-[52px] xl:text-[60px] font-bold leading-[1.1] tracking-tight;
   }
   .text-section-heading {
-    @apply text-[30px] md:text-[36px] lg:text-[42px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight;
+    @apply text-[24px] md:text-[28px] lg:text-[32px] xl:text-[36px] font-bold leading-[1.2] tracking-tight;
   }
   .text-product-heading {
-    @apply text-[28px] md:text-[34px] lg:text-[36px] xl:text-[48px] font-extrabold leading-[1.1] tracking-tight;
+    @apply text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] font-bold leading-[1.2] tracking-tight;
   }
   .text-body-primary {
-    @apply text-[15px] md:text-[16px] lg:text-[18px] leading-[1.6];
+    @apply text-[14px] md:text-[15px] lg:text-[16px] leading-[1.6];
   }
   .text-body-small {
-    @apply text-[14px] md:text-[15px] leading-[1.5];
+    @apply text-[13px] md:text-[14px] leading-[1.5];
   }
   
-  /* Premium Shadow Tokens */
+  /* Premium Shadow Tokens - Softer for Minimal Aesthetic */
   .shadow-premium {
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   }
   .shadow-premium-hover {
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 }
