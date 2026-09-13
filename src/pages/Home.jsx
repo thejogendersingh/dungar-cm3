@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresence } from 'framer-motion';
-
+import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresence, useScroll } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ArrowLeft, Search, ChevronLeft, ChevronRight, Star, Trophy, Droplet, Droplets, ShieldCheck, Users, Award, MapPin, Armchair, Layers, SprayCan, Wrench, Zap, Settings, FlaskConical, Clock, Activity, Shield, Globe, Hexagon, Component, Factory, Microscope, Cpu, Package, Flame, TestTube, Thermometer, Wind, Radar, Box, ZapIcon, CheckCircle } from 'lucide-react';
+import heroBgImg from '../assets/hero-bg.png';
+import hero1Img from '../assets/hero-1.PNG';
+import logoImg from '../assets/logo.png';
+import productImg from '../assets/product.png';
+import actualProductImg from '../assets/product.png';
+import aplicationImg from '../assets/aplication.PNG';
 function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = "" }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -20,35 +27,153 @@ function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = 
     }
   }, [isInView, to, duration, delay, count]);
 
-  return <motion.span ref={ref}>{formatted}</motion.span>;
 }
-import { ChevronLeft, ChevronRight, Trophy, Droplet, Droplets, ShieldCheck, Users, Award, MapPin, Armchair, Layers, SprayCan, Wrench, Zap, Settings } from 'lucide-react';
-import heroBg from '../assets/hero-bg.png';
-import productImg from '../assets/hero.png';
-import actualProductImg from '../assets/product.png';
 
-// 3 Premium Hero Images (Working URLs)
+
+
+
+// Premium Hero Images
 const heroImages = [
-  "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?q=80&w=2070&auto=format&fit=crop"
+  'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1920&q=80'
 ];
+
+function FAQItem({ question, answer }) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-gray-200">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full py-5 md:py-6 flex justify-between items-center text-left focus:outline-none group"
+      >
+        <h4 className="text-[15px] md:text-[16px] font-semibold text-slate-800 pr-8 group-hover:text-amber-600 transition-colors">{question}</h4>
+        <span className="shrink-0 text-xl md:text-2xl font-light text-slate-500 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-hover:bg-amber-50 group-hover:text-amber-600 transition-colors">
+          {isOpen ? '×' : '+'}
+        </span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-slate-500 text-[14px] leading-relaxed max-w-4xl">{answer}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
+  const [activeCategory, setActiveCategory] = useState('All Products');
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeApp, setActiveApp] = useState(0);
 
-  // Auto-advance Hero Slider (5 seconds)
+  // Hero Scroll Animation Hooks
+  const { scrollY } = useScroll();
+  const heroScale = useTransform(scrollY, [0, 400], [1, 0.95]);
+  const heroRadius = useTransform(scrollY, [0, 400], ["0px", "40px"]);
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const nextSlide = () => setHeroIndex((prev) => (prev + 1) % heroImages.length);
   const prevSlide = () => setHeroIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 
+  // Auto-play the slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000); // Change image every 5 seconds
+    return () => clearInterval(timer);
+  }, []);
 
+  const categories = ['All Products', 'Gel Glue', 'Rapid Glue', 'Activator Spray'];
+  
+  const applications = [
+    {
+      title: "Woodworking",
+      desc: "Perfectly binds solid wood, plywood, and softwoods.",
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h16"/><path d="M4 16v4"/><path d="M20 16v4"/><path d="M12 20v-4"/><path d="M8 12h8"/><path d="M10 8h4"/><path d="M12 4v4"/></svg>,
+      img: "https://images.pexels.com/photos/1750059/pexels-photo-1750059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    },
+    {
+      title: "Laminates",
+      desc: "Expertly secures laminates for a bubble-free finish.",
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>,
+      img: "https://images.pexels.com/photos/3805983/pexels-photo-3805983.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    },
+    {
+      title: "Industrial",
+      desc: "High stress bearing capacity for heavy structures.",
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
+      img: "https://images.pexels.com/photos/1750058/pexels-photo-1750058.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    },
+    {
+      title: "Edge Banding",
+      desc: "Instant fixing for edges, trims, and quick repairs.",
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/></svg>,
+      img: "https://images.pexels.com/photos/101808/pexels-photo-101808.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    }
+  ];
+  
+  const products = [
+    {
+      id: 1,
+      name: 'Gel Glue',
+      tagline: 'King of Adhesives - Ultimate Bond',
+      category: 'Gel Glue',
+      bgColor: 'bg-white',
+      accentColor: 'bg-indigo-700',
+      textColor: 'text-slate-900',
+      price: '$129',
+      features: ['High Strength', 'Clear Finish', 'Fast Curing'],
+      image: actualProductImg,
+      isNew: true,
+      rating: 5,
+      reviews: 128
+    },
+    {
+      id: 2,
+      name: 'Rapid Glue',
+      tagline: 'Super Fast Drying Adhesive',
+      category: 'Rapid Glue',
+      bgColor: 'bg-white',
+      accentColor: 'bg-emerald-700',
+      textColor: 'text-slate-900',
+      price: '$89',
+      features: ['Instant Bond', 'Multi-surface', 'Waterproof'],
+      image: actualProductImg,
+      rating: 4.8,
+      reviews: 96
+    },
+    {
+      id: 3,
+      name: 'Activator Spray',
+      tagline: 'Instant Bonding Accelerator',
+      category: 'Activator Spray',
+      bgColor: 'bg-white',
+      accentColor: 'bg-amber-600',
+      textColor: 'text-slate-900',
+      price: '$159',
+      features: ['Accelerator', 'Pro Grade', 'No Residue'],
+      image: actualProductImg,
+      rating: 4.9,
+      reviews: 215
+    }
+  ];
+
+  const filteredProducts = activeCategory === 'All Products' ? products : products.filter(p => p.category === activeCategory);
 
   // Smooth scroll helper for anchor links
   useEffect(() => {
@@ -71,403 +196,184 @@ export default function Home() {
     <div className="w-full bg-bg-primary text-text-primary selection:bg-surface-dark selection:text-white overflow-x-hidden">
       
       {/* ========================================================
-          02 — HERO (FULL SCREEN SLIDER)
+          01 — HERO SECTION (With Scroll Animation)
           ======================================================== */}
-      <section 
-        id="hero" 
-        className="relative w-full mt-[114px] lg:mt-[126px] h-[40vh] min-h-[350px] lg:h-[50vh] overflow-hidden bg-black group flex items-center justify-center"
+      <motion.div
+        style={{ 
+          scale: heroScale, 
+          borderRadius: heroRadius,
+          transformOrigin: 'top center'
+        }}
+        className="w-full mx-auto overflow-hidden bg-slate-950"
       >
-        <AnimatePresence initial={false}>
-          <motion.img 
-            key={heroIndex}
-            src={heroImages[heroIndex]}
-            alt="Hero Slide"
-            className="absolute inset-0 w-full h-full object-cover"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-          />
-        </AnimatePresence>
-
-        {/* Center Content: Glassmorphism Box */}
-        <div className="relative z-30 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md p-6 md:p-8 rounded-[8px] border border-white/10 w-[90%] sm:w-[85%] max-w-3xl text-center shadow-2xl">
-          <h1 className="text-[24px] sm:text-[28px] md:text-[36px] font-bold text-white leading-[1.2] mb-3">
-            Industrial Strength You Can Trust
-          </h1>
-          <p className="text-[13px] md:text-[14px] text-white/90 mb-6 max-w-lg">
-            Engineered for maximum durability and precision in professional woodworking and construction.
-          </p>
-          <a href="#contact" className="bg-[#ff6a13] hover:bg-[#e65a0b] text-white px-6 py-2.5 rounded-[4px] text-[13px] font-bold transition-transform hover:-translate-y-1 shadow-sm">
-            Find Your Solution
-          </a>
-        </div>
-
-        {/* Navigation Arrows */}
-        <button onClick={prevSlide} className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 cursor-pointer">
-          <ChevronLeft size={24} />
-        </button>
-        <button onClick={nextSlide} className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 cursor-pointer">
-          <ChevronRight size={24} />
-        </button>
-
-        {/* Pagination Dots */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-20">
-          {heroImages.map((_, i) => (
-            <button 
-              key={i} 
-              onClick={() => setHeroIndex(i)}
-              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${i === heroIndex ? 'bg-[#ff6a13] w-8' : 'bg-white/50 hover:bg-white w-2'}`}
+        <section id="hero" className="relative w-full h-screen flex items-center overflow-hidden bg-slate-900 shadow-sm">
+          
+          <AnimatePresence initial={false}>
+            <motion.img 
+              key={heroIndex}
+              src={heroImages[heroIndex]}
+              alt="Hero Slide"
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
             />
-          ))}
-        </div>
-      </section>
+          </AnimatePresence>
 
-      {/* ========================================================
-          03 — OUR PRODUCTS (PREMIUM CLEAN)
-          ======================================================== */}
-      <section id="products" className="bg-white pt-10 pb-16 lg:pt-12 lg:pb-20 relative z-20">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
-          
-          <div className="flex flex-col items-center justify-center mb-12 text-center px-4">
-            <h2 className="text-[32px] md:text-[40px] text-text-primary mb-4" style={{ fontFamily: "'Pacifico', cursive", letterSpacing: '1px' }}>
-              Our Signature Solutions
-            </h2>
-            <p className="text-[14px] md:text-[15px] text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Formulated through years of rigorous research and development, designed to deliver uncompromising industrial-grade strength and long-lasting impact.
-            </p>
-          </div>
+          {/* Slight gradient overlay just to make left text readable if image is bright */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent z-10" />
 
-          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory lg:grid lg:grid-cols-4 gap-4 md:gap-6 pb-4 -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
+          {/* Main Content Container */}
+          <div className="relative z-20 max-w-[1440px] w-full mx-auto px-6 sm:px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between h-full pt-[110px] md:pt-[130px] pb-16 gap-10 md:gap-0">
             
-            {/* PRODUCT 1 */}
-            <div className="group w-[260px] sm:w-[300px] lg:w-auto shrink-0 snap-center cursor-pointer" tabIndex="0">
-              <div className="relative w-full h-[260px] sm:h-[300px] lg:h-auto lg:aspect-square bg-[#F9F9F9] overflow-hidden rounded-[4px] border border-black/5 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow-md group-focus:shadow-md">
-                <img src={actualProductImg} alt="Multi-Purpose Gel" className="w-[70%] h-[70%] object-contain transition-transform duration-700 group-hover:scale-105 group-focus:scale-105" />
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-[#ff6a13]/95 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center z-10 backdrop-blur-[2px]">
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-white mb-2">Multi-Purpose Gel</h3>
-                  <p className="text-[13px] text-white/90">Everyday strong bonding</p>
-                </div>
-              </div>
-            </div>
-
-            {/* PRODUCT 2 */}
-            <div className="group w-[260px] sm:w-[300px] lg:w-auto shrink-0 snap-center cursor-pointer" tabIndex="0">
-              <div className="relative w-full h-[260px] sm:h-[300px] lg:h-auto lg:aspect-square bg-[#F9F9F9] overflow-hidden rounded-[4px] border border-black/5 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow-md group-focus:shadow-md">
-                <img src={actualProductImg} alt="Crystal Clear Epoxy" className="w-[70%] h-[70%] object-contain transition-transform duration-700 group-hover:scale-105 group-focus:scale-105" />
-                <div className="absolute inset-0 bg-[#ff6a13]/95 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center z-10 backdrop-blur-[2px]">
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-white mb-2">Crystal Clear Epoxy</h3>
-                  <p className="text-[13px] text-white/90">Invisible, flawless finish</p>
-                </div>
-              </div>
-            </div>
-
-            {/* PRODUCT 3 */}
-            <div className="group w-[260px] sm:w-[300px] lg:w-auto shrink-0 snap-center cursor-pointer" tabIndex="0">
-              <div className="relative w-full h-[260px] sm:h-[300px] lg:h-auto lg:aspect-square bg-[#F9F9F9] overflow-hidden rounded-[4px] border border-black/5 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow-md group-focus:shadow-md">
-                <img src={actualProductImg} alt="Fast-Setting Formula" className="w-[70%] h-[70%] object-contain transition-transform duration-700 group-hover:scale-105 group-focus:scale-105" />
-                <div className="absolute inset-0 bg-[#ff6a13]/95 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center z-10 backdrop-blur-[2px]">
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-white mb-2">Fast-Setting Formula</h3>
-                  <p className="text-[13px] text-white/90">Reduces cure time by 50%</p>
-                </div>
-              </div>
-            </div>
-
-            {/* PRODUCT 4 */}
-            <div className="group w-[260px] sm:w-[300px] lg:w-auto shrink-0 snap-center cursor-pointer" tabIndex="0">
-              <div className="relative w-full h-[260px] sm:h-[300px] lg:h-auto lg:aspect-square bg-[#F9F9F9] overflow-hidden rounded-[4px] border border-black/5 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow-md group-focus:shadow-md">
-                <img src={actualProductImg} alt="Industrial Heavy Duty" className="w-[70%] h-[70%] object-contain transition-transform duration-700 group-hover:scale-105 group-focus:scale-105" />
-                <div className="absolute inset-0 bg-[#ff6a13]/95 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center z-10 backdrop-blur-[2px]">
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-white mb-2">Heavy Duty Grade</h3>
-                  <p className="text-[13px] text-white/90">For maximum stress points</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-
-        </div>
-      </section>
-
-      {/* ========================================================
-          04 — WHY CHOOSE US (PREMIUM HORIZONTAL)
-          ======================================================== */}
-      <section 
-        id="about" 
-        className="relative w-full py-8 lg:py-10 bg-[#111111] flex items-center overflow-hidden"
-        style={{ backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px)' }}
-      >
-        
-        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-8 lg:px-12 flex flex-col lg:flex-row items-center justify-between relative z-20 gap-16 lg:gap-8">
-          
-          {/* Left: Text Content */}
-          <div className="w-full lg:w-1/2">
-            <span className="text-[18px] md:text-[22px] text-[#ff6a13] mb-2 block tracking-wide" style={{ fontFamily: "'Pacifico', cursive" }}>
-              Why Choose Us
-            </span>
-            <h2 className="text-section-heading text-white mb-6">
-              Uncompromising Quality.<br />
-              <span className="text-white/70">Absolute Precision.</span>
-            </h2>
-            <p className="text-body-primary text-white/80 mb-12 max-w-lg">
-              Our advanced formulations are rigorously tested to ensure they meet the demands of professionals. We don't just supply adhesives; we supply reliability that holds your world together.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-lg">
+            {/* Left Side: Headline & Button */}
+            <div className="w-full md:w-1/2 flex flex-col items-start pt-10 md:pt-0">
+              <h1 className="text-3xl md:text-4xl lg:text-[42px] font-medium text-white leading-[1.2] mb-6 drop-shadow-lg">
+                Industrial Adhesives<br />For Every Bond !
+              </h1>
               
-              <div>
-                <div className="w-10 h-10 bg-white/5 border border-white/10 shadow-sm rounded-full flex items-center justify-center mb-4 text-[#ff6a13]">
-                  <span className="text-[16px] font-light">&rarr;</span>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="border border-white/80 rounded-t-lg rounded-bl-lg p-2 w-[70px] shrink-0">
+                   <div className="text-white text-lg font-medium border-b border-white/50 pb-0.5 mb-1">100+</div>
+                   <div className="text-white text-[9px] uppercase tracking-wider">Grades</div>
                 </div>
-                <h4 className="text-[15px] font-bold text-white mb-1">Industrial Grade</h4>
-                <p className="text-[13px] text-white/70 leading-snug">Engineered to withstand extreme stress and temperature variations.</p>
-              </div>
-
-              <div>
-                <div className="w-10 h-10 bg-white/5 border border-white/10 shadow-sm rounded-full flex items-center justify-center mb-4 text-[#ff6a13]">
-                  <span className="text-[16px] font-light">&rarr;</span>
+                <div className="text-white text-[14px] lg:text-[15px] font-medium leading-snug drop-shadow-md">
+                  To Reflect<br />Your Standards
                 </div>
-                <h4 className="text-[15px] font-bold text-white mb-1">Clean Application</h4>
-                <p className="text-[13px] text-white/70 leading-snug">Smooth, controlled dispensing for flawless aesthetic finishes.</p>
               </div>
 
-            </div>
-          </div>
-
-          {/* Right: Circular Image Composition */}
-          <div className="w-full lg:w-1/2 relative h-[350px] sm:h-[400px] lg:h-[500px] flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
-            <div className="relative w-full max-w-[450px] aspect-square">
-              
-              {/* Main Circle (Top Right) */}
-              <div className="absolute top-0 right-0 w-[75%] aspect-square rounded-full overflow-hidden border-[8px] border-[#111111] z-20 shadow-premium">
-                <img 
-                  src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop" 
-                  alt="Industrial Precision" 
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
-                />
-              </div>
-              
-              {/* Secondary Circle (Bottom Left) */}
-              <div className="absolute bottom-4 left-0 w-[55%] aspect-square rounded-full overflow-hidden border-[8px] border-[#111111] z-10 shadow-premium">
-                <img 
-                  src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800&auto=format&fit=crop" 
-                  alt="Strong Bond" 
-                  className="w-full h-full object-cover grayscale transition-transform duration-700 hover:scale-105" 
-                />
-              </div>
-
-              {/* Accent Element */}
-              <div className="absolute top-[15%] left-[5%] w-[12%] aspect-square rounded-full bg-[#ff6a13] z-30 shadow-md"></div>
-              
-            </div>
-          </div>
-          
-        </div>
-      </section>
-
-
-
-      {/* ========================================================
-          05 — APPLICATIONS (PREMIUM)
-          ======================================================== */}
-      <section id="applications" className="bg-white py-16 lg:py-24 border-b border-border-subtle">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-center">
-            
-            {/* Left Column: Text */}
-            <div className="w-full lg:w-[25%] flex flex-col justify-center">
-              <span className="text-[18px] md:text-[22px] text-[#ff6a13] mb-2 block tracking-wide" style={{ fontFamily: "'Pacifico', cursive" }}>
-                Applications
-              </span>
-              <h2 className="text-[28px] lg:text-[32px] font-bold text-text-primary leading-tight mb-4">
-                One Solution.<br/>
-                <span className="text-text-secondary">Infinite Uses.</span>
-              </h2>
-              <p className="text-[13px] text-text-secondary mb-6 leading-relaxed">
-                From simple household repairs to heavy-duty industrial bonding, our adhesive is formulated to deliver flawless results everywhere.
-              </p>
-              <a href="#explore" className="text-[12px] font-bold uppercase tracking-widest text-text-primary border-b border-text-primary pb-1 inline-block w-max hover:text-[#ff6a13] hover:border-[#ff6a13] transition-colors">
-                Explore All
+              <a 
+                href="#products" 
+                className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-white text-white text-[13px] font-medium hover:bg-white hover:text-black transition-colors backdrop-blur-sm bg-black/20"
+              >
+                Explore product catalogue
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
 
-            {/* Right Column: 1-Row 4-Column Grid */}
-            <div className="w-full lg:w-[75%] flex overflow-x-auto hide-scrollbar snap-x snap-mandatory lg:grid lg:grid-cols-4 gap-4 pb-4 -mx-6 px-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
+            {/* Right Side: Floating White Card */}
+            <div className="w-full md:w-[380px] lg:w-[400px] bg-white rounded-[10px] shadow-2xl p-8 lg:p-10 mt-12 md:mt-0">
+              <h2 className="text-[28px] lg:text-[34px] font-light text-[#E5202B] mb-8 leading-[1.15]">
+                Transform<br />your business
+              </h2>
               
-              {/* App 1 */}
-              <div className="group min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 shrink-0 snap-center cursor-pointer">
-                <div className="w-full h-[240px] lg:h-[280px] overflow-hidden rounded-[4px] shadow-sm border border-black/5 group-hover:border-black/10 transition-colors duration-300 mb-4">
-                  <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Home Repair" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-                <div className="text-left px-1">
-                  <h4 className="text-[15px] font-bold text-text-primary mb-1 group-hover:text-[#ff6a13] transition-colors">Home Repair</h4>
-                  <p className="text-[12px] text-text-secondary leading-tight">Perfect for everyday repairs and fixes.</p>
-                </div>
+              <div className="grid grid-cols-3 gap-y-10 gap-x-2">
+                {[
+                  { icon: <Droplet className="w-[28px] h-[28px] text-[#4A4A4A] mx-auto mb-3 stroke-[1.2]" />, label: 'Woodworking\nadhesives' },
+                  { icon: <Package className="w-[28px] h-[28px] text-[#4A4A4A] mx-auto mb-3 stroke-[1.2]" />, label: 'Packaging\nsolutions' },
+                  { icon: <ShieldCheck className="w-[28px] h-[28px] text-[#4A4A4A] mx-auto mb-3 stroke-[1.2]" />, label: 'Waterproofing\nchemicals' },
+                  { icon: <Settings className="w-[28px] h-[28px] text-[#4A4A4A] mx-auto mb-3 stroke-[1.2]" />, label: 'Industrial\nbonds' },
+                  { icon: <Search className="w-[28px] h-[28px] text-[#4A4A4A] mx-auto mb-3 stroke-[1.2]" />, label: 'Find a\nproduct' },
+                  { icon: <Users className="w-[28px] h-[28px] text-[#4A4A4A] mx-auto mb-3 stroke-[1.2]" />, label: 'Find a\ndistributor' },
+                ].map((item, i) => (
+                  <div key={i} className="text-center cursor-pointer group">
+                    <div className="transform group-hover:-translate-y-1 transition-transform duration-300">
+                      {item.icon}
+                    </div>
+                    <p className="text-[10px] text-[#666666] leading-[1.3] group-hover:text-[#E5202B] transition-colors whitespace-pre-line font-medium">
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
               </div>
-
-              {/* App 2 */}
-              <div className="group min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 shrink-0 snap-center cursor-pointer">
-                <div className="w-full h-[240px] lg:h-[280px] overflow-hidden rounded-[4px] shadow-sm border border-black/5 group-hover:border-black/10 transition-colors duration-300 mb-4">
-                  <img src="https://images.unsplash.com/photo-1584286595398-a59f21d313f5?auto=format&fit=crop&w=800&q=80" alt="DIY & Crafts" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-                <div className="text-left px-1">
-                  <h4 className="text-[15px] font-bold text-text-primary mb-1 group-hover:text-[#ff6a13] transition-colors">DIY & Crafts</h4>
-                  <p className="text-[12px] text-text-secondary leading-tight">Ideal for creative projects and crafts.</p>
-                </div>
-              </div>
-
-              {/* App 3 */}
-              <div className="group min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 shrink-0 snap-center cursor-pointer">
-                <div className="w-full h-[240px] lg:h-[280px] overflow-hidden rounded-[4px] shadow-sm border border-black/5 group-hover:border-black/10 transition-colors duration-300 mb-4">
-                  <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80" alt="Professional Use" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-                <div className="text-left px-1">
-                  <h4 className="text-[15px] font-bold text-text-primary mb-1 group-hover:text-[#ff6a13] transition-colors">Professional Use</h4>
-                  <p className="text-[12px] text-text-secondary leading-tight">Trusted by professionals and contractors.</p>
-                </div>
-              </div>
-
-              {/* App 4 */}
-              <div className="group min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 shrink-0 snap-center cursor-pointer">
-                <div className="w-full h-[240px] lg:h-[280px] overflow-hidden rounded-[4px] shadow-sm border border-black/5 group-hover:border-black/10 transition-colors duration-300 mb-4">
-                  <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=800&q=80" alt="General Bonding" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-                <div className="text-left px-1">
-                  <h4 className="text-[15px] font-bold text-text-primary mb-1 group-hover:text-[#ff6a13] transition-colors">General Bonding</h4>
-                  <p className="text-[12px] text-text-secondary leading-tight">For wood, metal, plastic, ceramic and more.</p>
-                </div>
-              </div>
-
             </div>
+
           </div>
-        </div>
-      </section>
 
-      <section className="relative py-10 lg:py-12 bg-[#ff6a13] flex items-center overflow-hidden">
-        
-        {/* Subtle Texture */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.2) 0, rgba(255,255,255,0.2) 2px, transparent 2px, transparent 12px)' }}></div>
-
-        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+          {/* Bottom Center Controls */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 px-4 py-2.5 bg-white rounded-full shadow-lg">
+            <button 
+              onClick={() => setHeroIndex(prev => prev === 0 ? heroImages.length - 1 : prev - 1)}
+              className="text-slate-600 hover:text-black transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+            </button>
+            <div className="flex gap-2 items-center">
+              {heroImages.map((_, idx) => (
+                <button 
+                  key={idx}
+                  onClick={() => setHeroIndex(idx)}
+                  className={`rounded-full transition-all duration-300 ${heroIndex === idx ? 'w-4 h-[5px] bg-[#4A4A4A]' : 'w-[5px] h-[5px] bg-[#D4D4D4] hover:bg-[#A3A3A3]'}`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+            <button 
+               onClick={() => setHeroIndex(prev => prev === heroImages.length - 1 ? 0 : prev + 1)}
+               className="text-slate-600 hover:text-black transition-colors"
+            >
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
           
-          <div className="flex flex-col items-center justify-center mb-6 lg:mb-10">
-            <span className="text-[22px] md:text-[28px] text-white block tracking-wide" style={{ fontFamily: "'Pacifico', cursive" }}>
-              Our Mission
-            </span>
-            <div className="w-12 h-[3px] bg-white/30 mt-3 rounded-full"></div>
-          </div>
+        </section>
+      </motion.div>
 
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-            
-            <span className="font-serif text-[60px] md:text-[80px] text-white/20 leading-none mb-0 select-none translate-y-6">
-              &ldquo;
-            </span>
-            <p className="text-white text-[20px] md:text-[24px] lg:text-[28px] font-bold italic leading-[1.5] tracking-tight mb-10 relative z-10">
-              To be an innovation driven, research led, and customer focused manufacturer of world-class adhesives and sealants. From formulation to final application, every product we create is guided by dedication to quality and real-world performance.
-            </p>
-            
-            <div className="p-2 bg-white/10 backdrop-blur-md rounded-[8px] shadow-lg border border-white/10">
-              <img 
-                src="https://images.unsplash.com/photo-1574359411659-15573a27fd0c?q=80&w=800&auto=format&fit=crop" 
-                alt="Product Range" 
-                className="w-full max-w-[280px] h-[140px] object-cover rounded-[4px] shadow-sm border border-white/20 transition-transform duration-500 hover:scale-105"
-              />
-            </div>
 
-          </div>
-        </div>
-      </section>
 
       {/* ========================================================
-          06 — TESTIMONIALS (GOOGLE WIDGET STYLE)
+          03 — OUR PRODUCTS (PREMIUM SLIDER)
           ======================================================== */}
-      {/* ========================================================
-          06 — TESTIMONIALS (PREMIUM GRID)
-          ======================================================== */}
-      <section id="testimonials" className="bg-[#FAFAFA] py-20 lg:py-24 border-b border-border-subtle overflow-hidden relative">
-        
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      <section id="products" className="bg-white pt-16 pb-12 lg:pt-24 lg:pb-16 relative z-20 overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 w-full">
           
-          {/* Section Header */}
-          <div className="text-center mb-16 flex flex-col items-center">
-            <span className="text-[22px] md:text-[28px] text-[#ff6a13] mb-2 block tracking-wide" style={{ fontFamily: "'Pacifico', cursive" }}>
-              Testimonials
-            </span>
-            <h2 className="text-[32px] lg:text-[40px] font-bold text-text-primary mb-4">
-              Trusted by Industry Leaders
-            </h2>
-            <div className="w-16 h-[3px] bg-[#ff6a13] mx-auto rounded-full"></div>
-          </div>
-
-          {/* 3-Column Premium Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-0 w-full justify-between">
             
-            {/* Review 1 */}
-            <div className="bg-white rounded-[8px] p-8 lg:p-10 shadow-sm border border-black/5 relative group hover:-translate-y-1 transition-transform duration-300">
-              <span className="absolute top-6 right-8 text-[60px] font-serif text-black/5 leading-none group-hover:text-[#ff6a13]/10 transition-colors">
-                &rdquo;
-              </span>
-              <div className="flex gap-1 text-[#ff6a13] mb-6">
-                {[1,2,3,4,5].map(star => (
-                  <svg key={star} width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
-                ))}
+            {/* Left Side: Text & Brand */}
+            <div className="w-full lg:w-[28%] flex flex-col items-start pr-0">
+              <div className="flex items-center gap-3 mb-8">
+                <img src={logoImg} alt="Brand" className="h-8 md:h-10 lg:h-11 object-contain drop-shadow-sm brightness-0" /> 
               </div>
-              <p className="text-[15px] text-text-secondary leading-relaxed italic mb-8 relative z-10">
-                "I recently used Bond Max Instant Glue, and I couldn't be more impressed! The adhesive works incredibly fast, bonding various materials in seconds. It has significantly reduced our curing time without compromising on durability."
+              <h2 className="text-[28px] sm:text-3xl md:text-4xl lg:text-[46px] font-black text-slate-900 leading-[1.1] mb-5 tracking-tight whitespace-nowrap md:whitespace-normal">
+                Products of <br className="hidden md:block" /> the years
+              </h2>
+              <p className="text-[12px] md:text-[13px] text-slate-600 mb-8 max-w-[280px] font-medium leading-[1.6]">
+                Explore and elevate your space with featured shades of Dungar Chemicals
               </p>
-              <div className="flex items-center gap-4 border-t border-border-subtle pt-6">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&auto=format&fit=crop" className="w-12 h-12 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" alt="Rajesh Sharma" />
-                <div>
-                  <h5 className="text-[15px] font-bold text-text-primary">Rajesh Sharma</h5>
-                  <p className="text-[13px] text-text-secondary mt-0.5">Industrial Contractor</p>
-                </div>
-              </div>
+              <a 
+                href="#catalogue" 
+                className="px-5 py-2 rounded-full border border-slate-900 text-[11px] font-bold text-slate-900 flex items-center gap-2 hover:bg-slate-900 hover:text-white transition-colors w-max tracking-wide uppercase"
+              >
+                View colour catalogue <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
 
-            {/* Review 2 */}
-            <div className="bg-white rounded-[8px] p-8 lg:p-10 shadow-sm border border-black/5 relative group hover:-translate-y-1 transition-transform duration-300">
-              <span className="absolute top-6 right-8 text-[60px] font-serif text-black/5 leading-none group-hover:text-[#ff6a13]/10 transition-colors">
-                &rdquo;
-              </span>
-              <div className="flex gap-1 text-[#ff6a13] mb-6">
-                {[1,2,3,4,5].map(star => (
-                  <svg key={star} width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
-                ))}
-              </div>
-              <p className="text-[15px] text-text-secondary leading-relaxed italic mb-8 relative z-10">
-                "As an interior contractor, precision and cleanliness are everything. This adhesive is clear, sets quickly, and leaves absolutely zero residue. Will definitely recommend to other builders. Much better than standard glues."
-              </p>
-              <div className="flex items-center gap-4 border-t border-border-subtle pt-6">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop" className="w-12 h-12 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" alt="Anjali Desai" />
-                <div>
-                  <h5 className="text-[15px] font-bold text-text-primary">Anjali Desai</h5>
-                  <p className="text-[13px] text-text-secondary mt-0.5">Interior Designer</p>
+            {/* Right Side: Horizontal Scrolling Cards */}
+            <div className="w-full lg:w-[72%] flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-4 [&::-webkit-scrollbar]:hidden" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+              {[
+                { year: '2026', name: 'moonlit silk', code: '7809', bg: 'bg-[#CBD5A1]', textColor: 'text-slate-800', border: 'border-slate-800', img: hero1Img },
+                { year: '2025', name: 'CARDINAL', code: '8206', bg: 'bg-[#7E5A6A]', textColor: 'text-white', border: 'border-white', img: heroBgImg },
+                { year: '2024', name: 'TERRA', code: 'K212', bg: 'bg-[#A67B73]', textColor: 'text-white', border: 'border-white', img: productImg },
+              ].map((item, idx) => (
+                <div key={idx} className="flex-shrink-0 w-[240px] md:w-[260px] lg:w-[270px] snap-start flex flex-col rounded-xl overflow-hidden shadow-sm border border-slate-200/50 hover:-translate-y-1 transition-transform duration-300 group cursor-pointer">
+                  
+                  {/* Top Image */}
+                  <div className="h-[220px] w-full overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  
+                  {/* Bottom Color Block */}
+                  <div className={`h-[180px] w-full p-5 flex flex-col justify-between ${item.bg} ${item.textColor}`}>
+                    <div>
+                      <div className="text-[9px] font-bold tracking-[0.15em] uppercase mb-1 opacity-90">Product of the year {item.year}</div>
+                      <div className="text-[22px] font-black uppercase tracking-wider">{item.name}</div>
+                    </div>
+                    
+                    <div className="flex justify-between items-end w-full">
+                      {/* Color Swatch Representation */}
+                      <div className={`border ${item.border} p-2 w-[55px] h-[65px] flex flex-col justify-end bg-transparent rounded-sm relative`}>
+                        {/* Little hook line at top like Asian Paints */}
+                        <div className={`absolute top-0 left-0 w-full h-[8px] border-b ${item.border}`}></div>
+                        <div className="text-[8px] font-bold leading-tight">{item.code}</div>
+                        <div className="text-[7px] uppercase font-medium leading-[1.1]">{item.name}</div>
+                      </div>
+                      
+                      <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Review 3 */}
-            <div className="bg-white rounded-[8px] p-8 lg:p-10 shadow-sm border border-black/5 relative group hover:-translate-y-1 transition-transform duration-300">
-              <span className="absolute top-6 right-8 text-[60px] font-serif text-black/5 leading-none group-hover:text-[#ff6a13]/10 transition-colors">
-                &rdquo;
-              </span>
-              <div className="flex gap-1 text-[#ff6a13] mb-6">
-                {[1,2,3,4,5].map(star => (
-                  <svg key={star} width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/></svg>
-                ))}
-              </div>
-              <p className="text-[15px] text-text-secondary leading-relaxed italic mb-8 relative z-10">
-                "Bond Max has several different kind of bonds and adhesives. I've used countless adhesives for heavy metal joints, but nothing holds up under stress testing quite like this one. Best for industry applications."
-              </p>
-              <div className="flex items-center gap-4 border-t border-border-subtle pt-6">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" className="w-12 h-12 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" alt="Vikram Singh" />
-                <div>
-                  <h5 className="text-[15px] font-bold text-text-primary">Vikram Singh</h5>
-                  <p className="text-[13px] text-text-secondary mt-0.5">Structural Engineer</p>
-                </div>
-              </div>
+              ))}
             </div>
 
           </div>
@@ -475,61 +381,138 @@ export default function Home() {
       </section>
 
       {/* ========================================================
-          07 — CONTACT DETAILS (COMPACT SPLIT LAYOUT WITH FORM)
+          03.5 — PROMOTIONAL BANNER SECTION
           ======================================================== */}
-      <section id="contact" className="bg-[#FAFAFA] py-10 lg:py-12 border-t border-border-subtle">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+      <section className="w-full bg-white pt-4 pb-12 lg:pb-20 relative z-10">
+        <div className="max-w-[1440px] w-full mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="w-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm border border-slate-100 relative group cursor-pointer">
+            <img src={aplicationImg} alt="Dungar Chemicals Application" className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-700" />
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* ========================================================
+          05 — FAQ SECTION
+          ======================================================== */}
+      <section id="faq" className="bg-white pt-10 pb-12 lg:pt-16 lg:pb-16 relative z-10 w-full">
+        <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-12">
           
-          {/* Left: Text Content */}
-          <div className="w-full lg:w-[45%] flex flex-col items-start text-left">
-            <span className="text-[20px] md:text-[24px] text-[#ff6a13] mb-2 block tracking-wide" style={{ fontFamily: "'Pacifico', cursive" }}>
-              Reach Out
-            </span>
-            <h2 className="text-[28px] lg:text-[36px] font-bold text-text-primary mb-4 leading-tight">
-              We're Here to Help
-            </h2>
-            <div className="w-12 h-[3px] bg-[#ff6a13] mb-5 rounded-full"></div>
-            <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed max-w-md">
-              Whether you need technical support, bulk ordering information, or expert advice on the right adhesive for your project, our team is ready to assist you.
-            </p>
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight text-center mb-12">
+            FAQ's
+          </h2>
+
+          <div className="flex flex-col border-t border-gray-200">
+            <FAQItem 
+              question="What types of industrial chemicals do you manufacture?" 
+              answer="We specialize in manufacturing premium grade adhesives, wood glues, construction chemicals, and industrial binders. Our product line is designed for both commercial and residential applications ensuring the highest quality bonds." 
+            />
+            <FAQItem 
+              question="How can I become an authorized dealer for Dungar Chemicals?" 
+              answer="You can apply to become an authorized dealer by filling out the 'Become a Dealer' form located at the bottom of this page. Once submitted, our business development team will review your application and contact you within 24-48 hours." 
+            />
+            <FAQItem 
+              question="Do you provide bulk pricing for large construction projects?" 
+              answer="Yes, we offer specialized B2B pricing and bulk discounts for large-scale construction projects and industrial contractors. Please contact our sales team directly with your project requirements for a custom quote." 
+            />
+            <FAQItem 
+              question="What is the typical shelf life of your premium adhesives?" 
+              answer="When stored properly in a cool, dry place away from direct sunlight, our premium adhesives typically have a shelf life of 12 to 18 months from the date of manufacturing. Always check the packaging for specific product details." 
+            />
+            <FAQItem 
+              question="Where can I find safety data sheets (SDS) for your products?" 
+              answer="Safety Data Sheets (SDS) for all our products are available upon request. Authorized dealers can access them through our dealer portal, or you can email our support team to request a copy for any specific product." 
+            />
           </div>
 
-          {/* Right: Compact Form */}
-          <div className="w-full lg:w-[45%]">
-            <form className="bg-white p-6 rounded-[8px] border border-black/5 shadow-[0_2px_15px_rgba(0,0,0,0.03)] flex flex-col gap-4">
+        </div>
+      </section>
+
+      {/* ========================================================
+          06 — CONTACT DETAILS (BOLD BANNER)
+          ======================================================== */}
+      <section id="cta" className="bg-white py-12 lg:py-20 w-full relative z-10">
+        <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-12">
+          
+          <div className="border border-slate-200 rounded-2xl p-6 lg:px-10 lg:py-8 bg-white shadow-sm flex flex-col lg:flex-row gap-8 lg:gap-16 w-full mx-auto">
+            
+            {/* Left: Text Area */}
+            <div className="w-full lg:w-[32%] flex flex-col justify-center">
+              <span className="text-[13px] font-bold text-slate-800 mb-1.5">Partner with us</span>
+              <h2 className="text-4xl md:text-[42px] font-black text-[#F25C54] leading-[1.05] mb-3 tracking-tight">
+                Become a<br/>Dealer
+              </h2>
+              <p className="text-slate-500 text-[14px] leading-[1.6] max-w-[280px] font-medium">
+                Join Dungar Chemicals and grow your business with our premium range of industrial and construction chemicals.
+              </p>
+            </div>
+
+            {/* Right: Form Area */}
+            <div className="w-full lg:w-[68%] flex flex-col gap-4">
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <input 
-                  type="text" 
-                  placeholder="Your Name" 
-                  className="w-full bg-[#FAFAFA] border border-border-subtle rounded-[6px] px-4 py-3 text-[14px] text-text-primary focus:outline-none focus:border-[#ff6a13] focus:ring-1 focus:ring-[#ff6a13] transition-all"
-                  required
-                />
-                <input 
-                  type="tel" 
-                  placeholder="Phone Number" 
-                  className="w-full bg-[#FAFAFA] border border-border-subtle rounded-[6px] px-4 py-3 text-[14px] text-text-primary focus:outline-none focus:border-[#ff6a13] focus:ring-1 focus:ring-[#ff6a13] transition-all"
-                  required
-                />
+                <input type="text" placeholder="Enter your name" className="w-full border border-slate-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors" />
+                <input type="email" placeholder="Enter your Email" className="w-full border border-slate-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors" />
               </div>
               
-              <textarea 
-                placeholder="How can we help you?" 
-                rows="3"
-                className="w-full bg-[#FAFAFA] border border-border-subtle rounded-[6px] px-4 py-3 text-[14px] text-text-primary focus:outline-none focus:border-[#ff6a13] focus:ring-1 focus:ring-[#ff6a13] transition-all resize-none"
-                required
-              ></textarea>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <input type="tel" placeholder="Enter mobile number" className="w-full border border-slate-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors" />
+                <input type="text" placeholder="Enter your Pincode" className="w-full border border-slate-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors" />
+              </div>
               
-              <button 
-                type="submit" 
-                className="w-full bg-[#ff6a13] hover:bg-[#e65a0b] text-white font-bold text-[14px] py-3 rounded-[6px] transition-colors shadow-sm mt-1"
-              >
-                Send Message
-              </button>
+              <label className="flex items-center gap-2 cursor-pointer w-max mt-0.5">
+                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-amber-500 focus:ring-amber-500" defaultChecked />
+                <span className="text-[13px] font-bold text-slate-800">Get updates on WhatsApp</span>
+              </label>
               
-            </form>
-          </div>
+              <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 mt-1">
+                <div>
+                  <div className="text-[12px] font-bold text-slate-900 mb-2">Current Business Type? <span className="text-red-500">*</span></div>
+                  <div className="flex gap-4 items-center">
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="business" className="w-3.5 h-3.5 text-amber-500 border-gray-300 focus:ring-amber-500" />
+                      <span className="text-[12px] text-slate-500">Retailer</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="business" className="w-3.5 h-3.5 text-amber-500 border-gray-300 focus:ring-amber-500" />
+                      <span className="text-[12px] text-slate-500">Distributor</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="business" className="w-3.5 h-3.5 text-amber-500 border-gray-300 focus:ring-amber-500" />
+                      <span className="text-[12px] text-slate-500">Other</span>
+                    </label>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="text-[12px] font-bold text-slate-900 mb-2">Do you have a GST number? <span className="text-red-500">*</span></div>
+                  <div className="flex gap-4 items-center">
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="gst" className="w-3.5 h-3.5 text-amber-500 border-gray-300 focus:ring-amber-500" />
+                      <span className="text-[12px] text-slate-500">Yes</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="gst" className="w-3.5 h-3.5 text-amber-500 border-gray-300 focus:ring-amber-500" />
+                      <span className="text-[12px] text-slate-500">No</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mt-3 pt-3 border-t border-slate-100">
+                <p className="text-[10px] text-slate-400 leading-[1.5] max-w-sm">
+                  By proceeding, I authorize Dungar Chemicals and its authorized partners to contact me via WhatsApp, phone calls, SMS and e-mail and I agree to the <a href="#" className="text-blue-500 hover:underline">Terms & Conditions</a> and <a href="#" className="text-blue-500 hover:underline">Privacy Policy</a>
+                </p>
+                
+                <button className="shrink-0 bg-amber-500 text-slate-900 px-6 py-2.5 rounded-full text-[12px] font-bold flex items-center gap-2 hover:bg-amber-400 transition-colors shadow-sm w-full sm:w-auto justify-center">
+                  Submit Application <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
 
+            </div>
+
+          </div>
         </div>
       </section>
     </div>

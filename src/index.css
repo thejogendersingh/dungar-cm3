@@ -1,23 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Color Palette - Premium Asian Paints / Berger Tier */
-  --color-bg-primary: #FFFFFF; /* Crisp White */
-  --color-bg-secondary: #FAFAFA; /* Ultra Light Gray */
-  --color-white: #FFFFFF; /* Pure White */
+  /* Color Palette - Credofix Premium Theme */
+  --color-bg-primary: #FFFFFF; /* 50% white as requested */
+  --color-bg-secondary: #FAF7ED; /* Soft Cream */
+  --color-bg-cream: #F4ECC4; /* Warm Ivory */
   
-  --color-text-primary: #111827; /* Rich Charcoal */
-  --color-text-secondary: #6B7280; /* Medium Gray for paragraphs */
+  --color-text-primary: #2C2424; /* Espresso */
+  --color-text-secondary: #542C34; /* Deep Plum/Brown */
   
-  --color-brand-primary: #C12920; /* Bright Brand Red */
-  --color-brand-strong: #98211A; /* Darker Red for CTA bg */
-  --color-brand-secondary: #E3D8CC; /* Neutral beige for accents */
+  --color-brand-primary: #542C34; /* Deep Brand Plum */
+  --color-brand-strong: #74644C; /* Primary Brown */
+  --color-brand-secondary: #7C6454; /* Secondary Brown */
   
   --color-border-subtle: #EAE6DF; /* Light border */
+
+  /* Gradients mapped to variables for tailwind access if needed, though we can use arbitrary values */
+  --gradient-1: linear-gradient(135deg, #542C34 0%, #74644C 50%, #A28C70 100%);
+  --gradient-2: linear-gradient(135deg, #F4ECC4 0%, #E5D6A6 50%, #C9B890 100%);
+  --gradient-3: linear-gradient(135deg, #2C2424 0%, #542C34 50%, #74644C 100%);
   
   /* Typography */
-  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-primary: 'Outfit', sans-serif;
+  --font-secondary: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
@@ -31,9 +37,8 @@
 
   /* Base Typography Resets */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
+    font-family: var(--font-primary);
     color: var(--color-text-primary);
-    letter-spacing: -0.02em;
   }
 
   p {
@@ -77,23 +82,84 @@
 
 /* Custom Utilities for precise typography */
 @layer utilities {
-  .text-eyebrow {
-    @apply text-[10px] md:text-[11px] lg:text-[12px] uppercase tracking-[0.16em] font-bold;
+  .font-primary { font-family: var(--font-primary); }
+  .font-secondary { font-family: var(--font-secondary); }
+
+  /* Headings with Premium Black Shine (Chamk) */
+  .text-h1 {
+    @apply font-primary text-[38px] md:text-[44px] lg:text-[56px] xl:text-[64px] leading-[1.08] lg:leading-[1.05] max-w-[700px];
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .text-hero-heading {
-    @apply text-[32px] md:text-[40px] lg:text-[52px] xl:text-[60px] font-bold leading-[1.1] tracking-tight;
+  .text-h2 {
+    @apply font-primary text-[32px] md:text-[36px] lg:text-[40px] xl:text-[48px] leading-[1.10] lg:leading-[1.20];
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .text-section-heading {
-    @apply text-[24px] md:text-[28px] lg:text-[32px] xl:text-[36px] font-bold leading-[1.2] tracking-tight;
+  .text-h3 {
+    @apply font-primary text-[24px] md:text-[28px] lg:text-[32px] leading-[1.20];
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .text-product-heading {
-    @apply text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] font-bold leading-[1.2] tracking-tight;
+  .text-h4 {
+    @apply font-primary text-[20px] md:text-[22px] lg:text-[24px] leading-[1.25];
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .text-body-primary {
-    @apply text-[14px] md:text-[15px] lg:text-[16px] leading-[1.6];
+
+  /* Body Text */
+  .text-body-large {
+    @apply font-secondary font-medium text-[17px] lg:text-[18px] leading-[1.6];
   }
-  .text-body-small {
-    @apply text-[13px] md:text-[14px] leading-[1.5];
+  .text-body {
+    @apply font-secondary font-normal text-[15px] lg:text-[16px] leading-[1.6];
+  }
+  .text-small {
+    @apply font-secondary font-medium text-[13px] lg:text-[14px] leading-[1.5];
+  }
+  .text-caption {
+    @apply font-secondary font-medium text-[12px] lg:text-[13px] leading-[1.4];
+  }
+  
+  /* Components */
+  .text-nav {
+    @apply font-secondary font-medium lg:font-semibold text-[14px] lg:text-[15px];
+  }
+  
+  /* Statistics */
+  .text-stat-lg {
+    @apply font-primary font-bold text-[40px] lg:text-[48px];
+  }
+  .text-stat-label {
+    @apply font-secondary font-medium text-[14px] lg:text-[16px];
+  }
+  
+  /* Product Cards */
+  .text-product-title {
+    @apply font-primary text-[20px] lg:text-[22px] text-text-primary;
+  }
+  .text-product-desc {
+    @apply font-secondary font-normal text-[14px] lg:text-[15px] leading-[1.5];
+  }
+  .text-product-label {
+    @apply font-secondary font-semibold text-[12px] lg:text-[13px];
+  }
+  
+  /* Tech Specs */
+  .text-spec-label {
+    @apply font-secondary font-semibold text-[12px] lg:text-[13px];
+  }
+  .text-spec-value {
+    @apply font-secondary font-semibold text-[16px] lg:text-[18px];
+  }
+  
+  /* Standard Button Base */
+  .btn-base {
+    @apply font-secondary font-semibold text-[14px] lg:text-[15px] xl:text-[16px] leading-none h-[48px] lg:h-[52px] px-8 flex items-center justify-center rounded-full transition-colors;
   }
   
   /* Premium Shadow Tokens - Softer for Minimal Aesthetic */
