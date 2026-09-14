@@ -6,6 +6,63 @@ import gelGlueImg from '../assets/credofix-gel-glue.PNG';
 import rapidGlueImg from '../assets/credofix-rapid-glue.PNG';
 import activatorSprayImg from '../assets/activator-spray.PNG';
 
+function ProductFAQItem({ question, answer }) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-gray-100 last:border-b-0">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full py-5 sm:py-6 flex justify-between items-center text-left focus:outline-none group cursor-pointer"
+      >
+        <h4 className={`text-[15px] sm:text-[16px] font-semibold pr-6 transition-colors duration-200 ${isOpen ? 'text-[#FF7A00]' : 'text-[#1A1A2E] group-hover:text-[#FF7A00]'}`}>
+          {question}
+        </h4>
+        <span className={`shrink-0 text-xl sm:text-2xl font-light w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 ${isOpen ? 'bg-orange-50 text-[#FF7A00] rotate-45' : 'bg-gray-100 text-gray-500 group-hover:bg-orange-50 group-hover:text-[#FF7A00]'}`}>
+          +
+        </span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-gray-600 text-[13.5px] sm:text-[14px] leading-relaxed max-w-3xl">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+const productFaqs = [
+  {
+    question: "What products does Dungar Chemicals manufacture?",
+    answer: "Dungar Chemicals specializes in advanced instant-bonding solutions. Our flagship Credofix range includes high-performance Gel Glues, Rapid Glues, and Activator Sprays engineered specifically for Wood, PVC, Acrylic, and Stone applications."
+  },
+  {
+    question: "How is Credofix Gel Glue different from standard adhesives?",
+    answer: "Credofix Gel Glue is a premium, high-viscosity cyanoacrylate adhesive. Unlike standard liquid glues, its thick gel formula prevents dripping and absorption into porous surfaces, making it perfect for vertical applications and seamless woodworking."
+  },
+  {
+    question: "When should I use the Activator Spray with Rapid Glue?",
+    answer: "The Activator Spray is designed to be used with our Rapid Glue to instantly accelerate the curing process. Simply spray the activator on one surface, apply the Rapid Glue to the other, and press them together for a flawless, unbreakable bond within seconds."
+  },
+  {
+    question: "How can I become an authorized dealer for Dungar Chemicals?",
+    answer: "You can join our growing business network by contacting our sales and distribution team through WhatsApp or phone. Once submitted, our business development team will review your application and provide dealership onboarding details."
+  },
+  {
+    question: "What is the shelf life of Credofix instant adhesives?",
+    answer: "When stored properly in a cool, dry place away from direct sunlight, Credofix adhesives maintain peak performance for up to 12 months. We recommend ensuring the cap is tightly sealed after every use to prevent the glue from curing inside the bottle."
+  }
+];
+
 export default function ProductPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState('50g');
@@ -389,6 +446,31 @@ export default function ProductPage() {
 
         </div>
       </div>
+
+      {/* ========================================================
+          FAQ SECTION (Product Page)
+          ======================================================== */}
+      <section id="faq" className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-8 lg:py-12">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl p-6 sm:p-10 lg:p-12 border border-gray-200 shadow-sm">
+          
+          <div className="text-center mb-8 sm:mb-10">
+            <span className="text-[11px] sm:text-[12px] font-bold text-[#FF7A00] uppercase tracking-widest block mb-1.5">Got Questions?</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1A1A2E] tracking-tight">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-[13px] sm:text-[14px] text-gray-500 mt-2 max-w-xl mx-auto">
+              Everything you need to know about Credofix instant bonding adhesives, applications, and usage tips.
+            </p>
+          </div>
+
+          <div className="flex flex-col border-t border-gray-100">
+            {productFaqs.map((faq, index) => (
+              <ProductFAQItem key={index} question={faq.question} answer={faq.answer} />
+            ))}
+          </div>
+
+        </div>
+      </section>
 
     </div>
   );

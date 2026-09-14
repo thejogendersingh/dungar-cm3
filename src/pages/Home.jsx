@@ -13,6 +13,7 @@ import gelGlueImg from '../assets/credofix-gel-glue.PNG';
 import rapidGlueImg from '../assets/credofix-rapid-glue.PNG';
 import activatorSprayImg from '../assets/activator-spray.PNG';
 import heroBgFinalImg from '../assets/hero-bg-finl.PNG';
+import heroPhoneImg from '../assets/hero-phone.PNG';
 function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = "" }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -44,35 +45,6 @@ const heroImages = [
   'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80',
   'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1920&q=80'
 ];
-
-function FAQItem({ question, answer }) {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="border-b border-gray-200">
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-5 md:py-6 flex justify-between items-center text-left focus:outline-none group"
-      >
-        <h4 className={`text-[15px] md:text-[16px] font-semibold pr-8 transition-colors ${isOpen ? 'text-[#FF7A00]' : 'text-[#1A1A2E] group-hover:text-[#FF7A00]'}`}>{question}</h4>
-        <span className={`shrink-0 text-xl md:text-2xl font-light w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isOpen ? 'bg-orange-50 text-[#FF7A00]' : 'bg-gray-50 text-gray-400 group-hover:text-[#FF7A00]'}`}>
-          {isOpen ? '×' : '+'}
-        </span>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <p className="pb-6 text-slate-500 text-[14px] leading-relaxed max-w-4xl">{answer}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
@@ -222,36 +194,43 @@ export default function Home() {
           01 — HERO SECTION (Full Proportional Image — No Cropping)
           ======================================================== */}
       <div className="w-full relative bg-[#1A1A2E] overflow-hidden">
-        {/* Full Image — enlarged on phone with product cluster centered */}
+        {/* Desktop Hero Image (Wide Panoramic 3:1) */}
         <img 
           src={heroBgFinalImg} 
           alt="Credofix Adhesives Range" 
-          className="w-full h-[330px] sm:h-[400px] md:h-auto object-cover object-[58%_center] md:object-center block"
+          className="hidden md:block w-full h-auto object-cover"
+        />
+
+        {/* Mobile / Phone Hero Image (Custom Phone Layout) */}
+        <img 
+          src={heroPhoneImg} 
+          alt="Credofix Adhesives Range" 
+          className="block md:hidden w-full h-auto min-h-[300px] object-cover"
         />
         
-        {/* Subtle Dark Overlay for contrast and readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20 z-0 pointer-events-none"></div>
+        {/* Overlay for contrast and readability */}
+        <div className="absolute inset-0 bg-black/40 md:bg-transparent md:bg-gradient-to-t md:from-black/80 md:via-black/35 md:to-black/20 z-0 pointer-events-none"></div>
 
         {/* Text Content & CTA Overlay */}
-        <section id="hero" className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 w-full flex flex-col justify-end pb-5 sm:pb-8 lg:pb-14">
+        <section id="hero" className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 w-full flex flex-col justify-center items-center text-center md:justify-end md:items-start md:text-left md:pb-14">
           
-          {/* Text Content at Bottom Left */}
-          <div className="w-full sm:w-[70%] md:w-[55%] lg:w-[50%] flex flex-col items-start z-20 mb-2 sm:mb-2 lg:mb-6">
-            <h1 className="text-[19px] sm:text-[26px] md:text-[32px] lg:text-[40px] font-serif leading-[1.22] mb-3 sm:mb-4 lg:mb-5 tracking-wide text-white drop-shadow-md">
-              The enduring bond<br />that lasts a lifetime
+          {/* Text Content: Centered with compact size on mobile, bottom-left on desktop */}
+          <div className="w-full max-w-[290px] sm:max-w-sm md:max-w-none md:mx-0 md:w-[55%] lg:w-[50%] flex flex-col items-center text-center md:items-start md:text-left z-20 mb-0 md:mb-6">
+            <h1 className="text-[15px] sm:text-[18px] md:text-[32px] lg:text-[40px] font-serif leading-[1.25] mb-2.5 sm:mb-3 md:mb-5 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              The enduring bond<br className="hidden xs:inline md:inline" /> that lasts a lifetime
             </h1>
             
-            {/* 2 Pill Buttons at Bottom Left */}
-            <div className="flex flex-row items-center gap-2.5 sm:gap-3.5">
+            {/* 2 Pill Buttons: Small & Centered on mobile */}
+            <div className="flex flex-row items-center justify-center md:justify-start gap-2 sm:gap-3.5">
               <a 
                 href="#products" 
-                className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-7 py-2 sm:py-2 lg:py-2.5 rounded-full bg-white text-black text-[11.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-3 sm:px-6 lg:px-7 py-1.5 sm:py-2 lg:py-2.5 rounded-full bg-white text-black text-[10.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
               >
                 Explore Products
               </a>
               <a 
                 href="tel:+919672444677" 
-                className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-7 py-2 sm:py-2 lg:py-2.5 rounded-full bg-black/40 backdrop-blur-xs border border-white/80 text-white text-[11.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-3 sm:px-6 lg:px-7 py-1.5 sm:py-2 lg:py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[10.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
               >
                 About Dungar
               </a>
@@ -490,29 +469,7 @@ export default function Home() {
             const goNext = () => setMobileProductIndex(prev => (prev + 1) % mobileProducts.length);
 
             return (
-              <div className="block md:hidden relative max-w-[330px] sm:max-w-sm mx-auto px-1">
-                {/* Thin Left Side Arrow */}
-                {mobileProducts.length > 1 && (
-                  <button
-                    onClick={goPrev}
-                    aria-label="Previous product"
-                    className="absolute -left-3 top-[36%] -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white/95 border border-gray-200/90 shadow-md flex items-center justify-center text-gray-700 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all"
-                  >
-                    <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
-                  </button>
-                )}
-
-                {/* Thin Right Side Arrow */}
-                {mobileProducts.length > 1 && (
-                  <button
-                    onClick={goNext}
-                    aria-label="Next product"
-                    className="absolute -right-3 top-[36%] -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white/95 border border-gray-200/90 shadow-md flex items-center justify-center text-gray-700 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all"
-                  >
-                    <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-                  </button>
-                )}
-
+              <div className="block md:hidden relative max-w-[340px] sm:max-w-sm mx-auto px-2">
                 {/* Single Product Card with Swipe Support */}
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -710,7 +667,7 @@ export default function Home() {
                   <Star key={i} className="w-6 h-6 fill-[#FFB900] text-[#FFB900]" />
                 ))}
               </div>
-              <div className="text-[13px] text-gray-600 mb-3 font-medium">Based on <strong>57 reviews</strong></div>
+              <div className="text-[13px] text-gray-600 mb-3 font-medium">Based on <strong>42 verified reviews</strong></div>
               <div className="text-[32px] font-bold tracking-tighter flex items-center justify-center">
                 <span className="text-[#4285F4]">G</span>
                 <span className="text-[#EA4335]">o</span>
@@ -722,18 +679,18 @@ export default function Home() {
             </div>
 
             {/* Right: Review Cards */}
-            <div className="flex-1 flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory w-full hide-scrollbar" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+            <div className="flex-1 flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory w-full hide-scrollbar no-scrollbar" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
               
               {/* Review 1 */}
               <div className="min-w-[280px] md:min-w-[320px] flex-1 bg-white border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] rounded-2xl p-6 text-left flex flex-col relative snap-start">
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
-                      <img src="https://ui-avatars.com/api/?name=Rakesh+B&background=random" alt="Rakesh B" className="w-full h-full object-cover" />
+                      <img src="https://ui-avatars.com/api/?name=Rakesh+B&background=1A1A2E&color=fff" alt="Rakesh B" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Rakesh B</div>
-                      <div className="text-[12px] text-gray-500">11 months ago</div>
+                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Rakesh B.</div>
+                      <div className="text-[12px] text-gray-500">2 weeks ago</div>
                     </div>
                   </div>
                   <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
@@ -752,8 +709,8 @@ export default function Home() {
                     <path d="M10.9 16.6l-4.5-4.5 1.4-1.4 3.1 3.1 7.1-7.1 1.4 1.4-8.5 8.5z" fill="#FFFFFF"/>
                   </svg>
                 </div>
-                <p className="text-[14px] text-gray-700 font-normal leading-relaxed whitespace-pre-line relative z-10">
-                  Amazing company with super strong ethics on customer service.{"\n\n"}Very rare to find such experience.
+                <p className="text-[13.5px] text-gray-700 font-normal leading-relaxed relative z-10">
+                  Recently started using Credofix Gel Glue for PVC edge banding and acrylic sheets. Zero white blooming marks and bonds firmly within seconds. Super impressed with the quality!
                 </p>
               </div>
 
@@ -762,11 +719,11 @@ export default function Home() {
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
-                      <img src="https://ui-avatars.com/api/?name=Shivakumar+K&background=random" alt="Shivakumar K" className="w-full h-full object-cover" />
+                      <img src="https://ui-avatars.com/api/?name=Shivakumar+K&background=FF7A00&color=fff" alt="Shivakumar K" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Shivakumar K</div>
-                      <div className="text-[12px] text-gray-500">3 years ago</div>
+                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Shivakumar K.</div>
+                      <div className="text-[12px] text-gray-500">3 weeks ago</div>
                     </div>
                   </div>
                   <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
@@ -785,22 +742,21 @@ export default function Home() {
                     <path d="M10.9 16.6l-4.5-4.5 1.4-1.4 3.1 3.1 7.1-7.1 1.4 1.4-8.5 8.5z" fill="#FFFFFF"/>
                   </svg>
                 </div>
-                <p className="text-[14px] text-gray-700 font-normal leading-relaxed whitespace-pre-line relative z-10 line-clamp-4">
-                  I found in Google and dropped message. Mr Vibhav called on same day and explain product description which i required.....
+                <p className="text-[13.5px] text-gray-700 font-normal leading-relaxed relative z-10">
+                  Contacted Dungar Chemicals team and Mr. Vibhav explained the adhesives thoroughly. The Rapid Glue with Activator Spray works in just 2 seconds on mitre joints. Very prompt dispatch!
                 </p>
-                <button className="text-[12px] text-gray-400 text-left mt-2 relative z-10 hover:text-gray-600 transition-colors">Read more</button>
               </div>
 
               {/* Review 3 */}
               <div className="min-w-[280px] md:min-w-[320px] flex-1 bg-white border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] rounded-2xl p-6 text-left flex flex-col relative snap-start">
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-amber-700 flex items-center justify-center text-white font-medium text-[16px] overflow-hidden shrink-0">
-                      K
+                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
+                      <img src="https://ui-avatars.com/api/?name=Krishna+S&background=333&color=fff" alt="Krishna S" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Krishna S</div>
-                      <div className="text-[12px] text-gray-500">3 years ago</div>
+                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Krishna Sharma</div>
+                      <div className="text-[12px] text-gray-500">1 month ago</div>
                     </div>
                   </div>
                   <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
@@ -819,8 +775,41 @@ export default function Home() {
                     <path d="M10.9 16.6l-4.5-4.5 1.4-1.4 3.1 3.1 7.1-7.1 1.4 1.4-8.5 8.5z" fill="#FFFFFF"/>
                   </svg>
                 </div>
-                <p className="text-[14px] text-gray-700 font-normal leading-relaxed whitespace-pre-line relative z-10">
-                  Excellent
+                <p className="text-[13.5px] text-gray-700 font-normal leading-relaxed relative z-10">
+                  Switched to Credofix for our modular furniture work last month. The thick gel formula does not drip on vertical panels. Excellent bonding strength and clean aesthetic finish.
+                </p>
+              </div>
+
+              {/* Review 4 */}
+              <div className="min-w-[280px] md:min-w-[320px] flex-1 bg-white border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] rounded-2xl p-6 text-left flex flex-col relative snap-start">
+                <div className="flex items-start justify-between mb-4 relative z-10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
+                      <img src="https://ui-avatars.com/api/?name=Amit+P&background=1A1A2E&color=FF7A00" alt="Amit Patel" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <div className="text-[14px] font-bold text-[#1A1A2E] leading-tight mb-0.5">Amit Patel</div>
+                      <div className="text-[12px] text-gray-500">1 month ago</div>
+                    </div>
+                  </div>
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                </div>
+                <div className="flex items-center gap-1 mb-3 relative z-10">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#FFB900] text-[#FFB900]" />
+                  ))}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="ml-1">
+                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" fill="#4285F4"/>
+                    <path d="M10.9 16.6l-4.5-4.5 1.4-1.4 3.1 3.1 7.1-7.1 1.4 1.4-8.5 8.5z" fill="#FFFFFF"/>
+                  </svg>
+                </div>
+                <p className="text-[13.5px] text-gray-700 font-normal leading-relaxed relative z-10">
+                  Started stocking Credofix adhesives at our hardware store. Great dealer support from Dungar Chemicals team and carpenters are already asking specifically for this brand.
                 </p>
               </div>
 
@@ -830,44 +819,7 @@ export default function Home() {
       </section>
 
       {/* ========================================================
-          05 — FAQ SECTION
-          ======================================================== */}
-      <section id="faq" className="bg-white pt-8 pb-8 lg:pt-12 lg:pb-8 relative z-10 w-full border-t border-gray-100">
-        <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-12">
-          
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight text-center mb-10">
-            FAQ's
-          </h2>
-          
-          {/* ... faq content ... */}
-          <div className="flex flex-col border-t border-gray-200">
-            <FAQItem 
-              question="What products does Dungar Chemicals manufacture?" 
-              answer="Dungar Chemicals specializes in advanced instant-bonding solutions. Our flagship Credofix range includes high-performance Gel Glues, Rapid Glues, and Activator Sprays engineered specifically for Wood, PVC, Acrylic, and Stone applications." 
-            />
-            <FAQItem 
-              question="How is Credofix Gel Glue different from standard adhesives?" 
-              answer="Credofix Gel Glue is a premium, high-viscosity cyanoacrylate adhesive. Unlike standard liquid glues, its thick gel formula prevents dripping and absorption into porous surfaces, making it perfect for vertical applications and seamless woodworking." 
-            />
-            <FAQItem 
-              question="When should I use the Activator Spray with Rapid Glue?" 
-              answer="The Activator Spray is designed to be used with our Rapid Glue to instantly accelerate the curing process. Simply spray the activator on one surface, apply the Rapid Glue to the other, and press them together for a flawless, unbreakable bond within seconds." 
-            />
-            <FAQItem 
-              question="How can I become an authorized dealer for Dungar Chemicals?" 
-              answer="You can join our growing business network by filling out the 'Become a Dealer' form at the bottom of this page. Once submitted, our business development team will review your application and contact you directly via WhatsApp or phone." 
-            />
-            <FAQItem 
-              question="What is the shelf life of Credofix instant adhesives?" 
-              answer="When stored properly in a cool, dry place away from direct sunlight, Credofix adhesives maintain peak performance for up to 12 months. We recommend ensuring the cap is tightly sealed after every use to prevent the glue from curing inside the bottle." 
-            />
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================
-          06 — CONTACT DETAILS (BOLD BANNER)
+          05 — CONTACT DETAILS (BOLD BANNER)
           ======================================================== */}
       <section id="cta" className="bg-white pt-4 pb-8 lg:pt-6 lg:pb-12 w-full relative z-10">
         <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-12">
