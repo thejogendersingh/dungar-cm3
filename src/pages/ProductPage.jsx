@@ -168,7 +168,7 @@ export default function ProductPage() {
         </div>
 
         {/* Main Card Container */}
-        <div className="bg-white rounded-3xl p-6 md:p-10 lg:p-12 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-200 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-16 relative overflow-hidden">
+        <div className="bg-white rounded-3xl p-6 md:p-10 lg:p-12 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-200 flex flex-col-reverse lg:flex-row items-stretch gap-8 lg:gap-16 relative overflow-hidden">
           
           <AnimatePresence custom={direction} mode="wait">
             
@@ -192,18 +192,9 @@ export default function ProductPage() {
                 {currentProduct.name} <br />
                 <span className={currentProduct.accentText}>{currentProduct.subtitle}</span>
               </h1>
-              
-              <div className="text-[12px] lg:text-[13px] text-gray-500 my-4 leading-relaxed max-w-lg font-medium space-y-2">
-                {currentProduct.desc.split('\n').map((line, i) => (
-                  <p key={i} className="flex items-start">
-                    <span className="text-[#FF1840] mr-2 text-[14px] leading-tight">•</span> 
-                    <span>{line}</span>
-                  </p>
-                ))}
-              </div>
 
               {/* Size Selector */}
-              <div className="mb-5">
+              <div className="mt-4 mb-2">
                 <h3 className="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2.5">Available Sizes</h3>
                 <div className="flex flex-wrap gap-2">
                   {currentProduct.sizes.map((size) => (
@@ -220,6 +211,15 @@ export default function ProductPage() {
                     </button>
                   ))}
                 </div>
+              </div>
+              
+              <div className="text-[12px] lg:text-[13px] text-gray-500 my-4 leading-relaxed max-w-lg font-medium space-y-2">
+                {currentProduct.desc.split('\n').map((line, i) => (
+                  <p key={i} className="flex items-start">
+                    <span className="text-[#FF1840] mr-2 text-[14px] leading-tight">•</span> 
+                    <span>{line}</span>
+                  </p>
+                ))}
               </div>
 
               {/* Action Buttons */}

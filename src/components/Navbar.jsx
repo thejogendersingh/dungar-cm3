@@ -160,17 +160,17 @@ export default function Navbar() {
                 <a 
                   href="/brochure.pdf" 
                   onClick={() => setIsOpen(false)}
-                  className="flex justify-center items-center w-full bg-amber-500 hover:bg-slate-900 hover:text-white transition-colors text-slate-900 h-12 rounded-full text-[13px] font-bold tracking-wide shadow-sm gap-2 group"
+                  className="flex justify-center items-center w-full bg-gradient-to-r from-[#FF6B35] to-[#FF1840] hover:shadow-md hover:opacity-90 transition-all text-white h-12 rounded-full text-[13px] font-bold tracking-wide shadow-sm gap-2 group"
                 >
                   <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
                   DOWNLOAD BROCHURE
                 </a>
                 
                 <div className="flex items-center justify-between w-full text-slate-600 px-2">
-                  <a href="tel:+919672444677" className="hover:text-amber-500 transition-colors flex items-center gap-2 text-[13px] font-semibold">
+                  <a href="tel:+919672444677" className="hover:text-[#FF1840] transition-colors flex items-center gap-2 text-[13px] font-semibold">
                     <Phone size={15} /> Call Us
                   </a>
-                  <a href="mailto:info@dungarchemicals.com" className="hover:text-amber-500 transition-colors flex items-center gap-2 text-[13px] font-semibold">
+                  <a href="mailto:info@dungarchemicals.com" className="hover:text-[#FF1840] transition-colors flex items-center gap-2 text-[13px] font-semibold">
                     <Mail size={15} /> Email Us
                   </a>
                 </div>
