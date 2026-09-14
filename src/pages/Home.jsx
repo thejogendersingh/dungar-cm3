@@ -252,12 +252,12 @@ export default function Home() {
           </div>
 
           {/* Right Image Composition */}
-          <div className="w-full lg:w-[45%] h-[350px] sm:h-[450px] lg:h-full flex items-center justify-center lg:justify-end mb-2 lg:mb-0 mt-4 lg:mt-0 relative">
-            <div className="relative w-full h-[100%] lg:h-[90%] max-h-[600px] max-w-[600px] flex items-center justify-center z-10">
+          <div className="w-full lg:w-[45%] h-[350px] sm:h-[450px] lg:h-full flex items-center justify-center lg:justify-end mb-4 lg:mb-0 mt-4 lg:mt-0 relative">
+            <div className="relative w-full h-[100%] lg:h-[90%] max-h-[600px] max-w-[600px] flex items-center justify-center z-10 bg-gradient-to-br from-white to-[#f8f9fa] rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-white p-6 sm:p-8 transition-all hover:shadow-[0_15px_50px_rgba(0,0,0,0.09)]">
               <img 
                 src={hero1Img} 
                 alt="Dungar Industrial Adhesives" 
-                className="w-full h-full object-contain scale-110 lg:scale-100 drop-shadow-2xl hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-contain scale-105 lg:scale-100 drop-shadow-xl hover:scale-[1.08] transition-transform duration-700"
               />
             </div>
           </div>
