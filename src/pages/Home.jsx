@@ -219,49 +219,42 @@ export default function Home() {
       {/* ========================================================
           01 — HERO SECTION (Small Split Layout)
           ======================================================== */}
-      <div className="w-full bg-[#EAE8E3]">
-        <section id="hero" className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full lg:min-h-[70vh] min-h-[100vh] flex flex-col-reverse lg:flex-row items-center justify-between pt-6 pb-12 lg:py-16 overflow-hidden">
+      <div 
+        className="w-full relative bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://images.pexels.com/photos/1036814/pexels-photo-1036814.jpeg?auto=compress&cs=tinysrgb&w=1920')" }}
+      >
+        <div className="absolute inset-0 bg-black/60 z-0"></div>
+        <section id="hero" className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full min-h-[80vh] lg:min-h-0 lg:h-[65vh] flex flex-col justify-end pb-12 lg:pb-20 pt-32 overflow-hidden relative z-10">
           
-          {/* Left Text Content */}
-          <div className="w-full lg:w-[55%] flex flex-col items-start z-20">
-            <h1 className="text-[36px] md:text-[48px] lg:text-[56px] font-bold text-[#1A1A2E] leading-[1.1] mb-1 tracking-tight">
+          {/* Text Content at Bottom Left */}
+          <div className="w-full lg:w-[70%] flex flex-col items-start z-20 text-white">
+            <h1 className="text-[36px] md:text-[48px] lg:text-[60px] font-bold leading-[1.1] mb-1 tracking-tight">
               India's most trusted
             </h1>
-            <h1 className="text-[36px] md:text-[48px] lg:text-[56px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#FF1840] leading-[1.1] mb-6 tracking-tight">
+            <h1 className="text-[36px] md:text-[48px] lg:text-[60px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#FF1840] leading-[1.1] mb-6 tracking-tight">
               Industrial Adhesives &<br className="hidden lg:block" /> Sealants
             </h1>
             
-            <p className="text-[14px] md:text-[15px] lg:text-[16px] text-[#1A1A2E]/80 mb-10 max-w-[620px] font-medium leading-[1.7]">
-              Home to the trusted <strong>Credofix</strong> product line, we manufacture India’s most reliable, instant-bonding solutions. Engineered for uncompromising strength and flawless, zero-residue finishes, our premium Gel Glues, Rapid Glues, and Activator Sprays are the first choice for professionals working with Wood, PVC, Acrylic, and Stone.
+            <p className="text-[14px] md:text-[16px] lg:text-[18px] text-white/90 mb-10 max-w-[620px] font-medium leading-[1.7]">
+              Home to the trusted <strong>Credofix</strong> product line, we manufacture India’s most reliable, instant-bonding solutions. Engineered for uncompromising strength and flawless, zero-residue finishes.
             </p>
             
-            <div className="flex flex-row items-center gap-2 sm:gap-4 w-full">
+            {/* 2 Buttons at Bottom Left */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
               <a 
                 href="#products" 
-                className="flex-1 sm:flex-none inline-flex items-center justify-center px-2 sm:px-7 py-3 rounded-sm bg-gradient-to-r from-[#FF6B35] to-[#FF1840] text-white text-[10px] sm:text-[12px] font-bold uppercase tracking-wider hover:shadow-lg hover:opacity-90 transition-all shadow-sm whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 rounded-sm bg-gradient-to-r from-[#FF6B35] to-[#FF1840] text-white text-[12px] font-bold uppercase tracking-wider hover:shadow-lg hover:opacity-90 transition-all shadow-sm whitespace-nowrap"
               >
-                VIEW PRODUCTS <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1.5" />
+                VIEW PRODUCTS <ArrowRight className="w-4 h-4 ml-1.5" />
               </a>
               <a 
                 href="tel:+919672444677" 
-                className="flex-1 sm:flex-none inline-flex items-center justify-center px-2 sm:px-7 py-3 rounded-sm bg-transparent border-2 border-[#1A1A2E] text-[#1A1A2E] text-[10px] sm:text-[12px] font-bold uppercase tracking-wider hover:bg-[#1A1A2E] hover:text-white transition-colors whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 rounded-sm bg-transparent border-2 border-white text-white text-[12px] font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-colors whitespace-nowrap"
               >
                 TALK TO EXPERT
               </a>
             </div>
           </div>
-
-          {/* Right Image Composition */}
-          <div className="w-full lg:w-[45%] h-[350px] sm:h-[450px] lg:h-full flex items-center justify-center lg:justify-end mb-4 lg:mb-0 mt-4 lg:mt-0 relative">
-            <div className="relative w-full h-[100%] lg:h-[90%] max-h-[600px] max-w-[600px] flex items-center justify-center z-10 bg-gradient-to-br from-white to-[#f8f9fa] rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-white p-6 sm:p-8 transition-all hover:shadow-[0_15px_50px_rgba(0,0,0,0.09)]">
-              <img 
-                src={hero1Img} 
-                alt="Dungar Industrial Adhesives" 
-                className="w-full h-full object-contain scale-105 lg:scale-100 drop-shadow-xl hover:scale-[1.08] transition-transform duration-700"
-              />
-            </div>
-          </div>
-
         </section>
       </div>
 
