@@ -30,16 +30,16 @@ export default function Footer() {
               Premium adhesive solutions for stronger bonds, better builds, and reliable woodworking applications.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF1840] hover:text-white transition-colors duration-300">
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF7A00] hover:text-white transition-colors duration-300">
                 <FaFacebookF size={16} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF1840] hover:text-white transition-colors duration-300">
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF7A00] hover:text-white transition-colors duration-300">
                 <FaInstagram size={16} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF1840] hover:text-white transition-colors duration-300">
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF7A00] hover:text-white transition-colors duration-300">
                 <FaLinkedinIn size={16} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF1840] hover:text-white transition-colors duration-300">
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#FF7A00] hover:text-white transition-colors duration-300">
                 <FaXTwitter size={16} />
               </a>
             </div>
@@ -52,7 +52,7 @@ export default function Footer() {
               <h3 className="text-[13px] font-semibold text-white tracking-wider mb-6 uppercase">Quick Links</h3>
               <div className="flex flex-col gap-4">
                 {quickLinks.map((link) => (
-                  <a key={link.name} href={link.href} className="text-white/60 hover:text-[#FF1840] hover:translate-x-1 transition-all duration-300 text-[14px] w-fit">
+                  <a key={link.name} href={link.href} className="text-white/60 hover:text-[#FF7A00] hover:translate-x-1 transition-all duration-300 text-[14px] w-fit">
                     {link.name}
                   </a>
                 ))}
@@ -64,7 +64,7 @@ export default function Footer() {
               <h3 className="text-[13px] font-semibold text-white tracking-wider mb-6 uppercase">Information</h3>
               <div className="flex flex-col gap-4">
                 {policies.map((link) => (
-                  <a key={link.name} href={link.href} className="text-white/60 hover:text-[#FF1840] hover:translate-x-1 transition-all duration-300 text-[14px] w-fit">
+                  <a key={link.name} href={link.href} className="text-white/60 hover:text-[#FF7A00] hover:translate-x-1 transition-all duration-300 text-[14px] w-fit">
                     {link.name}
                   </a>
                 ))}
@@ -78,7 +78,7 @@ export default function Footer() {
               <h3 className="text-[13px] font-semibold text-white tracking-wider mb-6 uppercase">Connect With Us</h3>
               <div className="flex flex-col gap-5">
                 <div className="flex items-start gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-[#FF1840] transition-colors shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-[#FF7A00] transition-colors shrink-0">
                     <MapPin size={18} />
                   </div>
                   <div>
@@ -87,16 +87,16 @@ export default function Footer() {
                   </div>
                 </div>
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-[#FF1840] transition-colors shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-[#FF7A00] transition-colors shrink-0">
                     <Phone size={18} />
                   </div>
-                  <a href="tel:+919672444677" className="text-white/60 hover:text-[#FF1840] transition-colors text-[14px]">+91-9672444677</a>
+                  <a href="tel:+919672444677" className="text-white/60 hover:text-[#FF7A00] transition-colors text-[14px]">+91-9672444677</a>
                 </div>
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-[#FF1840] transition-colors shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-[#FF7A00] transition-colors shrink-0">
                     <Mail size={18} />
                   </div>
-                  <a href="mailto:team@dungarchemicals.com" className="text-white/60 hover:text-[#FF1840] transition-colors text-[14px]">team@dungarchemicals.com</a>
+                  <a href="mailto:team@dungarchemicals.com" className="text-white/60 hover:text-[#FF7A00] transition-colors text-[14px]">team@dungarchemicals.com</a>
                 </div>
               </div>
             </div>

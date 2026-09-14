@@ -12,6 +12,7 @@ import aplicationPhoneImg from '../assets/aplication-phone.PNG';
 import gelGlueImg from '../assets/credofix-gel-glue.PNG';
 import rapidGlueImg from '../assets/credofix-rapid-glue.PNG';
 import activatorSprayImg from '../assets/activator-spray.PNG';
+import heroBgFinalImg from '../assets/hero-bg-finl.PNG';
 function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = "" }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -52,8 +53,8 @@ function FAQItem({ question, answer }) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-5 md:py-6 flex justify-between items-center text-left focus:outline-none group"
       >
-        <h4 className="text-[15px] md:text-[16px] font-semibold text-[#1A1A2E] pr-8 transition-colors">{question}</h4>
-        <span className="shrink-0 text-xl md:text-2xl font-light text-gray-400 w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 transition-colors">
+        <h4 className={`text-[15px] md:text-[16px] font-semibold pr-8 transition-colors ${isOpen ? 'text-[#FF7A00]' : 'text-[#1A1A2E] group-hover:text-[#FF7A00]'}`}>{question}</h4>
+        <span className={`shrink-0 text-xl md:text-2xl font-light w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isOpen ? 'bg-orange-50 text-[#FF7A00]' : 'bg-gray-50 text-gray-400 group-hover:text-[#FF7A00]'}`}>
           {isOpen ? '×' : '+'}
         </span>
       </button>
@@ -76,6 +77,7 @@ function FAQItem({ question, answer }) {
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState('All Products');
+  const [mobileProductIndex, setMobileProductIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [activeApp, setActiveApp] = useState(0);
 
@@ -217,200 +219,405 @@ export default function Home() {
     <div className="w-full bg-bg-primary text-text-primary selection:bg-surface-dark selection:text-white overflow-x-hidden">
       
       {/* ========================================================
-          01 — HERO SECTION (Small Split Layout)
+          01 — HERO SECTION (Full Proportional Image — No Cropping)
           ======================================================== */}
-      <div 
-        className="w-full relative bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://images.pexels.com/photos/1036814/pexels-photo-1036814.jpeg?auto=compress&cs=tinysrgb&w=1920')" }}
-      >
-        <div className="absolute inset-0 bg-black/60 z-0"></div>
-        <section id="hero" className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full min-h-[80vh] lg:min-h-0 lg:h-[65vh] flex flex-col justify-end pb-12 lg:pb-20 pt-32 overflow-hidden relative z-10">
+      <div className="w-full relative bg-[#1A1A2E] overflow-hidden">
+        {/* Full Image — enlarged on phone with product cluster centered */}
+        <img 
+          src={heroBgFinalImg} 
+          alt="Credofix Adhesives Range" 
+          className="w-full h-[330px] sm:h-[400px] md:h-auto object-cover object-[58%_center] md:object-center block"
+        />
+        
+        {/* Subtle Dark Overlay for contrast and readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20 z-0 pointer-events-none"></div>
+
+        {/* Text Content & CTA Overlay */}
+        <section id="hero" className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 w-full flex flex-col justify-end pb-5 sm:pb-8 lg:pb-14">
           
           {/* Text Content at Bottom Left */}
-          <div className="w-full lg:w-[70%] flex flex-col items-start z-20 text-white">
-            <h1 className="text-[36px] md:text-[48px] lg:text-[60px] font-bold leading-[1.1] mb-1 tracking-tight">
-              India's most trusted
-            </h1>
-            <h1 className="text-[36px] md:text-[48px] lg:text-[60px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#FF1840] leading-[1.1] mb-6 tracking-tight">
-              Industrial Adhesives &<br className="hidden lg:block" /> Sealants
+          <div className="w-full sm:w-[70%] md:w-[55%] lg:w-[50%] flex flex-col items-start z-20 mb-2 sm:mb-2 lg:mb-6">
+            <h1 className="text-[19px] sm:text-[26px] md:text-[32px] lg:text-[40px] font-serif leading-[1.22] mb-3 sm:mb-4 lg:mb-5 tracking-wide text-white drop-shadow-md">
+              The enduring bond<br />that lasts a lifetime
             </h1>
             
-            <p className="text-[14px] md:text-[16px] lg:text-[18px] text-white/90 mb-10 max-w-[620px] font-medium leading-[1.7]">
-              Home to the trusted <strong>Credofix</strong> product line, we manufacture India’s most reliable, instant-bonding solutions. Engineered for uncompromising strength and flawless, zero-residue finishes.
-            </p>
-            
-            {/* 2 Buttons at Bottom Left */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            {/* 2 Pill Buttons at Bottom Left */}
+            <div className="flex flex-row items-center gap-2.5 sm:gap-3.5">
               <a 
                 href="#products" 
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 rounded-sm bg-gradient-to-r from-[#FF6B35] to-[#FF1840] text-white text-[12px] font-bold uppercase tracking-wider hover:shadow-lg hover:opacity-90 transition-all shadow-sm whitespace-nowrap"
+                className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-7 py-2 sm:py-2 lg:py-2.5 rounded-full bg-white text-black text-[11.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
               >
-                VIEW PRODUCTS <ArrowRight className="w-4 h-4 ml-1.5" />
+                Explore Products
               </a>
               <a 
                 href="tel:+919672444677" 
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 rounded-sm bg-transparent border-2 border-white text-white text-[12px] font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-colors whitespace-nowrap"
+                className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-7 py-2 sm:py-2 lg:py-2.5 rounded-full bg-black/40 backdrop-blur-xs border border-white/80 text-white text-[11.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
               >
-                TALK TO EXPERT
+                About Dungar
               </a>
             </div>
+          </div>
+
+          {/* Slider Dots Indicator */}
+          <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 z-20 pointer-events-none">
+            <div className="w-6 sm:w-8 h-1 sm:h-1.5 bg-white rounded-full"></div>
+            <div className="w-1.5 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full"></div>
+            <div className="w-1.5 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full"></div>
           </div>
         </section>
       </div>
 
       {/* ========================================================
-          01.5 — WHY CHOOSE US SECTION
+          01.5 — TRUST STRIP (2-Row Running Marquee)
           ======================================================== */}
-      <div className="w-full bg-white pt-16 lg:pt-24 pb-8 lg:pb-12">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full text-center">
-          
-          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-medium text-[#1A1A2E] leading-tight mb-14 tracking-tight">
-            Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#FF1840] font-semibold">professionals</span> choose Dungar
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-            
-            {/* Card 1 */}
-            <div className="flex flex-col p-8 rounded-md border border-gray-200 hover:border-[#FF1840]/30 hover:shadow-sm transition-all duration-300 group bg-white h-full">
-              <div className="mb-6">
-                <Microscope strokeWidth={1.5} className="w-10 h-10 text-[#1A1A2E] group-hover:text-[#FF1840] transition-colors" />
+      <div className="w-full bg-white py-8 sm:py-10 overflow-hidden flex flex-col gap-6">
+        {/* Row 1 — scrolls left */}
+        <div className="flex animate-marquee items-center gap-14 sm:gap-20 md:gap-28 pr-14 sm:pr-20 md:pr-28">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="flex items-center gap-14 sm:gap-20 md:gap-28 shrink-0">
+              <span className="text-[13px] sm:text-[15px] font-black italic uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap shrink-0">Heavy Duty</span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Star strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+                <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Pro Grade</span>
               </div>
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-[17px] font-semibold text-[#1A1A2E] mb-3 leading-snug h-[52px]">
-                  Precision<br className="hidden lg:block" /> Formulation
-                </h3>
-                <p className="text-[14px] text-gray-500 leading-relaxed font-normal flex-1">
-                  Every batch is rigorously lab-tested for viscosity, cure time, and color stability to guarantee consistent, reliable results.
-                </p>
+              <span className="text-[13px] sm:text-[15px] font-medium italic font-serif text-[#1A1A2E] whitespace-nowrap shrink-0">Long Lasting</span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <ShieldCheck strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+                <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Trusted</span>
               </div>
+              <span className="text-[12px] sm:text-[13px] font-bold uppercase tracking-widest text-[#1A1A2E] border border-[#1A1A2E] px-3 py-1 whitespace-nowrap shrink-0">All Weather</span>
             </div>
-
-            {/* Card 2 */}
-            <div className="flex flex-col p-8 rounded-md border border-gray-200 hover:border-[#FF1840]/30 hover:shadow-sm transition-all duration-300 group bg-white h-full">
-              <div className="mb-6">
-                <Layers strokeWidth={1.5} className="w-10 h-10 text-[#1A1A2E] group-hover:text-[#FF1840] transition-colors" />
+          ))}
+        </div>
+        {/* Row 2 — scrolls right */}
+        <div className="flex animate-marquee-reverse items-center gap-14 sm:gap-20 md:gap-28 pr-14 sm:pr-20 md:pr-28">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="flex items-center gap-14 sm:gap-20 md:gap-28 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Award strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+                <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Premium Quality</span>
               </div>
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-[17px] font-semibold text-[#1A1A2E] mb-3 leading-snug h-[52px]">
-                  Unmatched<br className="hidden lg:block" /> Adhesion Strength
-                </h3>
-                <p className="text-[14px] text-gray-500 leading-relaxed font-normal flex-1">
-                  Bonds diverse materials like glass, metal, concrete, wood, and composites with exceptionally superior tensile and peel strength.
-                </p>
+              <span className="text-[13px] sm:text-[15px] font-black italic uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap shrink-0">Instant Bond</span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Droplet strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+                <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Zero Residue</span>
               </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Zap strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+                <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Fast Cure</span>
+              </div>
+              <span className="text-[12px] sm:text-[13px] font-bold uppercase tracking-widest text-[#1A1A2E] border border-[#1A1A2E] px-3 py-1 whitespace-nowrap shrink-0">Eco Friendly</span>
             </div>
-
-            {/* Card 3 */}
-            <div className="flex flex-col p-8 rounded-md border border-gray-200 hover:border-[#FF1840]/30 hover:shadow-sm transition-all duration-300 group bg-white h-full">
-              <div className="mb-6">
-                <Sun strokeWidth={1.5} className="w-10 h-10 text-[#1A1A2E] group-hover:text-[#FF1840] transition-colors" />
-              </div>
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-[17px] font-semibold text-[#1A1A2E] mb-3 leading-snug h-[52px]">
-                  Weather & UV<br className="hidden lg:block" /> Resistance
-                </h3>
-                <p className="text-[14px] text-gray-500 leading-relaxed font-normal flex-1">
-                  Engineered to withstand severe climate extremes, providing excellent resistance against high humidity, intense heat, and heavy monsoons.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="flex flex-col p-8 rounded-md border border-gray-200 hover:border-[#FF1840]/30 hover:shadow-sm transition-all duration-300 group bg-white h-full">
-              <div className="mb-6">
-                <Handshake strokeWidth={1.5} className="w-10 h-10 text-[#1A1A2E] group-hover:text-[#FF1840] transition-colors" />
-              </div>
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-[17px] font-semibold text-[#1A1A2E] mb-3 leading-snug h-[52px]">
-                  Trusted by<br className="hidden lg:block" /> Professionals
-                </h3>
-                <p className="text-[14px] text-gray-500 leading-relaxed font-normal flex-1">
-                  Relied upon by top builders, leading contractors, and OEMs across major glazing, infrastructure, and demanding automotive projects.
-                </p>
-              </div>
-            </div>
-
-          </div>
+          ))}
         </div>
       </div>
 
       {/* ========================================================
-          03 — OUR PRODUCTS (SIMPLE GRID)
+          03 — PREMIUM COLLECTION (Carousel)
           ======================================================== */}
-      <section id="products" className="bg-white pt-4 lg:pt-6 pb-16 lg:pb-24 relative z-20 w-full">
+      <section id="products" className="bg-[#f5f5f5] py-10 lg:py-16 relative z-20 w-full">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full">
-          
-          <div className="text-center mb-16">
-            <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-semibold text-[#333333] mb-4 tracking-tight">
-              High-Performance Industrial Adhesives & Sealants
+
+          <div className="text-center mb-8">
+            <h2 className="text-[32px] md:text-[40px] lg:text-[48px] font-bold font-serif text-[#1A1A2E] mb-4 tracking-tight">
+              Premium Collection
             </h2>
-            <p className="text-[16px] text-gray-500 font-normal">
-              Best Adhesives for Industrial, Construction, Electronics and more
+            <p className="text-[14px] sm:text-[16px] text-gray-500 font-normal max-w-[600px] mx-auto">
+              Industry-leading synthetic adhesives designed for maximum durability and uncompromised bond strength.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 w-full">
-            
-            {/* Card 1 */}
-            <Link to="/product" className="flex flex-col group items-center text-center cursor-pointer">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden mb-5 flex items-center justify-center p-8 bg-[#EAE8E3] group-hover:-translate-y-1 transition-all duration-500">
-                <img src={gelGlueImg} alt="Credofix GEL GLUE" className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <h3 className="text-[16px] font-medium text-[#222222] mb-4 leading-snug">
-                Credofix GEL GLUE
-              </h3>
-              <span className="inline-flex px-6 py-2 border border-gray-300 text-gray-700 text-[12px] font-medium rounded group-hover:bg-gray-50 transition-colors tracking-widest uppercase">
-                VIEW DETAILS
-              </span>
-            </Link>
-
-            {/* Card 2 */}
-            <Link to="/product" className="flex flex-col group items-center text-center cursor-pointer">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden mb-5 flex items-center justify-center p-8 bg-[#EAE8E3] group-hover:-translate-y-1 transition-all duration-500">
-                <img src={rapidGlueImg} alt="Credofix RAPID GLUE" className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <h3 className="text-[16px] font-medium text-[#222222] mb-4 leading-snug">
-                Credofix RAPID GLUE
-              </h3>
-              <span className="inline-flex px-6 py-2 border border-gray-300 text-gray-700 text-[12px] font-medium rounded group-hover:bg-gray-50 transition-colors tracking-widest uppercase">
-                VIEW DETAILS
-              </span>
-            </Link>
-
-            {/* Card 3 */}
-            <Link to="/product" className="flex flex-col group items-center text-center cursor-pointer">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden mb-5 flex items-center justify-center p-8 bg-[#EAE8E3] group-hover:-translate-y-1 transition-all duration-500">
-                <img src={activatorSprayImg} alt="Credofix ACTIVATOR SPRAY" className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <h3 className="text-[16px] font-medium text-[#222222] mb-4 leading-snug">
-                Credofix ACTIVATOR SPRAY
-              </h3>
-              <span className="inline-flex px-6 py-2 border border-gray-300 text-gray-700 text-[12px] font-medium rounded group-hover:bg-gray-50 transition-colors tracking-widest uppercase">
-                VIEW DETAILS
-              </span>
-            </Link>
-            {/* Card 4 - Coming Soon */}
-            <div className="flex flex-col group h-full">
-              <div className="bg-gradient-to-br from-[#1A1A2E] to-[#2D2D44] w-full aspect-square rounded-md overflow-hidden mb-5 flex items-center justify-center p-8 relative shadow-inner">
-                <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent pointer-events-none"></div>
-                <div className="text-center z-10 flex flex-col items-center justify-center h-full">
-                  <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center mx-auto mb-5 text-white/50 text-[24px] font-light">
-                    +
-                  </div>
-                  <p className="text-white/70 text-[12px] font-medium tracking-widest uppercase leading-relaxed max-w-[180px]">
-                    New Formulations In Development
-                  </p>
-                </div>
-              </div>
-              <h3 className="text-[16px] font-medium text-gray-400 mb-5 leading-snug">
-                More innovations coming soon...
-              </h3>
-              <div className="mt-auto self-start px-5 py-2 border border-gray-200 text-gray-400 text-[13px] font-medium rounded bg-gray-50/50">
-                STAY TUNED
-              </div>
+          {/* Filter Tabs with animated sliding black pill */}
+          <div className="w-full flex justify-center px-2 mb-8 sm:mb-10">
+            <div className="flex items-center justify-start sm:justify-center p-1 sm:p-1.5 bg-gray-100/90 rounded-full w-fit max-w-full border border-gray-200/80 overflow-x-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              {['All Products', 'Gel Glue', 'Rapid Glue', 'Activator Spray'].map((tab) => {
+                const isActive = activeCategory === tab;
+                return (
+                  <button 
+                    key={tab}
+                    onClick={() => {
+                      setActiveCategory(tab);
+                      setMobileProductIndex(0);
+                    }}
+                    className={`relative px-3 sm:px-6 py-1.5 sm:py-2.5 text-[11.5px] sm:text-[14px] font-semibold tracking-wide transition-colors duration-300 whitespace-nowrap rounded-full cursor-pointer shrink-0 ${
+                      isActive 
+                        ? 'text-[#FF7A00]' 
+                        : 'text-[#1A1A2E] hover:text-[#FF7A00]'
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeFilterPill"
+                        className="absolute inset-0 bg-[#1A1A2E] rounded-full shadow-sm"
+                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                      />
+                    )}
+                    <span className="relative z-10">{tab}</span>
+                  </button>
+                );
+              })}
             </div>
-
           </div>
+
+          {/* Desktop Product Cards Grid (md and up) */}
+          <motion.div layout className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <AnimatePresence mode="popLayout">
+              {[
+                {
+                  id: 'gel-glue',
+                  category: 'Gel Glue',
+                  name: 'Credofix Gel Glue',
+                  tagline: 'High-Viscosity Instant Gel',
+                  desc: 'Super strong instant bonding gel with non-drip formula, ideal for vertical surfaces & precision joints.',
+                  specs: ['Non-Drip Formula', 'Anti-Blooming', 'All-Weather'],
+                  img: gelGlueImg
+                },
+                {
+                  id: 'rapid-glue',
+                  category: 'Rapid Glue',
+                  name: 'Credofix Rapid Glue',
+                  tagline: 'Ultra-Fast Liquid Adhesive',
+                  desc: 'Ultra-fast curing industrial adhesive engineered to penetrate micro-gaps and bond firmly in 5-10 seconds.',
+                  specs: ['5-10s Curing', 'High Penetration', 'Invisible Joints'],
+                  img: rapidGlueImg
+                },
+                {
+                  id: 'activator-spray',
+                  category: 'Activator Spray',
+                  name: 'Credofix Activator Spray',
+                  tagline: 'Aerosol Curing Accelerator',
+                  desc: 'High-performance curing accelerator aerosol spray that bonds substrates instantly across difficult surfaces.',
+                  specs: ['Instant Cure', 'Uniform Spray', 'Porous Surfaces'],
+                  img: activatorSprayImg
+                }
+              ]
+                .filter(p => activeCategory === 'All Products' || p.category === activeCategory)
+                .map((product) => (
+                  <motion.div
+                    key={product.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Link 
+                      to="/product" 
+                      className="group h-full cursor-pointer bg-white rounded-xl p-5 sm:p-6 border border-gray-200/90 hover:border-[#FF7A00]/50 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                    >
+                      <div>
+                        {/* Image Container — seamless without inner box */}
+                        <div className="w-full h-52 sm:h-60 flex items-center justify-center mb-5 relative">
+                          <img 
+                            src={product.img} 
+                            alt={product.name} 
+                            className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
+                          />
+                        </div>
+
+                        {/* Text Content */}
+                        <div className="text-left mb-4">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF7A00] block mb-1">
+                            {product.tagline}
+                          </span>
+                          <h3 className="text-[18px] sm:text-[19px] font-bold text-[#1A1A2E] group-hover:text-[#FF7A00] transition-colors duration-300 mb-2">
+                            {product.name}
+                          </h3>
+                          <p className="text-[13px] text-gray-500 leading-relaxed mb-4 line-clamp-2">
+                            {product.desc}
+                          </p>
+
+                          {/* Key Specs Pills */}
+                          <div className="flex flex-wrap gap-1.5">
+                            {product.specs.map(spec => (
+                              <span key={spec} className="text-[11px] font-medium text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md group-hover:bg-orange-50 group-hover:text-[#FF7A00] transition-colors duration-300">
+                                {spec}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Full-width Button */}
+                      <div className="w-full pt-4">
+                        <span className="w-full py-2.5 sm:py-3 px-4 rounded-lg bg-[#1A1A2E] text-white text-[13px] sm:text-[14px] font-semibold flex items-center justify-center gap-2 group-hover:bg-[#FF7A00] group-hover:text-white transition-all duration-300 shadow-sm">
+                          <span>View Details</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                        </span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Mobile Single Product Slider (Visible on mobile only) */}
+          {(() => {
+            const mobileProducts = [
+              {
+                id: 'gel-glue',
+                category: 'Gel Glue',
+                name: 'Credofix Gel Glue',
+                tagline: 'High-Viscosity Instant Gel',
+                desc: 'Super strong instant bonding gel with non-drip formula, ideal for vertical surfaces & precision joints.',
+                specs: ['Non-Drip Formula', 'Anti-Blooming', 'All-Weather'],
+                img: gelGlueImg
+              },
+              {
+                id: 'rapid-glue',
+                category: 'Rapid Glue',
+                name: 'Credofix Rapid Glue',
+                tagline: 'Ultra-Fast Liquid Adhesive',
+                desc: 'Ultra-fast curing industrial adhesive engineered to penetrate micro-gaps and bond firmly in 5-10 seconds.',
+                specs: ['5-10s Curing', 'High Penetration', 'Invisible Joints'],
+                img: rapidGlueImg
+              },
+              {
+                id: 'activator-spray',
+                category: 'Activator Spray',
+                name: 'Credofix Activator Spray',
+                tagline: 'Aerosol Curing Accelerator',
+                desc: 'High-performance curing accelerator aerosol spray that bonds substrates instantly across difficult surfaces.',
+                specs: ['Instant Cure', 'Uniform Spray', 'Porous Surfaces'],
+                img: activatorSprayImg
+              }
+            ].filter(p => activeCategory === 'All Products' || p.category === activeCategory);
+
+            const curIdx = mobileProductIndex % mobileProducts.length;
+            const curProd = mobileProducts[curIdx] || mobileProducts[0];
+
+            const goPrev = () => setMobileProductIndex(prev => (prev - 1 + mobileProducts.length) % mobileProducts.length);
+            const goNext = () => setMobileProductIndex(prev => (prev + 1) % mobileProducts.length);
+
+            return (
+              <div className="block md:hidden relative max-w-[330px] sm:max-w-sm mx-auto px-1">
+                {/* Thin Left Side Arrow */}
+                {mobileProducts.length > 1 && (
+                  <button
+                    onClick={goPrev}
+                    aria-label="Previous product"
+                    className="absolute -left-3 top-[36%] -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white/95 border border-gray-200/90 shadow-md flex items-center justify-center text-gray-700 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all"
+                  >
+                    <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+                  </button>
+                )}
+
+                {/* Thin Right Side Arrow */}
+                {mobileProducts.length > 1 && (
+                  <button
+                    onClick={goNext}
+                    aria-label="Next product"
+                    className="absolute -right-3 top-[36%] -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white/95 border border-gray-200/90 shadow-md flex items-center justify-center text-gray-700 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all"
+                  >
+                    <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                  </button>
+                )}
+
+                {/* Single Product Card with Swipe Support */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={curProd.id}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    onDragEnd={(_, info) => {
+                      if (info.offset.x < -40) goNext();
+                      else if (info.offset.x > 40) goPrev();
+                    }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.25 }}
+                    className="touch-pan-y cursor-grab active:cursor-grabbing"
+                  >
+                    <Link 
+                      to="/product" 
+                      className="group block bg-white rounded-xl p-5 border border-gray-200/90 shadow-sm flex flex-col justify-between"
+                    >
+                      <div>
+                        {/* Image Container */}
+                        <div className="w-full h-48 flex items-center justify-center mb-3 relative pointer-events-none">
+                          <img 
+                            src={curProd.img} 
+                            alt={curProd.name} 
+                            className="max-h-full max-w-full object-contain mix-blend-multiply transition-transform duration-300" 
+                          />
+                        </div>
+
+                        {/* Text Content */}
+                        <div className="text-left mb-4 pointer-events-none">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF7A00] block mb-1">
+                            {curProd.tagline}
+                          </span>
+                          <h3 className="text-[18px] font-bold text-[#1A1A2E] mb-1.5">
+                            {curProd.name}
+                          </h3>
+                          <p className="text-[12.5px] text-gray-500 leading-relaxed mb-3.5 line-clamp-2">
+                            {curProd.desc}
+                          </p>
+
+                          {/* Key Specs Pills */}
+                          <div className="flex flex-wrap gap-1.5">
+                            {curProd.specs.map(spec => (
+                              <span key={spec} className="text-[11px] font-medium text-gray-600 bg-gray-100 px-2.5 py-0.5 rounded-md">
+                                {spec}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Full-width Button */}
+                      <div className="w-full pt-2">
+                        <span className="w-full py-2.5 px-4 rounded-lg bg-[#1A1A2E] text-white text-[13px] font-semibold flex items-center justify-center gap-2 group-hover:bg-[#FF7A00] transition-colors shadow-sm">
+                          <span>View Details</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Thin Navigation Controls Below Card */}
+                {mobileProducts.length > 1 && (
+                  <div className="flex items-center justify-center gap-4 mt-4">
+                    <button 
+                      onClick={goPrev}
+                      aria-label="Previous product"
+                      className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all shadow-xs"
+                    >
+                      <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+                    </button>
+                    
+                    {/* Dots Indicator */}
+                    <div className="flex gap-2 items-center">
+                      {mobileProducts.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setMobileProductIndex(i)}
+                          aria-label={`Go to product ${i + 1}`}
+                          className={`transition-all duration-300 rounded-full ${
+                            curIdx === i 
+                              ? 'w-6 h-1.5 bg-[#FF7A00]' 
+                              : 'w-1.5 h-1.5 bg-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+
+                    <button 
+                      onClick={goNext}
+                      aria-label="Next product"
+                      className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all shadow-xs"
+                    >
+                      <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
         </div>
       </section>
 
@@ -433,7 +640,7 @@ export default function Home() {
               
               {/* Step 1 */}
               <div className="p-6 md:p-8 flex flex-col items-start hover:bg-white transition-colors duration-300">
-                <Sparkles strokeWidth={1.5} className="w-8 h-8 text-[#FF1840] mb-4" />
+                <Sparkles strokeWidth={1.5} className="w-8 h-8 text-[#FF7A00] mb-4" />
                 <h4 className="text-[15px] font-medium text-[#1A1A2E] mb-2 leading-snug">
                   1. Clean Surface
                 </h4>
@@ -444,7 +651,7 @@ export default function Home() {
 
               {/* Step 2 */}
               <div className="p-6 md:p-8 flex flex-col items-start hover:bg-white transition-colors duration-300">
-                <SprayCan strokeWidth={1.5} className="w-8 h-8 text-[#FF1840] mb-4" />
+                <SprayCan strokeWidth={1.5} className="w-8 h-8 text-[#FF7A00] mb-4" />
                 <h4 className="text-[15px] font-medium text-[#1A1A2E] mb-2 leading-snug">
                   2. Active Spray
                 </h4>
@@ -455,7 +662,7 @@ export default function Home() {
 
               {/* Step 3 */}
               <div className="p-6 md:p-8 flex flex-col items-start hover:bg-white transition-colors duration-300">
-                <Droplet strokeWidth={1.5} className="w-8 h-8 text-[#FF1840] mb-4" />
+                <Droplet strokeWidth={1.5} className="w-8 h-8 text-[#FF7A00] mb-4" />
                 <h4 className="text-[15px] font-medium text-[#1A1A2E] mb-2 leading-snug">
                   3. Apply Gel Glue
                 </h4>
@@ -466,7 +673,7 @@ export default function Home() {
 
               {/* Step 4 */}
               <div className="p-6 md:p-8 flex flex-col items-start hover:bg-white transition-colors duration-300">
-                <Zap strokeWidth={1.5} className="w-8 h-8 text-[#FF1840] mb-4" />
+                <Zap strokeWidth={1.5} className="w-8 h-8 text-[#FF7A00] mb-4" />
                 <h4 className="text-[15px] font-medium text-[#1A1A2E] mb-2 leading-snug">
                   4. Fast Bonding
                 </h4>
@@ -487,7 +694,7 @@ export default function Home() {
         <div className="max-w-[1280px] w-full mx-auto px-6 sm:px-8 lg:px-12 text-center">
           
           <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-semibold text-[#333333] mb-3 tracking-tight">
-            See What <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#FF1840]">People</span> Say
+            See What <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#FF4500]">People</span> Say
           </h2>
           <p className="text-[15px] text-gray-500 font-normal mb-10 lg:mb-14">
             Customer satisfaction is always our top priority
@@ -669,8 +876,8 @@ export default function Home() {
             
             {/* Left: Text Area */}
             <div className="w-full lg:w-[32%] flex flex-col justify-center">
-              <span className="text-[13px] font-bold text-[#1A1A2E] mb-1.5 uppercase tracking-wider">Partner with us</span>
-              <h2 className="text-4xl md:text-[42px] font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B35] to-[#FF1840] leading-[1.05] mb-3 tracking-tight">
+              <span className="text-[13px] font-bold text-[#FF7A00] mb-1.5 uppercase tracking-wider">Partner with us</span>
+              <h2 className="text-4xl md:text-[42px] font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#FF4500] leading-[1.05] mb-3 tracking-tight">
                 Become a<br/>Dealer
               </h2>
               <p className="text-slate-500 text-[14px] leading-[1.6] max-w-[280px] font-medium">
@@ -682,51 +889,51 @@ export default function Home() {
             <form onSubmit={handleContactSubmit} className="w-full lg:w-[68%] flex flex-col gap-4">
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <input required type="text" name="name" placeholder="Enter your name" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF1840] focus:ring-1 focus:ring-[#FF1840] transition-colors" />
-                <input required type="email" name="email" placeholder="Enter your Email" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF1840] focus:ring-1 focus:ring-[#FF1840] transition-colors" />
+                <input required type="text" name="name" placeholder="Enter your name" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-colors" />
+                <input required type="email" name="email" placeholder="Enter your Email" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-colors" />
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <input required type="tel" name="mobile" placeholder="Enter mobile number" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF1840] focus:ring-1 focus:ring-[#FF1840] transition-colors" />
-                <input required type="text" name="pincode" placeholder="Enter your Pincode" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF1840] focus:ring-1 focus:ring-[#FF1840] transition-colors" />
+                <input required type="tel" name="mobile" placeholder="Enter mobile number" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-colors" />
+                <input required type="text" name="pincode" placeholder="Enter your Pincode" className="w-full border border-gray-200 rounded-md px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-colors" />
               </div>
               
               <label className="flex items-center gap-2 cursor-pointer w-max mt-0.5">
-                <input type="checkbox" name="whatsappUpdates" className="w-4 h-4 rounded border-gray-300 text-[#FF1840] focus:ring-[#FF1840]" defaultChecked />
+                <input type="checkbox" name="whatsappUpdates" className="w-4 h-4 rounded border-gray-300 text-[#FF7A00] focus:ring-[#FF7A00]" defaultChecked />
                 <span className="text-[13px] font-bold text-[#1A1A2E]">Get updates on WhatsApp</span>
               </label>
               
               <div className="flex flex-col sm:flex-row gap-6 mt-1">
                 <div className="flex-1">
-                  <div className="text-[12px] font-bold text-[#1A1A2E] mb-2.5">Current Business Type? <span className="text-[#FF1840]">*</span></div>
+                  <div className="text-[12px] font-bold text-[#1A1A2E] mb-2.5">Current Business Type? <span className="text-[#FF7A00]">*</span></div>
                   <div className="flex gap-4 items-center">
                     <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input required type="radio" value="Retailer" name="business" className="w-3.5 h-3.5 text-[#FF1840] border-gray-300 focus:ring-[#FF1840]" />
+                      <input required type="radio" value="Retailer" name="business" className="w-3.5 h-3.5 text-[#FF7A00] border-gray-300 focus:ring-[#FF7A00]" />
                       <span className="text-[12px] text-gray-600 font-medium">Retailer</span>
                     </label>
                     <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input required type="radio" value="Distributor" name="business" className="w-3.5 h-3.5 text-[#FF1840] border-gray-300 focus:ring-[#FF1840]" />
+                      <input required type="radio" value="Distributor" name="business" className="w-3.5 h-3.5 text-[#FF7A00] border-gray-300 focus:ring-[#FF7A00]" />
                       <span className="text-[12px] text-gray-600 font-medium">Distributor</span>
                     </label>
                     <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input required type="radio" value="Other" name="business" className="w-3.5 h-3.5 text-[#FF1840] border-gray-300 focus:ring-[#FF1840]" />
+                      <input required type="radio" value="Other" name="business" className="w-3.5 h-3.5 text-[#FF7A00] border-gray-300 focus:ring-[#FF7A00]" />
                       <span className="text-[12px] text-gray-600 font-medium">Other</span>
                     </label>
                   </div>
                 </div>
                 
                 <div className="flex-1">
-                  <div className="text-[12px] font-bold text-[#1A1A2E] mb-1.5">GST Number <span className="text-[#FF1840]">*</span></div>
-                  <input required type="text" name="gst" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" title="Please enter a valid GST number (e.g., 22AAAAA0000A1Z5)" placeholder="Enter GST Number" className="w-full border border-gray-200 rounded-md px-4 py-2 text-[13px] focus:outline-none focus:border-[#FF1840] focus:ring-1 focus:ring-[#FF1840] transition-colors uppercase" />
+                  <div className="text-[12px] font-bold text-[#1A1A2E] mb-1.5">GST Number <span className="text-[#FF7A00]">*</span></div>
+                  <input required type="text" name="gst" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" title="Please enter a valid GST number (e.g., 22AAAAA0000A1Z5)" placeholder="Enter GST Number" className="w-full border border-gray-200 rounded-md px-4 py-2 text-[13px] focus:outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-colors uppercase" />
                 </div>
               </div>
               
               <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mt-3 pt-3 border-t border-gray-100">
                 <p className="text-[10px] text-gray-400 leading-[1.5] max-w-sm">
-                  By proceeding, I authorize Dungar Chemicals and its authorized partners to contact me via WhatsApp, phone calls, SMS and e-mail and I agree to the <a href="#" className="text-[#FF1840] hover:underline">Terms & Conditions</a> and <a href="#" className="text-[#FF1840] hover:underline">Privacy Policy</a>
+                  By proceeding, I authorize Dungar Chemicals and its authorized partners to contact me via WhatsApp, phone calls, SMS and e-mail and I agree to the <a href="#" className="text-[#FF7A00] hover:underline">Terms & Conditions</a> and <a href="#" className="text-[#FF7A00] hover:underline">Privacy Policy</a>
                 </p>
                 
-                <button type="submit" className="shrink-0 bg-gradient-to-r from-[#FF6B35] to-[#FF1840] text-white px-6 py-2.5 rounded-md text-[13px] font-bold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm w-full sm:w-auto justify-center">
+                <button type="submit" className="shrink-0 bg-gradient-to-r from-[#FF8C00] to-[#FF4500] hover:from-[#FF7A00] hover:to-[#E03E00] text-white px-7 py-3 rounded-lg text-[13px] font-bold flex items-center gap-2 hover:shadow-md transition-all shadow-sm w-full sm:w-auto justify-center">
                   Submit Application <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

@@ -24,7 +24,7 @@ export default function Navbar() {
     <div className="sticky top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out bg-white shadow-md border-b border-gray-200">
       
       {/* Top Dark Orange Bar */}
-      <div className="w-full bg-gradient-to-r from-[#FF6B35] to-[#FF1840] text-white/90">
+      <div className="w-full bg-gradient-to-r from-[#FF8C00] to-[#FF4500] text-white/90">
         <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-8 lg:px-16 py-2.5 flex flex-col md:flex-row justify-between items-center text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase gap-2 md:gap-0">
           
           <div className="flex items-center gap-3">
@@ -68,30 +68,32 @@ export default function Navbar() {
               <a 
                 key={link.name} 
                 href={link.path} 
-                className="text-[12px] lg:text-[13px] font-semibold text-[#1A1A1A] hover:text-[#FF1840] transition-colors duration-200 uppercase tracking-wide"
+                className="text-[12px] lg:text-[13px] font-semibold text-[#1A1A1A] hover:text-[#FF7A00] transition-colors duration-200 uppercase tracking-wide"
               >
                 {link.name}
               </a>
             ))}
             <a 
-              href="https://wa.me/919672444677" target="_blank" rel="noreferrer"
-              className="ml-4 border border-[#1A1A1A] bg-transparent text-[#1A1A1A] px-6 py-2.5 rounded-sm text-[12px] font-bold uppercase tracking-wider transition-all duration-300 hover:bg-[#1A1A1A] hover:text-white"
+              href="/brochure.pdf" target="_blank" rel="noreferrer"
+              className="ml-4 inline-flex items-center gap-2 border border-[#1A1A1A] bg-transparent text-[#1A1A1A] px-5 py-2.5 rounded-lg text-[12px] font-bold uppercase tracking-wider transition-all duration-300 hover:bg-[#FF7A00] hover:border-[#FF7A00] hover:text-white group shadow-xs"
             >
-              GET IN TOUCH
+              <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+              <span>BROCHURE</span>
             </a>
           </div>
 
           {/* Mobile Actions (Toggle) */}
           <div className="md:hidden flex items-center gap-3 sm:gap-4">
             <a 
-              href="https://wa.me/919672444677" target="_blank" rel="noreferrer"
-              className="border border-[#1A1A1A] text-[#1A1A1A] px-4 py-2 rounded-sm text-[10px] font-bold uppercase transition-all duration-300 hover:bg-[#1A1A1A] hover:text-white"
+              href="/brochure.pdf" target="_blank" rel="noreferrer"
+              className="inline-flex items-center gap-1.5 border border-[#1A1A1A] text-[#1A1A1A] px-3.5 py-1.5 rounded-lg text-[11px] font-bold uppercase transition-all duration-300 hover:bg-[#FF7A00] hover:border-[#FF7A00] hover:text-white group shadow-xs"
             >
-              Get in touch
+              <Download className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
+              <span>BROCHURE</span>
             </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-800 hover:text-[#FF1840] focus:outline-none"
+              className="text-slate-800 hover:text-[#FF7A00] focus:outline-none"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -127,7 +129,7 @@ export default function Navbar() {
                 <img src={logoImg} alt="Dungar Chemicals Logo" className="h-[36px] w-auto object-contain brightness-0" />
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-[#FF1840] hover:text-white transition-colors"
+                  className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-[#FF7A00] hover:text-white transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -143,7 +145,7 @@ export default function Navbar() {
                     key={link.path}
                     href={link.path}
                     onClick={() => setIsOpen(false)}
-                    className="text-[20px] font-semibold text-slate-800 hover:text-[#FF1840] transition-colors border-b border-slate-100 pb-4"
+                    className="text-[20px] font-semibold text-slate-800 hover:text-[#FF7A00] transition-colors border-b border-slate-100 pb-4"
                   >
                     {link.name}
                   </motion.a>
@@ -160,17 +162,17 @@ export default function Navbar() {
                 <a 
                   href="/brochure.pdf" 
                   onClick={() => setIsOpen(false)}
-                  className="flex justify-center items-center w-full bg-gradient-to-r from-[#FF6B35] to-[#FF1840] hover:shadow-md hover:opacity-90 transition-all text-white h-12 rounded-full text-[13px] font-bold tracking-wide shadow-sm gap-2 group"
+                  className="flex justify-center items-center w-full bg-gradient-to-r from-[#FF8C00] to-[#FF4500] hover:shadow-md hover:opacity-90 transition-all text-white h-12 rounded-full text-[13px] font-bold tracking-wide shadow-sm gap-2 group"
                 >
                   <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
                   DOWNLOAD BROCHURE
                 </a>
                 
                 <div className="flex items-center justify-between w-full text-slate-600 px-2">
-                  <a href="tel:+919672444677" className="hover:text-[#FF1840] transition-colors flex items-center gap-2 text-[13px] font-semibold">
+                  <a href="tel:+919672444677" className="hover:text-[#FF7A00] transition-colors flex items-center gap-2 text-[13px] font-semibold">
                     <Phone size={15} /> Call Us
                   </a>
-                  <a href="mailto:info@dungarchemicals.com" className="hover:text-[#FF1840] transition-colors flex items-center gap-2 text-[13px] font-semibold">
+                  <a href="mailto:info@dungarchemicals.com" className="hover:text-[#FF7A00] transition-colors flex items-center gap-2 text-[13px] font-semibold">
                     <Mail size={15} /> Email Us
                   </a>
                 </div>

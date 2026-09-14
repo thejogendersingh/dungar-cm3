@@ -34,9 +34,9 @@ export default function ProductPage() {
         "Bond: Press firmly by hand for 1 to 2 minutes for maximum strength."
       ],
       img: gelGlueImg,
-      themeGlow: "bg-[#FF1840]",
-      accentText: "text-[#FF1840]",
-      primaryBtn: "bg-[#FF1840] hover:bg-slate-900",
+      themeGlow: "bg-[#FF7A00]",
+      accentText: "text-[#FF7A00]",
+      primaryBtn: "bg-[#FF7A00] hover:bg-[#1A1A2E]",
       sizes: ['250g', '125g', '50g', '20g'],
       rating: 5.0,
       reviews: 128
@@ -58,9 +58,9 @@ export default function ProductPage() {
         "Bond: Press firmly by hand for just 5 to 10 seconds for an instant, ultra-strong hold."
       ],
       img: rapidGlueImg,
-      themeGlow: "bg-[#FF6B35]",
-      accentText: "text-[#FF1840]",
-      primaryBtn: "bg-[#FF1840] hover:bg-slate-900",
+      themeGlow: "bg-[#FF7A00]",
+      accentText: "text-[#FF7A00]",
+      primaryBtn: "bg-[#FF7A00] hover:bg-[#1A1A2E]",
       sizes: ['50g', '20g'],
       rating: 4.8,
       reviews: 96
@@ -82,9 +82,9 @@ export default function ProductPage() {
         "Apply & Join: Apply Credofix Glue to the other surface, press both parts together immediately, and hold firmly for 2 to 3 seconds."
       ],
       img: activatorSprayImg,
-      themeGlow: "bg-[#1A1A2E]",
-      accentText: "text-[#FF1840]",
-      primaryBtn: "bg-[#FF1840] hover:bg-slate-900",
+      themeGlow: "bg-[#FF7A00]",
+      accentText: "text-[#FF7A00]",
+      primaryBtn: "bg-[#FF7A00] hover:bg-[#1A1A2E]",
       sizes: ['100ml'],
       rating: 4.9,
       reviews: 215
@@ -135,16 +135,16 @@ export default function ProductPage() {
   };
 
   return (
-    <div className="w-full bg-[#FAFAFA] text-[#2C2424] pt-2 lg:pt-4 pb-8">
+    <div className="w-full bg-[#F8F9FA] text-[#1A1A2E] pt-2 lg:pt-4 pb-12">
       
       {/* Breadcrumbs */}
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-2 relative z-10">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-3 relative z-10">
         <div className="flex items-center text-[11px] uppercase tracking-widest font-bold text-gray-400">
-          <a href="/" className="hover:text-black transition-colors">Home</a>
+          <a href="/" className="hover:text-[#FF7A00] transition-colors">Home</a>
           <span className="mx-2 text-gray-300">/</span>
-          <a href="/#products" className="hover:text-black transition-colors">Products</a>
+          <a href="/#products" className="hover:text-[#FF7A00] transition-colors">Products</a>
           <span className="mx-2 text-gray-300">/</span>
-          <span className="text-black">{currentProduct.name}</span>
+          <span className="text-[#FF7A00]">{currentProduct.name} {currentProduct.subtitle}</span>
         </div>
       </div>
 
@@ -155,20 +155,20 @@ export default function ProductPage() {
         <div className="absolute top-1/2 -translate-y-1/2 left-0 md:left-2 right-0 md:right-2 z-30 flex justify-between pointer-events-none">
           <button 
             onClick={handlePrev} 
-            className="pointer-events-auto flex items-center justify-center text-gray-300 hover:text-black hover:-translate-x-1 transition-all duration-300"
+            className="pointer-events-auto flex items-center justify-center text-gray-400 hover:text-[#FF7A00] hover:scale-110 transition-all duration-300"
           >
             <ChevronLeft className="w-8 h-8 lg:w-12 lg:h-12" />
           </button>
           <button 
             onClick={handleNext} 
-            className="pointer-events-auto flex items-center justify-center text-gray-300 hover:text-black hover:translate-x-1 transition-all duration-300"
+            className="pointer-events-auto flex items-center justify-center text-gray-400 hover:text-[#FF7A00] hover:scale-110 transition-all duration-300"
           >
             <ChevronRight className="w-8 h-8 lg:w-12 lg:h-12" />
           </button>
         </div>
 
         {/* Main Card Container */}
-        <div className="bg-white rounded-3xl p-6 md:p-10 lg:p-12 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-200 flex flex-col-reverse lg:flex-row items-stretch gap-8 lg:gap-16 relative overflow-hidden">
+        <div className="bg-white rounded-2xl p-6 md:p-10 lg:p-12 shadow-sm border border-gray-200/90 flex flex-col-reverse lg:flex-row items-stretch gap-8 lg:gap-16 relative overflow-hidden">
           
           <AnimatePresence custom={direction} mode="wait">
             
@@ -182,29 +182,29 @@ export default function ProductPage() {
               exit="exit"
               className="w-full lg:w-1/2 flex flex-col justify-center relative z-20"
             >
-              <div className="inline-flex items-center gap-2 mb-2">
-                <span className="px-2.5 py-1 bg-gray-100 text-gray-600 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-full">
+              <div className="inline-flex items-center gap-2 mb-3">
+                <span className="px-3 py-1 bg-orange-50 border border-orange-200/70 text-[#FF7A00] text-[10px] md:text-[11px] font-bold uppercase tracking-wider rounded-full">
                   {currentProduct.grade}
                 </span>
               </div>
               
-              <h1 className="text-2xl lg:text-4xl font-black text-black mb-1 tracking-tight leading-[1.1]">
+              <h1 className="text-2xl lg:text-4xl font-bold text-[#1A1A2E] mb-1 tracking-tight leading-[1.1]">
                 {currentProduct.name} <br />
-                <span className={currentProduct.accentText}>{currentProduct.subtitle}</span>
+                <span className="text-[#FF7A00]">{currentProduct.subtitle}</span>
               </h1>
 
               {/* Size Selector */}
               <div className="mt-4 mb-2">
-                <h3 className="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2.5">Available Sizes</h3>
+                <h3 className="text-[10px] md:text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2.5">Available Sizes</h3>
                 <div className="flex flex-wrap gap-2">
                   {currentProduct.sizes.map((size) => (
                     <button 
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`px-3 py-1.5 rounded-sm text-[11px] font-black transition-all duration-300 ${
+                      className={`px-3.5 py-1.5 rounded-lg text-[12px] font-bold transition-all duration-300 ${
                         selectedSize === size 
-                          ? 'bg-[#1A1A2E] text-white shadow-sm' 
-                          : 'bg-white text-gray-500 border border-gray-200 hover:border-[#1A1A2E] hover:text-[#1A1A2E]'
+                          ? 'bg-[#1A1A2E] text-white shadow-sm border border-[#1A1A2E]' 
+                          : 'bg-white text-gray-600 border border-gray-200 hover:border-[#FF7A00] hover:text-[#FF7A00]'
                       }`}
                     >
                       {size}
@@ -213,21 +213,21 @@ export default function ProductPage() {
                 </div>
               </div>
               
-              <div className="text-[12px] lg:text-[13px] text-gray-500 my-4 leading-relaxed max-w-lg font-medium space-y-2">
+              <div className="text-[13px] lg:text-[14px] text-gray-500 my-4 leading-relaxed max-w-lg font-medium space-y-2">
                 {currentProduct.desc.split('\n').map((line, i) => (
                   <p key={i} className="flex items-start">
-                    <span className="text-[#FF1840] mr-2 text-[14px] leading-tight">•</span> 
+                    <span className="text-[#FF7A00] mr-2 text-[14px] leading-tight font-bold">•</span> 
                     <span>{line}</span>
                   </p>
                 ))}
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <a href="https://wa.me/919672444677" target="_blank" rel="noreferrer" className="flex-1 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 px-5 rounded-sm font-bold text-[12px] transition-colors shadow-md flex items-center justify-center gap-2 uppercase tracking-widest">
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <a href="https://wa.me/919672444677" target="_blank" rel="noreferrer" className="flex-1 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3.5 px-5 rounded-lg font-bold text-[12px] transition-colors shadow-sm hover:shadow-md flex items-center justify-center gap-2 uppercase tracking-widest">
                   WhatsApp Chat <MessageCircle className="w-4 h-4" />
                 </a>
-                <button className={`flex-1 ${currentProduct.primaryBtn} text-white py-3 px-5 rounded-sm font-bold text-[12px] transition-colors shadow-md flex items-center justify-center gap-2 uppercase tracking-widest`}>
+                <button className="flex-1 bg-[#1A1A2E] hover:bg-[#FF7A00] text-white py-3.5 px-5 rounded-lg font-bold text-[12px] transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center gap-2 uppercase tracking-widest">
                   Enquire Now <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -243,7 +243,7 @@ export default function ProductPage() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full lg:w-1/2 flex items-center justify-center relative bg-[#EAE8E3] rounded-3xl p-8 lg:p-12"
+              className="w-full lg:w-1/2 flex items-center justify-center relative bg-gradient-to-br from-gray-50/60 via-white to-orange-50/25 rounded-2xl border border-gray-100 p-8 lg:p-12 overflow-hidden"
             >
               <motion.img 
                 animate={{ 
@@ -254,7 +254,7 @@ export default function ProductPage() {
                 }}
                 src={currentProduct.img} 
                 alt={currentProduct.name} 
-                className="max-w-[280px] lg:max-w-[400px] max-h-full object-contain mix-blend-multiply relative z-20" 
+                className="max-w-[280px] lg:max-w-[380px] max-h-full object-contain mix-blend-multiply relative z-20" 
               />
             </motion.div>
           </AnimatePresence>
@@ -263,23 +263,23 @@ export default function ProductPage() {
       </div>
 
       {/* Technical Specifications Tabs */}
-      <div className="bg-white border-t border-gray-100 py-20 relative z-20">
+      <div className="bg-white border-t border-gray-200/80 py-16 relative z-20">
         <div className="max-w-[1000px] mx-auto px-6 sm:px-8 lg:px-12 flex flex-col items-center">
           
-          <div className="flex gap-8 lg:gap-12 border-b border-gray-100 mb-10 overflow-x-auto hide-scrollbar w-full justify-center">
+          <div className="flex gap-8 lg:gap-12 border-b border-gray-200 mb-10 overflow-x-auto hide-scrollbar w-full justify-center">
             {['description', 'applications', 'directions'].map((tab) => (
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`pb-3 text-[12px] font-black uppercase tracking-widest whitespace-nowrap transition-colors relative ${
-                  activeTab === tab ? 'text-[#FF1840]' : 'text-gray-400 hover:text-black'
+                className={`pb-3 text-[12px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors relative ${
+                  activeTab === tab ? 'text-[#FF7A00]' : 'text-gray-400 hover:text-[#1A1A2E]'
                 }`}
               >
                 {tab}
                 {activeTab === tab && (
                   <motion.div 
                     layoutId="activeTab" 
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FF1840]"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FF7A00]"
                   />
                 )}
               </button>
@@ -289,23 +289,23 @@ export default function ProductPage() {
           <div className="w-full">
             {activeTab === 'description' && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-4xl mx-auto">
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs">
                   <table className="w-full text-left text-[13px] lg:text-[14px]">
                     <tbody>
                       {currentProduct.desc.split('\n').map((line, i) => {
                         const parts = line.split(':');
                         if (parts.length < 2) {
                           return (
-                            <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                            <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-orange-50/20 transition-colors">
                               <td colSpan="2" className="px-6 py-4 text-gray-700 font-medium">
-                                <span className="text-[#FF1840] mr-2 font-bold">•</span> {line}
+                                <span className="text-[#FF7A00] mr-2 font-bold">•</span> {line}
                               </td>
                             </tr>
                           );
                         }
                         return (
-                          <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                            <th className="px-6 py-4 font-bold text-gray-900 w-1/3 bg-gray-50/50 border-r border-gray-100 align-top">
+                          <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-orange-50/20 transition-colors">
+                            <th className="px-6 py-4 font-bold text-gray-900 w-1/3 bg-gray-50/70 border-r border-gray-100 align-top">
                               {parts[0].trim()}
                             </th>
                             <td className="px-6 py-4 text-gray-600 font-medium align-top">
@@ -322,23 +322,23 @@ export default function ProductPage() {
             
             {activeTab === 'applications' && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-4xl mx-auto">
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs">
                   <table className="w-full text-left text-[13px] lg:text-[14px]">
                     <tbody>
                       {currentProduct.applications.map((app, index) => {
                         const parts = app.split(':');
                         if (parts.length < 2) {
                           return (
-                            <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                            <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-orange-50/20 transition-colors">
                               <td colSpan="2" className="px-6 py-4 text-gray-700 font-medium">
-                                <span className="text-[#FF1840] mr-2 font-bold">•</span> {app}
+                                <span className="text-[#FF7A00] mr-2 font-bold">•</span> {app}
                               </td>
                             </tr>
                           );
                         }
                         return (
-                          <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                            <th className="px-6 py-4 font-bold text-gray-900 w-1/3 bg-gray-50/50 border-r border-gray-100 align-top">
+                          <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-orange-50/20 transition-colors">
+                            <th className="px-6 py-4 font-bold text-gray-900 w-1/3 bg-gray-50/70 border-r border-gray-100 align-top">
                               {parts[0].trim()}
                             </th>
                             <td className="px-6 py-4 text-gray-600 font-medium align-top">
@@ -355,23 +355,23 @@ export default function ProductPage() {
 
             {activeTab === 'directions' && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-4xl mx-auto">
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs">
                   <table className="w-full text-left text-[13px] lg:text-[14px]">
                     <tbody>
                       {currentProduct.directions.map((dir, index) => {
                         const parts = dir.split(':');
                         if (parts.length < 2) {
                           return (
-                            <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                            <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-orange-50/20 transition-colors">
                               <td colSpan="2" className="px-6 py-4 text-gray-700 font-medium">
-                                <span className="text-[#FF1840] mr-2 font-bold">•</span> {dir}
+                                <span className="text-[#FF7A00] mr-2 font-bold">•</span> {dir}
                               </td>
                             </tr>
                           );
                         }
                         return (
-                          <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                            <th className="px-6 py-4 font-bold text-gray-900 w-1/3 bg-gray-50/50 border-r border-gray-100 align-top">
+                          <tr key={index} className="border-b border-gray-100 last:border-0 hover:bg-orange-50/20 transition-colors">
+                            <th className="px-6 py-4 font-bold text-gray-900 w-1/3 bg-gray-50/70 border-r border-gray-100 align-top">
                               {parts[0].trim()}
                             </th>
                             <td className="px-6 py-4 text-gray-600 font-medium align-top">

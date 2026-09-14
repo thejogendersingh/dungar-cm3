@@ -46,6 +46,15 @@
   }
 }
 
+/* Hide scrollbars utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Subtle premium micro-interactions */
 .smooth-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
