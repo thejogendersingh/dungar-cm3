@@ -187,50 +187,123 @@ export default function Home() {
     return () => document.removeEventListener('click', handleHashClick);
   }, []);
 
+  // Hero Living Room Carousel Slides (Jivanjor Vibe)
+  const heroSlides = [
+    {
+      image: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      title: 'The enduring bond\nthat lasts a lifetime'
+    },
+    {
+      image: 'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      title: 'Crafted for Strength,\nEngineered to Last'
+    },
+    {
+      image: 'https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      title: 'Unbreakable Bonds\nfor Every Wooden Creation'
+    }
+  ];
+  const [heroSlide, setHeroSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
   return (
     <div className="w-full bg-bg-primary text-text-primary selection:bg-surface-dark selection:text-white overflow-x-hidden">
       
       {/* ========================================================
-          01 — HERO SECTION (Full Proportional Image — No Cropping)
+          01 — HERO SECTION
           ======================================================== */}
-      <div className="w-full relative bg-[#1A1A2E] overflow-hidden">
-        {/* Desktop Hero Image (Wide Panoramic 3:1) */}
+      
+      {/* --- MOBILE HERO (Jivanjor-Style: Warm Luxury Living Room + Left-Aligned Text & Dual Pills) --- */}
+      <section id="hero" className="block md:hidden w-full relative h-[510px] xs:h-[540px] overflow-hidden bg-[#1A1A2E]">
+        {/* Background Image: Luxury Warm Modern Living Room & Woodwork */}
+        {heroSlides.map((slide, idx) => (
+          <img 
+            key={idx}
+            src={slide.image} 
+            alt="Luxury Living Room Interior Woodwork" 
+            className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
+              heroSlide === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+            }`}
+          />
+        ))}
+
+        {/* Ambient Gradient Overlay (Soft at top, contrast for text at bottom) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15 pointer-events-none"></div>
+
+        {/* Text & Content Overlay (Positioned in lower half just like Jivanjor) */}
+        <div className="absolute inset-0 z-10 flex flex-col justify-end items-start px-6 pb-8 w-full">
+          {/* Headline in Serif */}
+          <h1 className="text-[27px] xs:text-[30px] font-serif leading-[1.22] text-white tracking-wide mb-4 text-left drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)] max-w-[310px] whitespace-pre-line">
+            {heroSlides[heroSlide].title}
+          </h1>
+          
+          {/* Dual Pill Buttons */}
+          <div className="flex flex-row items-center gap-2.5 w-full mb-6">
+            <a 
+              href="#products" 
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white text-black text-[12.5px] font-semibold tracking-wide hover:bg-gray-100 active:scale-95 transition-all shadow-lg whitespace-nowrap"
+            >
+              Explore Products
+            </a>
+            <a 
+              href="tel:+919672444677" 
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/45 backdrop-blur-xs border border-white text-white text-[12.5px] font-semibold tracking-wide hover:bg-white/20 active:scale-95 transition-all shadow-lg whitespace-nowrap"
+            >
+              About Dungar
+            </a>
+          </div>
+
+          {/* Slider Indicator Dots (· ━ ·) */}
+          <div className="w-full flex items-center justify-center gap-2 pt-1">
+            {heroSlides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setHeroSlide(idx)}
+                aria-label={`Slide ${idx + 1}`}
+                className={`transition-all duration-300 rounded-full ${
+                  heroSlide === idx 
+                    ? 'w-7 h-1 bg-white' 
+                    : 'w-1.5 h-1.5 bg-white/60 hover:bg-white/90'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- DESKTOP HERO (Wide Panoramic 3:1 with Bottom-Left Text Overlay) --- */}
+      <div className="hidden md:block w-full relative bg-[#1A1A2E] overflow-hidden">
         <img 
           src={heroBgFinalImg} 
           alt="Credofix Adhesives Range" 
-          className="hidden md:block w-full h-auto object-cover"
-        />
-
-        {/* Mobile / Phone Hero Image (Custom Phone Layout) */}
-        <img 
-          src={heroPhoneImg} 
-          alt="Credofix Adhesives Range" 
-          className="block md:hidden w-full h-auto min-h-[300px] object-cover"
+          className="w-full h-auto object-cover"
         />
         
         {/* Overlay for contrast and readability */}
-        <div className="absolute inset-0 bg-black/40 md:bg-transparent md:bg-gradient-to-t md:from-black/80 md:via-black/35 md:to-black/20 z-0 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20 z-0 pointer-events-none"></div>
 
         {/* Text Content & CTA Overlay */}
-        <section id="hero" className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 w-full flex flex-col justify-center items-center text-center md:justify-end md:items-start md:text-left md:pb-14">
-          
-          {/* Text Content: Centered with compact size on mobile, bottom-left on desktop */}
-          <div className="w-full max-w-[290px] sm:max-w-sm md:max-w-none md:mx-0 md:w-[55%] lg:w-[50%] flex flex-col items-center text-center md:items-start md:text-left z-20 mb-0 md:mb-6">
-            <h1 className="text-[15px] sm:text-[18px] md:text-[32px] lg:text-[40px] font-serif leading-[1.25] mb-2.5 sm:mb-3 md:mb-5 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              The enduring bond<br className="hidden xs:inline md:inline" /> that lasts a lifetime
+        <section className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-8 lg:px-16 w-full flex flex-col justify-end items-start text-left pb-14">
+          <div className="w-[55%] lg:w-[50%] flex flex-col items-start text-left z-20 mb-6">
+            <h1 className="text-[32px] lg:text-[40px] font-serif leading-[1.25] mb-5 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              The enduring bond<br /> that lasts a lifetime
             </h1>
             
-            {/* 2 Pill Buttons: Small & Centered on mobile */}
-            <div className="flex flex-row items-center justify-center md:justify-start gap-2 sm:gap-3.5">
+            <div className="flex flex-row items-center justify-start gap-3.5">
               <a 
                 href="#products" 
-                className="inline-flex items-center justify-center px-3 sm:px-6 lg:px-7 py-1.5 sm:py-2 lg:py-2.5 rounded-full bg-white text-black text-[10.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-6 lg:px-7 py-2 lg:py-2.5 rounded-full bg-white text-black text-[13px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
               >
                 Explore Products
               </a>
               <a 
                 href="tel:+919672444677" 
-                className="inline-flex items-center justify-center px-3 sm:px-6 lg:px-7 py-1.5 sm:py-2 lg:py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[10.5px] sm:text-[13px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-6 lg:px-7 py-2 lg:py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[13px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
               >
                 About Dungar
               </a>
@@ -238,10 +311,10 @@ export default function Home() {
           </div>
 
           {/* Slider Dots Indicator */}
-          <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 z-20 pointer-events-none">
-            <div className="w-6 sm:w-8 h-1 sm:h-1.5 bg-white rounded-full"></div>
-            <div className="w-1.5 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full"></div>
-            <div className="w-1.5 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full"></div>
+          <div className="absolute bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20 pointer-events-none">
+            <div className="w-8 h-1.5 bg-white rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
           </div>
         </section>
       </div>
@@ -294,44 +367,41 @@ export default function Home() {
       {/* ========================================================
           03 — PREMIUM COLLECTION (Carousel)
           ======================================================== */}
-      <section id="products" className="bg-[#f5f5f5] py-10 lg:py-16 relative z-20 w-full">
+      {/* ========================================================
+          03 — PRODUCT SHOWCASE (Bespoke Dungar Chemicals Design)
+          ======================================================== */}
+      {/* ========================================================
+          03 — PRODUCT SHOWCASE (Clean & Unique Architectural Pods)
+          ======================================================== */}
+      <section id="products" className="bg-white py-12 lg:py-18 relative z-20 w-full overflow-hidden">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full">
 
-          <div className="text-center mb-8">
-            <h2 className="text-[32px] md:text-[40px] lg:text-[48px] font-bold font-serif text-[#1A1A2E] mb-4 tracking-tight">
-              Premium Collection
+          {/* Simple Clean Title (No extra text clutter) */}
+          <div className="text-center mb-6">
+            <h2 className="text-[26px] sm:text-[34px] font-serif text-[#1A1A2E] font-normal tracking-tight">
+              Adhesives Range
             </h2>
-            <p className="text-[14px] sm:text-[16px] text-gray-500 font-normal max-w-[600px] mx-auto">
-              Industry-leading synthetic adhesives designed for maximum durability and uncompromised bond strength.
-            </p>
           </div>
 
-          {/* Filter Tabs with animated sliding black pill */}
-          <div className="w-full flex justify-center px-2 mb-8 sm:mb-10">
-            <div className="flex items-center justify-start sm:justify-center p-1 sm:p-1.5 bg-gray-100/90 rounded-full w-fit max-w-full border border-gray-200/80 overflow-x-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              {['All Products', 'Gel Glue', 'Rapid Glue', 'Activator Spray'].map((tab) => {
-                const isActive = activeCategory === tab;
+          {/* Filter Pills */}
+          <div className="w-full flex justify-center px-2 mb-8 sm:mb-12">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+              {['All', 'Gel Glue', 'Rapid Glue', 'Activator Spray'].map((tab) => {
+                const isTabActive = activeCategory === (tab === 'All' ? 'All Products' : tab);
                 return (
                   <button 
                     key={tab}
                     onClick={() => {
-                      setActiveCategory(tab);
+                      setActiveCategory(tab === 'All' ? 'All Products' : tab);
                       setMobileProductIndex(0);
                     }}
-                    className={`relative px-3 sm:px-6 py-1.5 sm:py-2.5 text-[11.5px] sm:text-[14px] font-semibold tracking-wide transition-colors duration-300 whitespace-nowrap rounded-full cursor-pointer shrink-0 ${
-                      isActive 
-                        ? 'text-[#FF7A00]' 
-                        : 'text-[#1A1A2E] hover:text-[#FF7A00]'
+                    className={`px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-semibold tracking-wide transition-all duration-300 whitespace-nowrap cursor-pointer ${
+                      isTabActive 
+                        ? 'bg-[#1A1A2E] text-white shadow-md' 
+                        : 'bg-[#F4F2EC] text-gray-700 hover:bg-[#EBE7DF]'
                     }`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeFilterPill"
-                        className="absolute inset-0 bg-[#1A1A2E] rounded-full shadow-sm"
-                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                      />
-                    )}
-                    <span className="relative z-10">{tab}</span>
+                    {tab}
                   </button>
                 );
               })}
@@ -339,34 +409,31 @@ export default function Home() {
           </div>
 
           {/* Desktop Product Cards Grid (md and up) */}
-          <motion.div layout className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <motion.div layout className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 pt-2 pb-4">
             <AnimatePresence mode="popLayout">
               {[
                 {
                   id: 'gel-glue',
                   category: 'Gel Glue',
-                  name: 'Credofix Gel Glue',
-                  tagline: 'High-Viscosity Instant Gel',
-                  desc: 'Super strong instant bonding gel with non-drip formula, ideal for vertical surfaces & precision joints.',
-                  specs: ['Non-Drip Formula', 'Anti-Blooming', 'All-Weather'],
+                  name: 'Credofix 32 Gel Glue',
+                  code: 'CREDOFIX 32',
+                  tagline: 'High-Viscosity Non-Drip Gel • 250g',
                   img: gelGlueImg
                 },
                 {
                   id: 'rapid-glue',
                   category: 'Rapid Glue',
-                  name: 'Credofix Rapid Glue',
-                  tagline: 'Ultra-Fast Liquid Adhesive',
-                  desc: 'Ultra-fast curing industrial adhesive engineered to penetrate micro-gaps and bond firmly in 5-10 seconds.',
-                  specs: ['5-10s Curing', 'High Penetration', 'Invisible Joints'],
+                  name: 'Credofix 28 Rapid Glue',
+                  code: 'CREDOFIX 28',
+                  tagline: 'Instant 5-10s Liquid Adhesive • 50g',
                   img: rapidGlueImg
                 },
                 {
                   id: 'activator-spray',
                   category: 'Activator Spray',
-                  name: 'Credofix Activator Spray',
-                  tagline: 'Aerosol Curing Accelerator',
-                  desc: 'High-performance curing accelerator aerosol spray that bonds substrates instantly across difficult surfaces.',
-                  specs: ['Instant Cure', 'Uniform Spray', 'Porous Surfaces'],
+                  name: 'Credofix Spray Activator',
+                  code: 'SPRAY ACTIVATOR',
+                  tagline: 'Fast-Drying Curing Accelerator',
                   img: activatorSprayImg
                 }
               ]
@@ -379,49 +446,38 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
+                    className="flex justify-center"
                   >
                     <Link 
                       to="/product" 
-                      className="group h-full cursor-pointer bg-white rounded-xl p-5 sm:p-6 border border-gray-200/90 hover:border-[#FF7A00]/50 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                      className="group relative w-full max-w-[310px] bg-[#F7F5F0] hover:bg-[#F3EFE7] rounded-[32px] p-6 border border-[#EAE5DA] shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-between text-center cursor-pointer"
                     >
-                      <div>
-                        {/* Image Container — seamless without inner box */}
-                        <div className="w-full h-52 sm:h-60 flex items-center justify-center mb-5 relative">
-                          <img 
-                            src={product.img} 
-                            alt={product.name} 
-                            className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
-                          />
-                        </div>
+                      {/* Top Brand Code Pill */}
+                      <span className="px-3.5 py-1 rounded-full bg-[#1A1A2E] text-[#FF7A00] text-[11px] font-bold uppercase tracking-wider shadow-xs mb-3">
+                        {product.code}
+                      </span>
 
-                        {/* Text Content */}
-                        <div className="text-left mb-4">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF7A00] block mb-1">
-                            {product.tagline}
-                          </span>
-                          <h3 className="text-[18px] sm:text-[19px] font-bold text-[#1A1A2E] group-hover:text-[#FF7A00] transition-colors duration-300 mb-2">
-                            {product.name}
-                          </h3>
-                          <p className="text-[13px] text-gray-500 leading-relaxed mb-4 line-clamp-2">
-                            {product.desc}
-                          </p>
-
-                          {/* Key Specs Pills */}
-                          <div className="flex flex-wrap gap-1.5">
-                            {product.specs.map(spec => (
-                              <span key={spec} className="text-[11px] font-medium text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md group-hover:bg-orange-50 group-hover:text-[#FF7A00] transition-colors duration-300">
-                                {spec}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+                      {/* Large Product Bottle Stage (Seamless blend with mix-blend-multiply) */}
+                      <div className="w-full h-60 flex items-center justify-center my-3 relative">
+                        <img 
+                          src={product.img} 
+                          alt={product.name} 
+                          className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)]" 
+                        />
                       </div>
 
-                      {/* Full-width Button */}
-                      <div className="w-full pt-4">
-                        <span className="w-full py-2.5 sm:py-3 px-4 rounded-lg bg-[#1A1A2E] text-white text-[13px] sm:text-[14px] font-semibold flex items-center justify-center gap-2 group-hover:bg-[#FF7A00] group-hover:text-white transition-all duration-300 shadow-sm">
+                      {/* Bottom Info */}
+                      <div className="w-full flex flex-col items-center">
+                        <h3 className="text-[20px] font-bold text-[#1A1A2E] group-hover:text-[#FF7A00] transition-colors mb-1">
+                          {product.name}
+                        </h3>
+                        <p className="text-[13px] text-gray-600 font-normal mb-5">
+                          {product.tagline}
+                        </p>
+
+                        <span className="px-6 py-2.5 rounded-full bg-[#1A1A2E] group-hover:bg-[#FF7A00] text-white text-[12.5px] font-semibold transition-all duration-300 inline-flex items-center gap-2 shadow-xs">
                           <span>View Details</span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                         </span>
                       </div>
                     </Link>
@@ -430,34 +486,31 @@ export default function Home() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Mobile Single Product Slider (Visible on mobile only) */}
+          {/* Mobile Single Product Slider (Architectural Pod with Clean Arrows) */}
           {(() => {
             const mobileProducts = [
               {
                 id: 'gel-glue',
                 category: 'Gel Glue',
-                name: 'Credofix Gel Glue',
-                tagline: 'High-Viscosity Instant Gel',
-                desc: 'Super strong instant bonding gel with non-drip formula, ideal for vertical surfaces & precision joints.',
-                specs: ['Non-Drip Formula', 'Anti-Blooming', 'All-Weather'],
+                name: 'Credofix 32 Gel Glue',
+                code: 'CREDOFIX 32',
+                tagline: 'High-Viscosity Non-Drip Gel • 250g',
                 img: gelGlueImg
               },
               {
                 id: 'rapid-glue',
                 category: 'Rapid Glue',
-                name: 'Credofix Rapid Glue',
-                tagline: 'Ultra-Fast Liquid Adhesive',
-                desc: 'Ultra-fast curing industrial adhesive engineered to penetrate micro-gaps and bond firmly in 5-10 seconds.',
-                specs: ['5-10s Curing', 'High Penetration', 'Invisible Joints'],
+                name: 'Credofix 28 Rapid Glue',
+                code: 'CREDOFIX 28',
+                tagline: 'Instant 5-10s Liquid Adhesive • 50g',
                 img: rapidGlueImg
               },
               {
                 id: 'activator-spray',
                 category: 'Activator Spray',
-                name: 'Credofix Activator Spray',
-                tagline: 'Aerosol Curing Accelerator',
-                desc: 'High-performance curing accelerator aerosol spray that bonds substrates instantly across difficult surfaces.',
-                specs: ['Instant Cure', 'Uniform Spray', 'Porous Surfaces'],
+                name: 'Credofix Spray Activator',
+                code: 'SPRAY ACTIVATOR',
+                tagline: 'Fast-Drying Curing Accelerator',
                 img: activatorSprayImg
               }
             ].filter(p => activeCategory === 'All Products' || p.category === activeCategory);
@@ -469,7 +522,27 @@ export default function Home() {
             const goNext = () => setMobileProductIndex(prev => (prev + 1) % mobileProducts.length);
 
             return (
-              <div className="block md:hidden relative max-w-[340px] sm:max-w-sm mx-auto px-2">
+              <div className="block md:hidden relative max-w-[320px] xs:max-w-[340px] mx-auto px-2 pb-4">
+                {/* Floating Side Arrows */}
+                {mobileProducts.length > 1 && (
+                  <>
+                    <button 
+                      onClick={goPrev}
+                      aria-label="Previous product"
+                      className="absolute -left-2 xs:left-0 top-1/2 -translate-y-1/2 p-2 text-[#1A1A2E] hover:text-[#FF7A00] active:scale-90 transition-all z-20 cursor-pointer"
+                    >
+                      <ChevronLeft className="w-7 h-7" strokeWidth={2.5} />
+                    </button>
+                    <button 
+                      onClick={goNext}
+                      aria-label="Next product"
+                      className="absolute -right-2 xs:right-0 top-1/2 -translate-y-1/2 p-2 text-[#1A1A2E] hover:text-[#FF7A00] active:scale-90 transition-all z-20 cursor-pointer"
+                    >
+                      <ChevronRight className="w-7 h-7" strokeWidth={2.5} />
+                    </button>
+                  </>
+                )}
+
                 {/* Single Product Card with Swipe Support */}
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -481,94 +554,63 @@ export default function Home() {
                       if (info.offset.x < -40) goNext();
                       else if (info.offset.x > 40) goPrev();
                     }}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.25 }}
-                    className="touch-pan-y cursor-grab active:cursor-grabbing"
+                    className="touch-pan-y cursor-grab active:cursor-grabbing flex justify-center"
                   >
                     <Link 
                       to="/product" 
-                      className="group block bg-white rounded-xl p-5 border border-gray-200/90 shadow-sm flex flex-col justify-between"
+                      className="relative block w-[260px] xs:w-[275px] bg-[#F7F5F0] rounded-[30px] p-6 border border-[#EAE5DA] shadow-md flex flex-col items-center justify-between text-center"
                     >
-                      <div>
-                        {/* Image Container */}
-                        <div className="w-full h-48 flex items-center justify-center mb-3 relative pointer-events-none">
-                          <img 
-                            src={curProd.img} 
-                            alt={curProd.name} 
-                            className="max-h-full max-w-full object-contain mix-blend-multiply transition-transform duration-300" 
-                          />
-                        </div>
+                      {/* Top Brand Code Pill */}
+                      <span className="px-3 py-1 rounded-full bg-[#1A1A2E] text-[#FF7A00] text-[10.5px] font-bold uppercase tracking-wider shadow-xs mb-2">
+                        {curProd.code}
+                      </span>
 
-                        {/* Text Content */}
-                        <div className="text-left mb-4 pointer-events-none">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF7A00] block mb-1">
-                            {curProd.tagline}
-                          </span>
-                          <h3 className="text-[18px] font-bold text-[#1A1A2E] mb-1.5">
-                            {curProd.name}
-                          </h3>
-                          <p className="text-[12.5px] text-gray-500 leading-relaxed mb-3.5 line-clamp-2">
-                            {curProd.desc}
-                          </p>
-
-                          {/* Key Specs Pills */}
-                          <div className="flex flex-wrap gap-1.5">
-                            {curProd.specs.map(spec => (
-                              <span key={spec} className="text-[11px] font-medium text-gray-600 bg-gray-100 px-2.5 py-0.5 rounded-md">
-                                {spec}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+                      {/* Product Bottle Stage */}
+                      <div className="w-full h-56 flex items-center justify-center my-2 pointer-events-none">
+                        <img 
+                          src={curProd.img} 
+                          alt={curProd.name} 
+                          className="max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-[0_12px_18px_rgba(0,0,0,0.12)]" 
+                        />
                       </div>
 
-                      {/* Full-width Button */}
-                      <div className="w-full pt-2">
-                        <span className="w-full py-2.5 px-4 rounded-lg bg-[#1A1A2E] text-white text-[13px] font-semibold flex items-center justify-center gap-2 group-hover:bg-[#FF7A00] transition-colors shadow-sm">
+                      {/* Product Name & Tagline */}
+                      <div className="w-full flex flex-col items-center pointer-events-none">
+                        <h3 className="text-[21px] font-bold text-[#1A1A2E] mb-1">
+                          {curProd.name}
+                        </h3>
+                        <p className="text-[12.5px] text-gray-600 font-normal mb-4">
+                          {curProd.tagline}
+                        </p>
+
+                        <span className="px-5 py-2 rounded-full bg-[#1A1A2E] text-white text-[12px] font-semibold inline-flex items-center gap-1.5 shadow-xs">
                           <span>View Details</span>
-                          <ArrowRight className="w-4 h-4" />
+                          <ArrowRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
                     </Link>
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Thin Navigation Controls Below Card */}
+                {/* Dots Indicator Below Card */}
                 {mobileProducts.length > 1 && (
-                  <div className="flex items-center justify-center gap-4 mt-4">
-                    <button 
-                      onClick={goPrev}
-                      aria-label="Previous product"
-                      className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all shadow-xs"
-                    >
-                      <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
-                    </button>
-                    
-                    {/* Dots Indicator */}
-                    <div className="flex gap-2 items-center">
-                      {mobileProducts.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setMobileProductIndex(i)}
-                          aria-label={`Go to product ${i + 1}`}
-                          className={`transition-all duration-300 rounded-full ${
-                            curIdx === i 
-                              ? 'w-6 h-1.5 bg-[#FF7A00]' 
-                              : 'w-1.5 h-1.5 bg-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-
-                    <button 
-                      onClick={goNext}
-                      aria-label="Next product"
-                      className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#FF7A00] hover:border-[#FF7A00] active:scale-90 transition-all shadow-xs"
-                    >
-                      <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-                    </button>
+                  <div className="flex justify-center items-center gap-2 mt-5">
+                    {mobileProducts.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setMobileProductIndex(i)}
+                        aria-label={`Go to product ${i + 1}`}
+                        className={`transition-all duration-300 rounded-full ${
+                          curIdx === i 
+                            ? 'w-6 h-1.5 bg-[#FF7A00]' 
+                            : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
+                        }`}
+                      />
+                    ))}
                   </div>
                 )}
               </div>
