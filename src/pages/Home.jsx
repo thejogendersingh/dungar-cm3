@@ -220,7 +220,7 @@ export default function Home() {
           01 — HERO SECTION (Small Split Layout)
           ======================================================== */}
       <div className="w-full bg-[#EAE8E3]">
-        <section id="hero" className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full lg:h-[calc(100vh-100px)] min-h-[100vh] lg:min-h-0 flex flex-col-reverse lg:flex-row items-center justify-between pt-6 pb-12 lg:py-0 overflow-hidden">
+        <section id="hero" className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full lg:min-h-[70vh] min-h-[100vh] flex flex-col-reverse lg:flex-row items-center justify-between pt-6 pb-12 lg:py-16 overflow-hidden">
           
           {/* Left Text Content */}
           <div className="w-full lg:w-[55%] flex flex-col items-start z-20">
