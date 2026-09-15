@@ -203,27 +203,34 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>
 
         {/* Text & Content Overlay */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-end items-start px-5 pb-6 w-full">
-          {/* Headline in Serif */}
-          <h1 className="text-[23px] xs:text-[26px] font-serif leading-[1.22] text-white tracking-wide mb-3.5 text-left drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
+        <div className="absolute inset-0 z-10 flex flex-col justify-end items-start px-5 pb-7 w-full">
+          {/* Headline in Elegant Editorial Serif */}
+          <h1 className="text-[25px] xs:text-[28px] font-['Cormorant_Garamond',serif] font-semibold leading-[1.16] text-white tracking-wide mb-3 text-left drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
             Crafted for Strength,<br />Built to Last
           </h1>
           
-          {/* Dual Pill Buttons */}
-          <div className="flex flex-row items-center gap-2.5 w-full">
+          {/* Sleek Buttons (Reduced Height, Normal Comfortable Width) */}
+          <div className="flex flex-row items-center gap-2.5">
             <a 
               href="#products" 
-              className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-white text-black text-[12.5px] font-semibold tracking-wide hover:bg-gray-100 active:scale-95 transition-all shadow-md whitespace-nowrap"
+              className="inline-flex items-center justify-center px-5 py-1.5 rounded-full bg-white text-black text-[11.5px] font-semibold tracking-wide hover:bg-gray-100 active:scale-95 transition-all shadow-md whitespace-nowrap leading-tight"
             >
               Explore Products
             </a>
             <a 
-              href="tel:+919672444677" 
-              className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[12.5px] font-semibold tracking-wide hover:bg-white/20 active:scale-95 transition-all shadow-md whitespace-nowrap"
+              href="#cta" 
+              className="inline-flex items-center justify-center px-5 py-1.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[11.5px] font-semibold tracking-wide hover:bg-white/20 active:scale-95 transition-all shadow-md whitespace-nowrap leading-tight"
             >
-              About Dungar
+              Contact Us
             </a>
           </div>
+        </div>
+
+        {/* Slider Dots Indicator (Mobile) */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 pointer-events-none">
+          <div className="w-7 h-1.5 bg-white rounded-full shadow-xs"></div>
+          <div className="w-1.5 h-1.5 bg-white/60 rounded-full shadow-xs"></div>
+          <div className="w-1.5 h-1.5 bg-white/60 rounded-full shadow-xs"></div>
         </div>
       </section>
 
@@ -241,22 +248,22 @@ export default function Home() {
         {/* Text Content & CTA Overlay */}
         <section className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-6 md:px-8 lg:px-12 w-full flex flex-col justify-end items-start text-left pb-8 lg:pb-10">
           <div className="w-[52%] lg:w-[46%] max-w-[500px] flex flex-col items-start text-left z-20 mb-3">
-            <h1 className="text-[27px] md:text-[30px] lg:text-[35px] font-serif leading-[1.2] mb-4 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+            <h1 className="text-[30px] md:text-[34px] lg:text-[40px] font-['Cormorant_Garamond',serif] font-semibold leading-[1.14] mb-3.5 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Crafted for Strength,<br />Built to Last
             </h1>
             
-            <div className="flex flex-row items-center justify-start gap-3">
+            <div className="flex flex-row items-center justify-start gap-2.5">
               <a 
                 href="#products" 
-                className="inline-flex items-center justify-center px-5 lg:px-6 py-2 lg:py-2.5 rounded-full bg-white text-black text-[12px] lg:text-[12.5px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-5.5 py-1.5 rounded-full bg-white text-black text-[12px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md leading-tight"
               >
                 Explore Products
               </a>
               <a 
-                href="tel:+919672444677" 
-                className="inline-flex items-center justify-center px-5 lg:px-6 py-2 lg:py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[12px] lg:text-[12.5px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
+                href="#cta" 
+                className="inline-flex items-center justify-center px-5.5 py-1.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[12px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md leading-tight"
               >
-                About Dungar
+                Contact Us
               </a>
             </div>
           </div>

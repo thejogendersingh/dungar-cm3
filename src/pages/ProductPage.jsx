@@ -231,34 +231,42 @@ export default function ProductPage() {
     <div className="w-full bg-[#F8F9FA] text-[#1A1A2E] pt-2 lg:pt-4 pb-12">
       
       {/* Breadcrumbs */}
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-3 relative z-10">
-        <div className="flex items-center text-[11px] uppercase tracking-widest font-bold text-gray-400">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-2.5 sm:py-3 relative z-10">
+        <div className="flex items-center text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold text-gray-400">
           <a href="/" className="hover:text-[#FF7A00] transition-colors">Home</a>
-          <span className="mx-2 text-gray-300">/</span>
+          <span className="mx-1.5 sm:mx-2 text-gray-300">/</span>
           <a href="/#products" className="hover:text-[#FF7A00] transition-colors">Products</a>
-          <span className="mx-2 text-gray-300">/</span>
-          <span className="text-[#FF7A00]">{currentProduct.name} {currentProduct.subtitle} ({currentVariant.code})</span>
+          <span className="mx-1.5 sm:mx-2 text-gray-300">/</span>
+          <span className="text-[#FF7A00] font-bold">
+            <span className="sm:hidden">{currentProduct.subtitle}</span>
+            <span className="hidden sm:inline">{currentProduct.name} {currentProduct.subtitle} ({currentVariant.code})</span>
+          </span>
         </div>
       </div>
 
       {/* Ultra Premium Interactive Showcase */}
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pb-12 relative">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pb-12 relative">
         
         {/* Product Quick-Switch Tabs (Mobile, Tablet, Desktop) */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto hide-scrollbar px-1 py-1">
-          {productsList.map((p, idx) => (
-            <button
-              key={p.id}
-              onClick={() => selectProduct(idx)}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-[12px] sm:text-[13px] font-bold transition-all duration-200 cursor-pointer whitespace-nowrap ${
-                currentIndex === idx
-                  ? 'bg-[#1A1A2E] text-white shadow-md scale-102'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:text-[#1A1A2E]'
-              }`}
-            >
-              <span>{p.name} {p.subtitle}</span>
-            </button>
-          ))}
+        <div className="w-full overflow-x-auto hide-scrollbar px-1 py-1 mb-5 sm:mb-8">
+          <div className="flex items-center justify-center min-w-max mx-auto gap-1.5 sm:gap-3">
+            {productsList.map((p, idx) => (
+              <button
+                key={p.id}
+                onClick={() => selectProduct(idx)}
+                className={`px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full text-[11px] sm:text-[13px] font-bold transition-all duration-200 cursor-pointer whitespace-nowrap ${
+                  currentIndex === idx
+                    ? 'bg-[#1A1A2E] text-white shadow-sm scale-100 sm:scale-102'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:text-[#1A1A2E]'
+                }`}
+              >
+                <span>
+                  <span className="sm:hidden">{p.subtitle}</span>
+                  <span className="hidden sm:inline">{p.name} {p.subtitle}</span>
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Main Card Container with Line-Centered Arrows */}
