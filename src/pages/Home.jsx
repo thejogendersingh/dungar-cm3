@@ -8,6 +8,8 @@ import rapidGlueImg from '../assets/credofix-rapid-glue.PNG';
 import activatorSprayImg from '../assets/activator-spray.PNG';
 import heroBgFinalImg from '../assets/hero-bg-finl.PNG';
 import phoneHeroBgImg from '../assets/phone-hero-bg.PNG';
+import aplicationImg from '../assets/aplication.PNG';
+import aplicationPhoneImg from '../assets/aplication-phone.PNG';
 function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = "" }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
