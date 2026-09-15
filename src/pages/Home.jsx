@@ -3,11 +3,6 @@ import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresen
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Search, ChevronLeft, ChevronRight, Star, Trophy, Droplet, Droplets, ShieldCheck, Users, Award, MapPin, Armchair, Layers, SprayCan, Wrench, Zap, Settings, FlaskConical, Clock, Activity, Shield, Globe, Hexagon, Component, Factory, Microscope, Cpu, Package, Flame, TestTube, Thermometer, Wind, Radar, Box, ZapIcon, CheckCircle, Sun, Handshake, Sparkles } from 'lucide-react';
 import { FaBottleDroplet } from 'react-icons/fa6';
-import heroBgImg from '../assets/hero-bg.PNG';
-import hero1Img from '../assets/hero-1.PNG';
-import logoImg from '../assets/logo.png';
-import aplicationImg from '../assets/aplication.PNG';
-import aplicationPhoneImg from '../assets/aplication-phone.PNG';
 import gelGlueImg from '../assets/credofix-gel-glue.PNG';
 import rapidGlueImg from '../assets/credofix-rapid-glue.PNG';
 import activatorSprayImg from '../assets/activator-spray.PNG';
