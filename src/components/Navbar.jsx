@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Mail, Briefcase, Download, MessageCircle } from 'lucide-react';
+import { FaFacebookF, FaInstagram } from 'react-icons/fa6';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoImg from '../assets/logo.png';
 
@@ -58,7 +59,7 @@ export default function Navbar() {
           {/* Left: Brand Logo */}
           <div className="flex items-center">
             <a href="/#hero" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <img src={logoImg} alt="Dungar Chemicals" className="h-10 md:h-[55px] lg:h-[60px] w-auto object-contain" />
+              <img src={logoImg} alt="Dungar Chemicals" className="h-[48px] xs:h-[50px] sm:h-[52px] md:h-[55px] lg:h-[60px] w-auto object-contain" />
             </a>
           </div>
 
@@ -174,6 +175,37 @@ export default function Navbar() {
                   </a>
                   <a href="mailto:info@dungarchemicals.com" className="hover:text-[#FF7A00] transition-colors flex items-center gap-2 text-[13px] font-semibold">
                     <Mail size={15} /> Email Us
+                  </a>
+                </div>
+
+                {/* Social Links Row in Mobile Drawer */}
+                <div className="flex items-center justify-center gap-3 pt-2 border-t border-slate-200/60">
+                  <a 
+                    href="https://www.facebook.com/share/17hckiUg4q/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    aria-label="Facebook"
+                    className="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#FF7A00] hover:text-white hover:border-[#FF7A00] flex items-center justify-center transition-colors shadow-2xs"
+                  >
+                    <FaFacebookF size={14} />
+                  </a>
+                  <a 
+                    href="https://www.instagram.com/credofix?stkn=MXRmbGg4endta3RpZw==" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    aria-label="Instagram"
+                    className="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#FF7A00] hover:text-white hover:border-[#FF7A00] flex items-center justify-center transition-colors shadow-2xs"
+                  >
+                    <FaInstagram size={15} />
+                  </a>
+                  <a 
+                    href="https://wa.me/919672444677" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    aria-label="WhatsApp"
+                    className="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] flex items-center justify-center transition-colors shadow-2xs"
+                  >
+                    <MessageCircle size={15} />
                   </a>
                 </div>
               </motion.div>

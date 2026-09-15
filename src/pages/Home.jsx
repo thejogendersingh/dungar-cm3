@@ -2,18 +2,17 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, animate, useInView, AnimatePresence, useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Search, ChevronLeft, ChevronRight, Star, Trophy, Droplet, Droplets, ShieldCheck, Users, Award, MapPin, Armchair, Layers, SprayCan, Wrench, Zap, Settings, FlaskConical, Clock, Activity, Shield, Globe, Hexagon, Component, Factory, Microscope, Cpu, Package, Flame, TestTube, Thermometer, Wind, Radar, Box, ZapIcon, CheckCircle, Sun, Handshake, Sparkles } from 'lucide-react';
-import heroBgImg from '../assets/hero-bg.png';
+import { FaBottleDroplet } from 'react-icons/fa6';
+import heroBgImg from '../assets/hero-bg.PNG';
 import hero1Img from '../assets/hero-1.PNG';
 import logoImg from '../assets/logo.png';
-import productImg from '../assets/product.png';
-import actualProductImg from '../assets/product.png';
 import aplicationImg from '../assets/aplication.PNG';
 import aplicationPhoneImg from '../assets/aplication-phone.PNG';
 import gelGlueImg from '../assets/credofix-gel-glue.PNG';
 import rapidGlueImg from '../assets/credofix-rapid-glue.PNG';
 import activatorSprayImg from '../assets/activator-spray.PNG';
 import heroBgFinalImg from '../assets/hero-bg-finl.PNG';
-import heroPhoneImg from '../assets/hero-phone.PNG';
+import phoneHeroBgImg from '../assets/phone-hero-bg.PNG';
 function Counter({ from = 0, to, duration = 2, delay = 0, prefix = "", suffix = "" }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -133,7 +132,7 @@ export default function Home() {
       textColor: 'text-slate-900',
       price: '$129',
       features: ['High Strength', 'Clear Finish', 'Fast Curing'],
-      image: actualProductImg,
+      image: gelGlueImg,
       isNew: true,
       rating: 5,
       reviews: 128
@@ -148,7 +147,7 @@ export default function Home() {
       textColor: 'text-slate-900',
       price: '$89',
       features: ['Instant Bond', 'Multi-surface', 'Waterproof'],
-      image: actualProductImg,
+      image: rapidGlueImg,
       rating: 4.8,
       reviews: 96
     },
@@ -162,7 +161,7 @@ export default function Home() {
       textColor: 'text-slate-900',
       price: '$159',
       features: ['Accelerator', 'Pro Grade', 'No Residue'],
-      image: actualProductImg,
+      image: activatorSprayImg,
       rating: 4.9,
       reviews: 215
     }
@@ -187,30 +186,6 @@ export default function Home() {
     return () => document.removeEventListener('click', handleHashClick);
   }, []);
 
-  // Hero Living Room Carousel Slides (Jivanjor Vibe)
-  const heroSlides = [
-    {
-      image: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      title: 'The enduring bond\nthat lasts a lifetime'
-    },
-    {
-      image: 'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      title: 'Crafted for Strength,\nEngineered to Last'
-    },
-    {
-      image: 'https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      title: 'Unbreakable Bonds\nfor Every Wooden Creation'
-    }
-  ];
-  const [heroSlide, setHeroSlide] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5500);
-    return () => clearInterval(timer);
-  }, [heroSlides.length]);
-
   return (
     <div className="w-full bg-bg-primary text-text-primary selection:bg-surface-dark selection:text-white overflow-x-hidden">
       
@@ -218,60 +193,39 @@ export default function Home() {
           01 — HERO SECTION
           ======================================================== */}
       
-      {/* --- MOBILE HERO (Jivanjor-Style: Warm Luxury Living Room + Left-Aligned Text & Dual Pills) --- */}
-      <section id="hero" className="block md:hidden w-full relative h-[510px] xs:h-[540px] overflow-hidden bg-[#1A1A2E]">
-        {/* Background Image: Luxury Warm Modern Living Room & Woodwork */}
-        {heroSlides.map((slide, idx) => (
-          <img 
-            key={idx}
-            src={slide.image} 
-            alt="Luxury Living Room Interior Woodwork" 
-            className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
-              heroSlide === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
-            }`}
-          />
-        ))}
+      {/* --- MOBILE HERO (Single Corner-to-Corner Image with Elegant Bottom CTA) --- */}
+      <section id="hero" className="block md:hidden w-full relative bg-[#1A1A2E] overflow-hidden">
+        {/* Full Corner-to-Corner Image */}
+        <img 
+          src={phoneHeroBgImg} 
+          alt="Credofix Adhesives Range Dungar Chemicals" 
+          className="w-full h-auto object-cover block"
+        />
 
-        {/* Ambient Gradient Overlay (Soft at top, contrast for text at bottom) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15 pointer-events-none"></div>
+        {/* Ambient Gradient Overlay (Soft contrast at bottom for text & CTA) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>
 
-        {/* Text & Content Overlay (Positioned in lower half just like Jivanjor) */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-end items-start px-6 pb-8 w-full">
+        {/* Text & Content Overlay */}
+        <div className="absolute inset-0 z-10 flex flex-col justify-end items-start px-5 pb-6 w-full">
           {/* Headline in Serif */}
-          <h1 className="text-[27px] xs:text-[30px] font-serif leading-[1.22] text-white tracking-wide mb-4 text-left drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)] max-w-[310px] whitespace-pre-line">
-            {heroSlides[heroSlide].title}
+          <h1 className="text-[23px] xs:text-[26px] font-serif leading-[1.22] text-white tracking-wide mb-3.5 text-left drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
+            Crafted for Strength,<br />Built to Last
           </h1>
           
           {/* Dual Pill Buttons */}
-          <div className="flex flex-row items-center gap-2.5 w-full mb-6">
+          <div className="flex flex-row items-center gap-2.5 w-full">
             <a 
               href="#products" 
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white text-black text-[12.5px] font-semibold tracking-wide hover:bg-gray-100 active:scale-95 transition-all shadow-lg whitespace-nowrap"
+              className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-white text-black text-[12.5px] font-semibold tracking-wide hover:bg-gray-100 active:scale-95 transition-all shadow-md whitespace-nowrap"
             >
               Explore Products
             </a>
             <a 
               href="tel:+919672444677" 
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/45 backdrop-blur-xs border border-white text-white text-[12.5px] font-semibold tracking-wide hover:bg-white/20 active:scale-95 transition-all shadow-lg whitespace-nowrap"
+              className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[12.5px] font-semibold tracking-wide hover:bg-white/20 active:scale-95 transition-all shadow-md whitespace-nowrap"
             >
               About Dungar
             </a>
-          </div>
-
-          {/* Slider Indicator Dots (· ━ ·) */}
-          <div className="w-full flex items-center justify-center gap-2 pt-1">
-            {heroSlides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setHeroSlide(idx)}
-                aria-label={`Slide ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full ${
-                  heroSlide === idx 
-                    ? 'w-7 h-1 bg-white' 
-                    : 'w-1.5 h-1.5 bg-white/60 hover:bg-white/90'
-                }`}
-              />
-            ))}
           </div>
         </div>
       </section>
@@ -288,22 +242,22 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20 z-0 pointer-events-none"></div>
 
         {/* Text Content & CTA Overlay */}
-        <section className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-8 lg:px-16 w-full flex flex-col justify-end items-start text-left pb-14">
-          <div className="w-[55%] lg:w-[50%] flex flex-col items-start text-left z-20 mb-6">
-            <h1 className="text-[32px] lg:text-[40px] font-serif leading-[1.25] mb-5 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              The enduring bond<br /> that lasts a lifetime
+        <section className="absolute inset-0 z-10 max-w-[1440px] mx-auto px-6 md:px-8 lg:px-12 w-full flex flex-col justify-end items-start text-left pb-8 lg:pb-10">
+          <div className="w-[52%] lg:w-[46%] max-w-[500px] flex flex-col items-start text-left z-20 mb-3">
+            <h1 className="text-[27px] md:text-[30px] lg:text-[35px] font-serif leading-[1.2] mb-4 tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              Crafted for Strength,<br />Built to Last
             </h1>
             
-            <div className="flex flex-row items-center justify-start gap-3.5">
+            <div className="flex flex-row items-center justify-start gap-3">
               <a 
                 href="#products" 
-                className="inline-flex items-center justify-center px-6 lg:px-7 py-2 lg:py-2.5 rounded-full bg-white text-black text-[13px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-5 lg:px-6 py-2 lg:py-2.5 rounded-full bg-white text-black text-[12px] lg:text-[12.5px] font-semibold tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap shadow-md"
               >
                 Explore Products
               </a>
               <a 
                 href="tel:+919672444677" 
-                className="inline-flex items-center justify-center px-6 lg:px-7 py-2 lg:py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[13px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
+                className="inline-flex items-center justify-center px-5 lg:px-6 py-2 lg:py-2.5 rounded-full bg-black/50 backdrop-blur-xs border border-white/80 text-white text-[12px] lg:text-[12.5px] font-semibold tracking-wide hover:bg-white/20 transition-colors whitespace-nowrap shadow-md"
               >
                 About Dungar
               </a>
@@ -322,22 +276,22 @@ export default function Home() {
       {/* ========================================================
           01.5 — TRUST STRIP (2-Row Running Marquee)
           ======================================================== */}
-      <div className="w-full bg-white py-8 sm:py-10 overflow-hidden flex flex-col gap-6">
+      <div className="w-full bg-white border-y border-gray-100 py-7 sm:py-9 overflow-hidden flex flex-col gap-5 sm:gap-6">
         {/* Row 1 — scrolls left */}
         <div className="flex animate-marquee items-center gap-14 sm:gap-20 md:gap-28 pr-14 sm:pr-20 md:pr-28">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="flex items-center gap-14 sm:gap-20 md:gap-28 shrink-0">
               <span className="text-[13px] sm:text-[15px] font-black italic uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap shrink-0">Heavy Duty</span>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <Star strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+              <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <Star strokeWidth={1.65} className="w-7 h-7 sm:w-8 sm:h-8 text-[#1A1A2E] shrink-0" />
                 <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Pro Grade</span>
               </div>
-              <span className="text-[13px] sm:text-[15px] font-medium italic font-serif text-[#1A1A2E] whitespace-nowrap shrink-0">Long Lasting</span>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <ShieldCheck strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+              <span className="text-[13px] sm:text-[15px] font-normal italic font-serif text-gray-500 whitespace-nowrap shrink-0">Long Lasting</span>
+              <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <ShieldCheck strokeWidth={1.65} className="w-7 h-7 sm:w-8 sm:h-8 text-[#1A1A2E] shrink-0" />
                 <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Trusted</span>
               </div>
-              <span className="text-[12px] sm:text-[13px] font-bold uppercase tracking-widest text-[#1A1A2E] border border-[#1A1A2E] px-3 py-1 whitespace-nowrap shrink-0">All Weather</span>
+              <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-widest text-white bg-[#1A1A2E] px-3.5 py-1 rounded-full whitespace-nowrap shrink-0 shadow-2xs">All Weather</span>
             </div>
           ))}
         </div>
@@ -345,275 +299,272 @@ export default function Home() {
         <div className="flex animate-marquee-reverse items-center gap-14 sm:gap-20 md:gap-28 pr-14 sm:pr-20 md:pr-28">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="flex items-center gap-14 sm:gap-20 md:gap-28 shrink-0">
-              <div className="flex items-center gap-1.5 shrink-0">
-                <Award strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+              <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <Award strokeWidth={1.65} className="w-7 h-7 sm:w-8 sm:h-8 text-[#1A1A2E] shrink-0" />
                 <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Premium Quality</span>
               </div>
               <span className="text-[13px] sm:text-[15px] font-black italic uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap shrink-0">Instant Bond</span>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <Droplet strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+              <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <Droplet strokeWidth={1.65} className="w-7 h-7 sm:w-8 sm:h-8 text-[#1A1A2E] shrink-0" />
                 <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Zero Residue</span>
               </div>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <Zap strokeWidth={1.5} className="w-4 h-4 text-[#1A1A2E]" />
+              <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <Zap strokeWidth={1.65} className="w-7 h-7 sm:w-8 sm:h-8 text-[#1A1A2E] shrink-0" />
                 <span className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-[#1A1A2E] whitespace-nowrap">Fast Cure</span>
               </div>
-              <span className="text-[12px] sm:text-[13px] font-bold uppercase tracking-widest text-[#1A1A2E] border border-[#1A1A2E] px-3 py-1 whitespace-nowrap shrink-0">Eco Friendly</span>
+              <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-widest text-white bg-[#1A1A2E] px-3.5 py-1 rounded-full whitespace-nowrap shrink-0 shadow-2xs">Eco Friendly</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* ========================================================
-          03 — PREMIUM COLLECTION (Carousel)
+          03 — PRODUCT SHOWCASE & CAROUSEL (Cohesive Site Vibe)
           ======================================================== */}
-      {/* ========================================================
-          03 — PRODUCT SHOWCASE (Bespoke Dungar Chemicals Design)
-          ======================================================== */}
-      {/* ========================================================
-          03 — PRODUCT SHOWCASE (Clean & Unique Architectural Pods)
-          ======================================================== */}
-      <section id="products" className="bg-white py-12 lg:py-18 relative z-20 w-full overflow-hidden">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 w-full">
+      <section id="products" className="w-full bg-[#FAFAFA] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] py-16 sm:py-24 scroll-mt-28 relative z-20 overflow-hidden border-t border-gray-100">
+        <div className="max-w-[1280px] w-full mx-auto px-5 sm:px-8 lg:px-12">
 
-          {/* Simple Clean Title (No extra text clutter) */}
-          <div className="text-center mb-6">
-            <h2 className="text-[26px] sm:text-[34px] font-serif text-[#1A1A2E] font-normal tracking-tight">
-              Adhesives Range
+          {/* Section Header: Cohesive Brand Styling */}
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/70 text-[11px] font-bold text-[#FF7A00] uppercase tracking-wider mb-3.5 shadow-2xs">
+              <svg viewBox="0 70 512 370" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
+                <path fillRule="evenodd" clipRule="evenodd" d="M256 81L512 165V430H392V252H120V430H0V165L256 81ZM150 281H362V430H150V281ZM180 312H241V341H180V312ZM271 312H332V341H271V312ZM180 372H241V401H180V372ZM271 372H332V401H271V372Z" />
+              </svg>
+              <span>Direct Factory Formulations</span>
+            </div>
+            <h2 className="text-[30px] sm:text-[38px] lg:text-[44px] font-semibold text-[#1A1A2E] tracking-tight leading-tight">
+              Engineered For <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#FF4500]">Unbreakable</span> Bonds
             </h2>
-          </div>
+            <p className="text-[14.5px] sm:text-[15px] text-gray-500 font-normal mt-3 leading-relaxed">
+              Industrial-grade cyanoacrylate adhesives and accelerator sprays formulated for instant bonding, structural strength, and zero-blooming finishes.
+            </p>
 
-          {/* Filter Pills */}
-          <div className="w-full flex justify-center px-2 mb-8 sm:mb-12">
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-              {['All', 'Gel Glue', 'Rapid Glue', 'Activator Spray'].map((tab) => {
-                const isTabActive = activeCategory === (tab === 'All' ? 'All Products' : tab);
+            {/* Filter Pills (Rounded-Full Site Style) */}
+            <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-white border border-gray-200 shadow-2xs mt-7 overflow-x-auto no-scrollbar max-w-full">
+              {['All Products', 'Gel Glue', 'Rapid Glue', 'Activator Spray'].map((tab) => {
+                const isTabActive = activeCategory === tab;
                 return (
                   <button 
                     key={tab}
                     onClick={() => {
-                      setActiveCategory(tab === 'All' ? 'All Products' : tab);
+                      setActiveCategory(tab);
                       setMobileProductIndex(0);
                     }}
-                    className={`px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-semibold tracking-wide transition-all duration-300 whitespace-nowrap cursor-pointer ${
+                    className={`px-4 sm:px-5 py-2 rounded-full text-[12.5px] transition-all duration-200 whitespace-nowrap cursor-pointer ${
                       isTabActive 
-                        ? 'bg-[#1A1A2E] text-white shadow-md' 
-                        : 'bg-[#F4F2EC] text-gray-700 hover:bg-[#EBE7DF]'
+                        ? 'bg-[#1A1A2E] text-white shadow-xs font-semibold' 
+                        : 'text-gray-600 hover:text-black font-normal'
                     }`}
                   >
-                    {tab}
+                    {tab === 'All Products' ? 'All Range' : tab}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Desktop Product Cards Grid (md and up) */}
-          <motion.div layout className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 pt-2 pb-4">
-            <AnimatePresence mode="popLayout">
-              {[
-                {
-                  id: 'gel-glue',
-                  category: 'Gel Glue',
-                  name: 'Credofix 32 Gel Glue',
-                  code: 'CREDOFIX 32',
-                  tagline: 'High-Viscosity Non-Drip Gel • 250g',
-                  img: gelGlueImg
-                },
-                {
-                  id: 'rapid-glue',
-                  category: 'Rapid Glue',
-                  name: 'Credofix 28 Rapid Glue',
-                  code: 'CREDOFIX 28',
-                  tagline: 'Instant 5-10s Liquid Adhesive • 50g',
-                  img: rapidGlueImg
-                },
-                {
-                  id: 'activator-spray',
-                  category: 'Activator Spray',
-                  name: 'Credofix Spray Activator',
-                  code: 'SPRAY ACTIVATOR',
-                  tagline: 'Fast-Drying Curing Accelerator',
-                  img: activatorSprayImg
-                }
-              ]
-                .filter(p => activeCategory === 'All Products' || p.category === activeCategory)
-                .map((product) => (
-                  <motion.div
-                    key={product.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex justify-center"
-                  >
-                    <Link 
-                      to="/product" 
-                      className="group relative w-full max-w-[310px] bg-[#F7F5F0] hover:bg-[#F3EFE7] rounded-[32px] p-6 border border-[#EAE5DA] shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-between text-center cursor-pointer"
-                    >
-                      {/* Top Brand Code Pill */}
-                      <span className="px-3.5 py-1 rounded-full bg-[#1A1A2E] text-[#FF7A00] text-[11px] font-bold uppercase tracking-wider shadow-xs mb-3">
-                        {product.code}
-                      </span>
-
-                      {/* Large Product Bottle Stage (Seamless blend with mix-blend-multiply) */}
-                      <div className="w-full h-60 flex items-center justify-center my-3 relative">
-                        <img 
-                          src={product.img} 
-                          alt={product.name} 
-                          className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 drop-shadow-[0_12px_20px_rgba(0,0,0,0.12)]" 
-                        />
-                      </div>
-
-                      {/* Bottom Info */}
-                      <div className="w-full flex flex-col items-center">
-                        <h3 className="text-[20px] font-bold text-[#1A1A2E] group-hover:text-[#FF7A00] transition-colors mb-1">
-                          {product.name}
-                        </h3>
-                        <p className="text-[13px] text-gray-600 font-normal mb-5">
-                          {product.tagline}
-                        </p>
-
-                        <span className="px-6 py-2.5 rounded-full bg-[#1A1A2E] group-hover:bg-[#FF7A00] text-white text-[12.5px] font-semibold transition-all duration-300 inline-flex items-center gap-2 shadow-xs">
-                          <span>View Details</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                        </span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-            </AnimatePresence>
-          </motion.div>
-
-          {/* Mobile Single Product Slider (Architectural Pod with Clean Arrows) */}
+          {/* Product Data Definition */}
           {(() => {
-            const mobileProducts = [
+            const productList = [
               {
                 id: 'gel-glue',
                 category: 'Gel Glue',
-                name: 'Credofix 32 Gel Glue',
-                code: 'CREDOFIX 32',
-                tagline: 'High-Viscosity Non-Drip Gel • 250g',
+                bottleNo: 'CREDOFIX 32',
+                name: 'Gel Glue',
+                pack: '250g Net',
+                desc: 'Thixotropic non-drip formula engineered for vertical laminate joints and heavy woodwork without sagging.',
+                highlights: ['Non-Drip Formula', 'Vertical Joints', 'High Shear Bond'],
                 img: gelGlueImg
               },
               {
                 id: 'rapid-glue',
                 category: 'Rapid Glue',
-                name: 'Credofix 28 Rapid Glue',
-                code: 'CREDOFIX 28',
-                tagline: 'Instant 5-10s Liquid Adhesive • 50g',
+                bottleNo: 'CREDOFIX 28',
+                name: 'Rapid Glue',
+                pack: '50g Bottle',
+                desc: 'Low-viscosity cyanoacrylate formula for instant 5-second penetration into edge banding, mitres, and acrylics.',
+                highlights: ['Instant 5s Grip', 'Edge Banding', 'Zero Blooming'],
                 img: rapidGlueImg
               },
               {
                 id: 'activator-spray',
                 category: 'Activator Spray',
-                name: 'Credofix Spray Activator',
-                code: 'SPRAY ACTIVATOR',
-                tagline: 'Fast-Drying Curing Accelerator',
+                bottleNo: 'SPRAY ACTIVATOR',
+                name: 'Activator Spray',
+                pack: '200ml Aerosol',
+                desc: 'Aerosol chemical accelerator that triggers sub-second polymerization on porous wood, MDF, and cold weather.',
+                highlights: ['Sub-Second Cure', 'Micro-Mist Primer', 'Porous Woods & MDF'],
                 img: activatorSprayImg
               }
-            ].filter(p => activeCategory === 'All Products' || p.category === activeCategory);
+            ];
 
-            const curIdx = mobileProductIndex % mobileProducts.length;
-            const curProd = mobileProducts[curIdx] || mobileProducts[0];
+            const filtered = productList.filter(p => activeCategory === 'All Products' || p.category === activeCategory);
+            const curIdx = mobileProductIndex % (filtered.length || 1);
+            const curProd = filtered[curIdx] || filtered[0];
 
-            const goPrev = () => setMobileProductIndex(prev => (prev - 1 + mobileProducts.length) % mobileProducts.length);
-            const goNext = () => setMobileProductIndex(prev => (prev + 1) % mobileProducts.length);
+            const goPrev = () => setMobileProductIndex(prev => (prev - 1 + filtered.length) % filtered.length);
+            const goNext = () => setMobileProductIndex(prev => (prev + 1) % filtered.length);
 
             return (
-              <div className="block md:hidden relative max-w-[320px] xs:max-w-[340px] mx-auto px-2 pb-4">
-                {/* Floating Side Arrows */}
-                {mobileProducts.length > 1 && (
-                  <>
-                    <button 
-                      onClick={goPrev}
-                      aria-label="Previous product"
-                      className="absolute -left-2 xs:left-0 top-1/2 -translate-y-1/2 p-2 text-[#1A1A2E] hover:text-[#FF7A00] active:scale-90 transition-all z-20 cursor-pointer"
+              <>
+                {/* Desktop 3-Card Grid (Matching Section 04 & 03.5 Card Vibe) */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-[1140px] mx-auto">
+                  {filtered.map((item) => (
+                    <div 
+                      key={item.id}
+                      className="group bg-white border border-gray-200/80 hover:border-gray-300 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08)] transition-all duration-300 text-left"
                     >
-                      <ChevronLeft className="w-7 h-7" strokeWidth={2.5} />
-                    </button>
-                    <button 
-                      onClick={goNext}
-                      aria-label="Next product"
-                      className="absolute -right-2 xs:right-0 top-1/2 -translate-y-1/2 p-2 text-[#1A1A2E] hover:text-[#FF7A00] active:scale-90 transition-all z-20 cursor-pointer"
-                    >
-                      <ChevronRight className="w-7 h-7" strokeWidth={2.5} />
-                    </button>
-                  </>
-                )}
+                      <div>
+                        {/* Top Meta Bar */}
+                        <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                          <div className="flex items-center gap-1.5">
+                            {item.category === 'Activator Spray' ? (
+                              <SprayCan className="w-3.5 h-3.5 text-[#FF7A00] shrink-0" strokeWidth={2.2} />
+                            ) : (
+                              <FaBottleDroplet className="w-3 h-3.5 text-[#FF7A00] shrink-0" />
+                            )}
+                            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                              {item.bottleNo}
+                            </span>
+                          </div>
+                          <span className="text-[11px] font-semibold text-gray-700 bg-gray-100 px-2.5 py-0.5 rounded-full">
+                            {item.pack}
+                          </span>
+                        </div>
 
-                {/* Single Product Card with Swipe Support */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={curProd.id}
-                    drag="x"
-                    dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.2}
-                    onDragEnd={(_, info) => {
-                      if (info.offset.x < -40) goNext();
-                      else if (info.offset.x > 40) goPrev();
-                    }}
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.25 }}
-                    className="touch-pan-y cursor-grab active:cursor-grabbing flex justify-center"
-                  >
-                    <Link 
-                      to="/product" 
-                      className="relative block w-[260px] xs:w-[275px] bg-[#F7F5F0] rounded-[30px] p-6 border border-[#EAE5DA] shadow-md flex flex-col items-center justify-between text-center"
-                    >
-                      {/* Top Brand Code Pill */}
-                      <span className="px-3 py-1 rounded-full bg-[#1A1A2E] text-[#FF7A00] text-[10.5px] font-bold uppercase tracking-wider shadow-xs mb-2">
-                        {curProd.code}
-                      </span>
+                        {/* Product Bottle Stage */}
+                        <div className="w-full h-56 sm:h-64 rounded-xl bg-gradient-to-b from-gray-50/60 to-white flex items-center justify-center p-4 my-4 relative overflow-hidden">
+                          <img 
+                            src={item.img} 
+                            alt={`${item.bottleNo} ${item.name}`} 
+                            className="max-h-52 sm:max-h-56 w-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-transform duration-300 group-hover:scale-105" 
+                          />
+                        </div>
 
-                      {/* Product Bottle Stage */}
-                      <div className="w-full h-56 flex items-center justify-center my-2 pointer-events-none">
-                        <img 
-                          src={curProd.img} 
-                          alt={curProd.name} 
-                          className="max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-[0_12px_18px_rgba(0,0,0,0.12)]" 
-                        />
-                      </div>
-
-                      {/* Product Name & Tagline */}
-                      <div className="w-full flex flex-col items-center pointer-events-none">
-                        <h3 className="text-[21px] font-bold text-[#1A1A2E] mb-1">
-                          {curProd.name}
+                        {/* Details */}
+                        <h3 className="text-[20px] font-bold text-[#1A1A2E] leading-snug group-hover:text-[#FF7A00] transition-colors">
+                          {item.name}
                         </h3>
-                        <p className="text-[12.5px] text-gray-600 font-normal mb-4">
-                          {curProd.tagline}
+                        <p className="text-[13px] text-gray-500 font-normal mt-2 line-clamp-2 leading-relaxed">
+                          {item.desc}
                         </p>
 
-                        <span className="px-5 py-2 rounded-full bg-[#1A1A2E] text-white text-[12px] font-semibold inline-flex items-center gap-1.5 shadow-xs">
-                          <span>View Details</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                        {/* Feature Badges */}
+                        <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-gray-100">
+                          {item.highlights.map((h, i) => (
+                            <span key={i} className="text-[11px] text-gray-600 bg-gray-50 border border-gray-200/60 px-2 py-0.5 rounded-md font-medium">
+                              {h}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <Link 
+                        to="/product"
+                        className="mt-6 w-full py-3 rounded-xl bg-[#1A1A2E] hover:bg-gradient-to-r hover:from-[#FF8C00] hover:to-[#FF4500] text-white text-[13px] font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs group-hover:shadow-md"
+                      >
+                        <span>View Specifications</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mobile Carousel (Smooth Swipe & Card Navigation Matching Site) */}
+                <div className="block md:hidden relative w-full px-1">
+                  <div className="bg-white border border-gray-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.03)] text-left max-w-[340px] mx-auto">
+                    {/* Top Meta Bar */}
+                    <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                      <div className="flex items-center gap-1.5">
+                        {curProd.category === 'Activator Spray' ? (
+                          <SprayCan className="w-3.5 h-3.5 text-[#FF7A00] shrink-0" strokeWidth={2.2} />
+                        ) : (
+                          <FaBottleDroplet className="w-3 h-3.5 text-[#FF7A00] shrink-0" />
+                        )}
+                        <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                          {curProd.bottleNo}
                         </span>
                       </div>
-                    </Link>
-                  </motion.div>
-                </AnimatePresence>
+                      <span className="text-[11px] font-semibold text-gray-700 bg-gray-100 px-2.5 py-0.5 rounded-full">
+                        {curProd.pack}
+                      </span>
+                    </div>
 
-                {/* Dots Indicator Below Card */}
-                {mobileProducts.length > 1 && (
-                  <div className="flex justify-center items-center gap-2 mt-5">
-                    {mobileProducts.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setMobileProductIndex(i)}
-                        aria-label={`Go to product ${i + 1}`}
-                        className={`transition-all duration-300 rounded-full ${
-                          curIdx === i 
-                            ? 'w-6 h-1.5 bg-[#FF7A00]' 
-                            : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
-                        }`}
+                    {/* Product Bottle Stage */}
+                    <div className="w-full h-56 rounded-xl bg-gradient-to-b from-gray-50/60 to-white flex items-center justify-center p-4 my-4 relative overflow-hidden">
+                      <img 
+                        src={curProd.img} 
+                        alt={`${curProd.bottleNo} ${curProd.name}`} 
+                        className="max-h-48 w-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]" 
                       />
-                    ))}
+                    </div>
+
+                    {/* Details */}
+                    <h3 className="text-[20px] font-bold text-[#1A1A2E] leading-snug">
+                      {curProd.name}
+                    </h3>
+                    <p className="text-[13px] text-gray-500 font-normal mt-2 leading-relaxed">
+                      {curProd.desc}
+                    </p>
+
+                    {/* Feature Badges */}
+                    <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-gray-100">
+                      {curProd.highlights.map((h, i) => (
+                        <span key={i} className="text-[11px] text-gray-600 bg-gray-50 border border-gray-200/60 px-2 py-0.5 rounded-md font-medium">
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Action Button */}
+                    <Link 
+                      to="/product"
+                      className="mt-6 w-full py-3 rounded-xl bg-[#1A1A2E] hover:bg-gradient-to-r hover:from-[#FF8C00] hover:to-[#FF4500] text-white text-[13px] font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs"
+                    >
+                      <span>View Specifications</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
-                )}
-              </div>
+
+                  {/* Carousel Chevrons & Pill Dots */}
+                  {filtered.length > 1 && (
+                    <div className="flex items-center justify-between mt-6 px-2 max-w-[340px] mx-auto">
+                      <button 
+                        onClick={goPrev}
+                        aria-label="Previous product"
+                        className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-xs flex items-center justify-center text-gray-700 hover:text-[#FF7A00] active:scale-95 transition-all cursor-pointer"
+                      >
+                        <ChevronLeft className="w-4.5 h-4.5" />
+                      </button>
+
+                      {/* Indicator Dots */}
+                      <div className="flex items-center gap-2">
+                        {filtered.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setMobileProductIndex(i)}
+                            aria-label={`Go to product ${i + 1}`}
+                            className={`transition-all duration-300 rounded-full ${
+                              curIdx === i 
+                                ? 'w-6 h-1.5 bg-[#FF7A00]' 
+                                : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
+                            }`}
+                          />
+                        ))}
+                      </div>
+
+                      <button 
+                        onClick={goNext}
+                        aria-label="Next product"
+                        className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-xs flex items-center justify-center text-gray-700 hover:text-[#FF7A00] active:scale-95 transition-all cursor-pointer"
+                      >
+                        <ChevronRight className="w-4.5 h-4.5" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
             );
           })()}
 
@@ -621,9 +572,9 @@ export default function Home() {
       </section>
 
       {/* ========================================================
-          03.5 — PROMOTIONAL BANNER SECTION
+          03.5 — PROMOTIONAL APPLICATION BANNER (Proper Vertical Gap)
           ======================================================== */}
-      <section id="applications" className="w-full bg-white pt-2 pb-8 lg:pb-12 relative z-10">
+      <section id="applications" className="w-full bg-white pt-12 sm:pt-16 pb-16 sm:pb-24 relative z-10 border-t border-gray-100">
         <div className="max-w-[1280px] w-full mx-auto px-4 sm:px-8 lg:px-12">
           
           <div className="w-full flex flex-col rounded-xl md:rounded-2xl overflow-hidden shadow-sm border border-slate-100 relative bg-white">

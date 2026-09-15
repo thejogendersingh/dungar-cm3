@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -21,6 +22,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
